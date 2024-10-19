@@ -1,10 +1,21 @@
 import java.util.Vector;
 
+/**
+ * Represents a librarian in the library system. This class extends the User class
+ * and provides functionalities for managing documents and storing librarian details.
+ */
 public class Librarian extends User {
     private int librarianSalary;
     private static Vector<Librarian> librarianList = new Vector<>();
     private LibraryManagementSystem librarySystem;
 
+    /**
+     * Constructs a Librarian with a specified salary and associated library system.
+     *
+     * @param salary the salary of the librarian.
+     * @param librarySystem the library management system associated with the librarian.
+     * @throws IllegalArgumentException if the salary is negative.
+     */
     public Librarian(int salary, LibraryManagementSystem librarySystem) {
         if (salary < 0) {
             throw new IllegalArgumentException("Salary cannot be negative");
@@ -13,16 +24,30 @@ public class Librarian extends User {
         this.librarySystem = librarySystem;
     }
 
+    /**
+     * Prints the user information, including the librarian's salary.
+     */
     @Override
     public void printUserInfo() {
         super.printUserInfo();
         System.out.println("Salary: " + librarianSalary);
     }
 
+    /**
+     * Gets the librarian's salary.
+     *
+     * @return the librarian's salary.
+     */
     public int getLibrarianSalary() {
         return librarianSalary;
     }
 
+    /**
+     * Sets the librarian's salary.
+     *
+     * @param salary the salary to set.
+     * @throws IllegalArgumentException if the salary is negative.
+     */
     public void setLibrarianSalary(int salary) {
         if (salary < 0) {
             throw new IllegalArgumentException("Salary cannot be negative");
@@ -30,14 +55,29 @@ public class Librarian extends User {
         this.librarianSalary = salary;
     }
 
+    /**
+     * Adds a librarian to the librarian list.
+     *
+     * @param l the librarian to add.
+     */
     public void addLibrarian(Librarian l) {
         librarianList.add(l);
     }
 
+    /**
+     * Gets the list of librarians.
+     *
+     * @return a vector containing all librarians.
+     */
     public static Vector<Librarian> getLibrarians() {
         return librarianList;
     }
 
+    /**
+     * Adds a document to the library system.
+     *
+     * @param d the document to add.
+     */
     public void addDocument(Document d) {
         if (d instanceof Book) {
             librarySystem.bookList.add((Book) d);
@@ -48,6 +88,11 @@ public class Librarian extends User {
         }
     }
 
+    /**
+     * Removes a document from the library system.
+     *
+     * @param d the document to remove.
+     */
     public void removeDocument(Document d) {
         if (d instanceof Book) {
             librarySystem.bookList.remove(d);
@@ -58,6 +103,12 @@ public class Librarian extends User {
         }
     }
 
+    /**
+     * Updates a document in the library system.
+     *
+     * @param d the document to update.
+     * @return true if the document was updated successfully, false otherwise.
+     */
     public boolean updateDocument(Document d) {
         if (d instanceof Book) {
             for (int i = 0; i < librarySystem.bookList.size(); i++) {
