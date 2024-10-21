@@ -3,14 +3,12 @@
  * with additional properties such as genre and publisher.
  * <p>
  * It inherits all the properties of the {@code Document} class, and provides
- * additional methods to set and retrieve the genre and publisher of the book.
+ * additional methods to set and get the genre and publisher of the book.
  * </p>
  */
 public class Book extends Document {
     private String bookGenre;
     private String bookPublisher;
-
-
 
     /**
      * Overrides the {@code printDocInfo} method from the {@code Document} class
@@ -23,39 +21,19 @@ public class Book extends Document {
         System.out.println("Book Publisher: " + bookPublisher);
     }
 
-    /**
-     * Gets the genre of the book.
-     *
-     * @return the genre of the book
-     */
-    public String getBookGenre() {
-        return bookGenre;
-    }
-
-    /**
-     * Sets the genre of the book.
-     *
-     * @param bookGenre the genre to be set
-     */
     public void setBookGenre(String bookGenre) {
         this.bookGenre = bookGenre;
     }
 
-    /**
-     * Gets the publisher of the book.
-     *
-     * @return the publisher of the book
-     */
-    public String getBookPublisher() {
-        return bookPublisher;
-    }
-
-    /**
-     * Sets the publisher of the book.
-     *
-     * @param bookPublisher the publisher to be set
-     */
     public void setBookPublisher(String bookPublisher) {
         this.bookPublisher = bookPublisher;
+    }
+
+    public String getBookGenre() {
+        return bookGenre;
+    }
+
+    public String getBookPublisher() {
+        return bookPublisher;
     }
 }

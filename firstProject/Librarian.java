@@ -1,28 +1,9 @@
 import java.util.Vector;
+import java.util.Scanner;
+import java.util.Date;
 
-/**
- * Represents a librarian in the library system. This class extends the User class
- * and provides functionalities for managing documents and storing librarian details.
- */
 public class Librarian extends User {
-    private int librarianSalary;
-    private static Vector<Librarian> librarianList = new Vector<>();
-    private LibraryManagementSystem librarySystem;
-
-    /**
-     * Constructs a Librarian with a specified salary and associated library system.
-     *
-     * @param salary the salary of the librarian.
-     * @param librarySystem the library management system associated with the librarian.
-     * @throws IllegalArgumentException if the salary is negative.
-     */
-    public Librarian(int salary, LibraryManagementSystem librarySystem) {
-        if (salary < 0) {
-            throw new IllegalArgumentException("Salary cannot be negative");
-        }
-        this.librarianSalary = salary;
-        this.librarySystem = librarySystem;
-    }
+    private int librarianSalary = 200; //dollars per month
 
     /**
      * Prints the user information, including the librarian's salary.
@@ -33,105 +14,163 @@ public class Librarian extends User {
         System.out.println("Salary: " + librarianSalary);
     }
 
-    /**
-     * Gets the librarian's salary.
-     *
-     * @return the librarian's salary.
-     */
     public int getLibrarianSalary() {
         return librarianSalary;
     }
+    public void setLibrarianSalary(int librarianSalary) {
+        this.librarianSalary = librarianSalary;
+    }
 
-    /**
-     * Sets the librarian's salary.
-     *
-     * @param salary the salary to set.
-     * @throws IllegalArgumentException if the salary is negative.
-     */
-    public void setLibrarianSalary(int salary) {
-        if (salary < 0) {
-            throw new IllegalArgumentException("Salary cannot be negative");
+    public void addBorrower(LibraryManagementSystem libraryManagementSystem) {
+        Borrower borrower = new Borrower();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Name: ");
+        borrower.setUserName(scanner.nextLine());
+
+        System.out.println("Enter Date of Birth (yyyy-MM-dd): ");
+        String dateInput = scanner.nextLine();
+        borrower.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
+
+        System.out.println("Are you a student (YES/NO): ");
+        String isStudentInput = scanner.nextLine();
+        if (isStudentInput.equals("YES"))
+            borrower.setIsStudent(true);
+        else if (isStudentInput.equals("NO"))
+            borrower.setIsStudent(false);
+
+        System.out.println("Enter Phone Number: ");
+        borrower.setUserPhoneNumb(scanner.nextLine());
+
+        System.out.println("Enter Password: ");
+        borrower.setUserPassword(scanner.nextLine());
+
+        libraryManagementSystem.userNumb ++;
+        borrower.setUserID(libraryManagementSystem.userNumb);
+        libraryManagementSystem.borrowerList.add(borrower);
+
+        System.out.println("Borrower information has been entered successfully:");
+        borrower.printUserInfo();
+    }
+
+    public void addLibrarian(LibraryManagementSystem libraryManagementSystem) {
+        Librarian librarian = new Librarian();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Name: ");
+        librarian.setUserName(scanner.nextLine());
+
+        System.out.println("Enter Date of Birth (yyyy-MM-dd): ");
+        String dateInput = scanner.nextLine();
+        librarian.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
+
+        System.out.println("Enter Phone Number: ");
+        librarian.setUserPhoneNumb(scanner.nextLine());
+
+        System.out.println("Enter Password: ");
+        librarian.setUserPassword(scanner.nextLine());
+
+        libraryManagementSystem.userNumb ++;
+        librarian.setUserID(libraryManagementSystem.userNumb);
+        libraryManagementSystem.librarianList.add(librarian);
+
+        System.out.println("Librarian information has been entered successfully: ");
+        librarian.printUserInfo();
+    }
+
+    public void addDocument(LibraryManagementSystem libraryManagementSystem) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Is the document a book, a thesis or a magazine (book/thesis/magazine): ");
+        String typeInput = scanner.nextLine();
+
+        System.out.println("Enter Quantity: ");
+        int quantityInput = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Enter Title: ");
+        String titleInput = scanner.nextLine();
+
+        System.out.println("Enter Author: ");
+        String authorInput = scanner.nextLine();
+
+        System.out.println("Enter Description: ");
+        String descriptionInput = scanner.nextLine();
+
+        System.out.println("Enter Language: ");
+        String languageInput = scanner.nextLine();
+
+        System.out.println("Enter Number of Pages: ");
+        int pageInput = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter ISBN: ");
+        String iSBNInput = scanner.nextLine();
+
+        if (typeInput.equals("book")) {
+            Book book = new Book();
+
+            book.documentQuantity = quantityInput;
+            book.setDocumentTitle(titleInput);
+            book.setDocumentAuthor(authorInput);
+            book.setDocumentDescription(descriptionInput);
+            book.setDocumentLanguage(languageInput);
+            book.setDocumentPage(pageInput);
+            book.setDocumentISBN(iSBNInput);
+
+            System.out.print("Enter Genre: ");
+            book.setBookGenre(scanner.nextLine());
+
+            System.out.print("Enter Publisher: ");
+            book.setBookPublisher(scanner.nextLine());
+
+            libraryManagementSystem.bookList.add(book);
+        } else if (typeInput.equals("thesis")) {
+            Thesis thesis = new Thesis();
+
+            thesis.documentQuantity = quantityInput;
+            thesis.setDocumentTitle(titleInput);
+            thesis.setDocumentAuthor(authorInput);
+            thesis.setDocumentDescription(descriptionInput);
+            thesis.setDocumentLanguage(languageInput);
+            thesis.setDocumentPage(pageInput);
+            thesis.setDocumentISBN(iSBNInput);
+
+            System.out.print("Enter Subject: ");
+            thesis.setThesisSubject(scanner.nextLine());
+
+            System.out.print("Enter Degree: ");
+            thesis.setThesisDegree(scanner.nextLine());
+
+            System.out.print("Enter University: ");
+            thesis.setThesisUniversity(scanner.nextLine());
+
+            libraryManagementSystem.thesisList.add(thesis);
+        } else if (typeInput.equals("magazine")) {
+            Magazine magazine = new Magazine();
+
+            magazine.documentQuantity = quantityInput;
+            magazine.setDocumentTitle(titleInput);
+            magazine.setDocumentAuthor(authorInput);
+            magazine.setDocumentDescription(descriptionInput);
+            magazine.setDocumentLanguage(languageInput);
+            magazine.setDocumentPage(pageInput);
+            magazine.setDocumentISBN(iSBNInput);
+
+            System.out.print("Enter Subject: ");
+            magazine.setMagazineSubject(scanner.nextLine());
+
+            System.out.print("Enter Frequency: ");
+            magazine.setMagazineFrequency(scanner.nextInt());
+            scanner.nextLine();
+
+            System.out.print("Enter Issue Number: ");
+            magazine.setMagazineIssueNumb(scanner.nextInt());
+            scanner.nextLine();
+
+            libraryManagementSystem.magazineList.add(magazine);
         }
-        this.librarianSalary = salary;
+
     }
 
-    /**
-     * Adds a librarian to the librarian list.
-     *
-     * @param l the librarian to add.
-     */
-    public void addLibrarian(Librarian l) {
-        librarianList.add(l);
-    }
-
-    /**
-     * Gets the list of librarians.
-     *
-     * @return a vector containing all librarians.
-     */
-    public static Vector<Librarian> getLibrarians() {
-        return librarianList;
-    }
-
-    /**
-     * Adds a document to the library system.
-     *
-     * @param d the document to add.
-     */
-    public void addDocument(Document d) {
-        if (d instanceof Book) {
-            librarySystem.bookList.add((Book) d);
-        } else if (d instanceof Thesis) {
-            librarySystem.thesisList.add((Thesis) d);
-        } else if (d instanceof Magazine) {
-            librarySystem.magazineList.add((Magazine) d);
-        }
-    }
-
-    /**
-     * Removes a document from the library system.
-     *
-     * @param d the document to remove.
-     */
-    public void removeDocument(Document d) {
-        if (d instanceof Book) {
-            librarySystem.bookList.remove(d);
-        } else if (d instanceof Thesis) {
-            librarySystem.thesisList.remove(d);
-        } else if (d instanceof Magazine) {
-            librarySystem.magazineList.remove(d);
-        }
-    }
-
-    /**
-     * Updates a document in the library system.
-     *
-     * @param d the document to update.
-     * @return true if the document was updated successfully, false otherwise.
-     */
-    public boolean updateDocument(Document d) {
-        if (d instanceof Book) {
-            for (int i = 0; i < librarySystem.bookList.size(); i++) {
-                if (librarySystem.bookList.get(i).getDocumentISBN().equals(d.getDocumentISBN())) {
-                    librarySystem.bookList.set(i, (Book) d);
-                    return true;  // Document updated successfully
-                }
-            }
-        } else if (d instanceof Thesis) {
-            for (int i = 0; i < librarySystem.thesisList.size(); i++) {
-                if (librarySystem.thesisList.get(i).getDocumentISBN().equals(d.getDocumentISBN())) {
-                    librarySystem.thesisList.set(i, (Thesis) d);
-                    return true;  // Document updated successfully
-                }
-            }
-        } else if (d instanceof Magazine) {
-            for (int i = 0; i < librarySystem.magazineList.size(); i++) {
-                if (librarySystem.magazineList.get(i).getDocumentISBN().equals(d.getDocumentISBN())) {
-                    librarySystem.magazineList.set(i, (Magazine) d);
-                    return true;  // Document updated successfully
-                }
-            }
-        }
-        return false;  // Document not found for update
-    }
 }

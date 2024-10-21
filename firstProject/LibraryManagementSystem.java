@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.util.Scanner;
 
 /**
  * The {@code LibraryManagementSystem} class represents a simple library management system
@@ -7,35 +8,22 @@ import java.util.Vector;
  * and find users by their ID.
  */
 public class LibraryManagementSystem {
+    public static final int MAX_BORROW_LIMIT = 5;
+    public static final int BORROW_DURATION_DAYS = 10;
+    public int userNumb;
     public Vector<Book> bookList;
     public Vector<Thesis> thesisList;
     public Vector<Magazine> magazineList;
     public Vector<Borrower> borrowerList;
     public Vector<Librarian> librarianList;
 
-    /**
-     * Combines all types of documents (Books, Theses, and Magazines) into one list for easier searching.
-     *
-     * @return a {@code Vector} of all {@code Document}s in the library
-     */
-    private Vector<Document> getAllDocuments() {
-        Vector<Document> allDocuments = new Vector<>();
-        allDocuments.addAll(bookList);
-        allDocuments.addAll(thesisList);
-        allDocuments.addAll(magazineList);
-        return allDocuments;
-    }
-
-    /**
-     * Combines all users (Borrowers and Librarians) into one list for easier searching.
-     *
-     * @return a {@code Vector} of all {@code User}s in the library
-     */
-    private Vector<User> getAllUsers() {
-        Vector<User> allUsers = new Vector<>();
-        allUsers.addAll(borrowerList);
-        allUsers.addAll(librarianList);
-        return allUsers;
+    public LibraryManagementSystem() {
+        userNumb = 0;
+        bookList = new Vector<>();
+        thesisList = new Vector<>();
+        magazineList = new Vector<>();
+        borrowerList = new Vector<>();
+        librarianList = new Vector<>();
     }
 
     /**
@@ -44,20 +32,17 @@ public class LibraryManagementSystem {
      */
     public void printLibraryDocument() {
         for (Book book : bookList) {
-            System.out.println(book.getDocumentISBN());
-            System.out.printf("The title of the book : %s. Author : %s%n%n",
+            System.out.printf(book.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
                     book.getDocumentTitle(), book.getDocumentAuthor());
         }
 
         for (Thesis thesis : thesisList) {
-            System.out.println(thesis.getDocumentISBN());
-            System.out.printf("The title of thesis : %s. Author : %s%n%n",
+            System.out.printf(thesis.getDocumentISBN() + ". The title of the thesis : %s. Author : %s%n",
                     thesis.getDocumentTitle(), thesis.getDocumentAuthor());
         }
 
         for (Magazine magazine : magazineList) {
-            System.out.println(magazine.getDocumentISBN());
-            System.out.printf("The title of magazine : %s. Author : %s%n%n",
+            System.out.printf(magazine.getDocumentISBN() + ". The title of the magazine : %s. Author : %s%n",
                     magazine.getDocumentTitle(), magazine.getDocumentAuthor());
         }
     }
@@ -109,18 +94,134 @@ public class LibraryManagementSystem {
         return documentsOfAuthor.isEmpty() ? null : documentsOfAuthor;
     }
 
+    public void findAndPrintDocuments() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Search by: ");
+        System.out.println("[1] ISBN");
+        System.out.println("[2] Title");
+        System.out.println("[3] Author");
+        System.out.print("Enter your choice: ");
+
+        String searchInput = scanner.nextLine();
+
+        switch (searchInput) {
+            case "1":
+                System.out.print("Enter ISBN: ");
+                String iSBNSearch = scanner.nextLine();
+                Document foundDocument = findDocumentByISBN(iSBNSearch);
+                if (foundDocument != null) {
+                    System.out.println("Document found: ");
+                    if (foundDocument instanceof Book) {
+                        Book foundBook = (Book)foundDocument;
+                        foundBook.printDocInfo();
+                    }
+                    if (foundDocument instanceof Thesis) {
+                        Thesis foundThesis = (Thesis)foundDocument;
+                        foundThesis.printDocInfo();
+                    }
+                    if (foundDocument instanceof Magazine) {
+                        Magazine foundMagazine = (Magazine)foundDocument;
+                        foundMagazine.printDocInfo();
+                    }
+                } else {
+                    System.out.println("No document found with ISBN: " + iSBNSearch);
+                }
+                break;
+
+            case "2":
+                System.out.print("Enter Title: ");
+                String titleSearch = scanner.nextLine();
+                Vector<Document> documentsByTitle = findDocumentByTitle(titleSearch);
+                if (documentsByTitle != null) {
+                    System.out.println("Documents found: ");
+                    for (Document doc : documentsByTitle) {
+                        if (doc instanceof Book) {
+                            Book foundBook = (Book)doc;
+                            foundBook.printDocInfo();
+                        }
+                        if (doc instanceof Thesis) {
+                            Thesis foundThesis = (Thesis)doc;
+                            foundThesis.printDocInfo();
+                        }
+                        if (doc instanceof Magazine) {
+                            Magazine foundMagazine = (Magazine)doc;
+                            foundMagazine.printDocInfo();
+                        }
+                    }
+                } else {
+                    System.out.println("No documents found with title: " + titleSearch);
+                }
+                break;
+
+            case "3":
+                System.out.print("Enter Author: ");
+                String authorSearch = scanner.nextLine();
+                Vector<Document> documentsByAuthor = findDocumentByAuthor(authorSearch);
+                if (documentsByAuthor != null) {
+                    System.out.println("Documents found:");
+                    for (Document doc : documentsByAuthor) {
+                        if (doc instanceof Book) {
+                            Book foundBook = (Book)doc;
+                            foundBook.printDocInfo();
+                        }
+                        if (doc instanceof Thesis) {
+                            Thesis foundThesis = (Thesis)doc;
+                            foundThesis.printDocInfo();
+                        }
+                        if (doc instanceof Magazine) {
+                            Magazine foundMagazine = (Magazine)doc;
+                            foundMagazine.printDocInfo();
+                        }
+                    }
+                } else {
+                    System.out.println("No documents found by author: " + authorSearch);
+                }
+                break;
+
+            default:
+                System.out.println("Invalid search option.");
+                break;
+        }
+    }
+
     /**
      * Finds a user by their unique ID.
      *
-     * @param UserID the ID of the user to find
+     * @param userID the ID of the user to find
      * @return the {@code User} found or {@code null} if no user matches the ID
      */
-    public User findUser(int UserID) {
+    public User findUser(int userID) {
         for (User user : getAllUsers()) {
-            if(user.getId() == UserID) {
+            if(user.getUserID() == userID) {
                 return user;
             }
         }
         return null;
+    }
+
+    /**
+     * Combines all types of documents (Books, Theses, and Magazines) into one list for easier searching.
+     *
+     * @return a {@code Vector} of all {@code Document}s in the library
+     */
+    private Vector<Document> getAllDocuments() {
+        Vector<Document> allDocuments = new Vector<>();
+        allDocuments.addAll(bookList);
+        allDocuments.addAll(thesisList);
+        allDocuments.addAll(magazineList);
+        return allDocuments;
+    }
+
+    /**
+     * Combines all users (Borrowers and Librarians) into one list for easier searching.
+     *
+     * @return a {@code Vector} of all {@code User}s in the library
+     */
+    private Vector<User> getAllUsers() {
+        Vector<User> allUsers = new Vector<>();
+        allUsers.addAll(borrowerList);
+        allUsers.addAll(librarianList);
+        return allUsers;
     }
 }
