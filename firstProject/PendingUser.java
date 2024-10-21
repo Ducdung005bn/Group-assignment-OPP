@@ -73,10 +73,10 @@ public class PendingUser {
      */
     private void setIDandPword(LibraryManagementSystem libraryManagementSystem) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter your ID:");
+        System.out.print("Please enter your ID: ");
         pendingUserID = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Please enter your password:");
+        System.out.print("Please enter your password: ");
         pendingUserPword = scanner.nextLine();
         checkIDandPword(libraryManagementSystem);
     }

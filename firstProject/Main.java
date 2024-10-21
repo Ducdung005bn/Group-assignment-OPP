@@ -5,31 +5,9 @@ public class Main {
     public static void main(String[] args) {
         LibraryManagementSystem libraryManagementSystem = new LibraryManagementSystem();
         PendingUser pendingUser = new PendingUser();
-
-        //Check
-        Librarian check_librarian = new Librarian();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter Name: ");
-        check_librarian.setUserName(scanner.nextLine());
-
-        System.out.println("Enter Date of Birth (yyyy-MM-dd): ");
-        String dateInput = scanner.nextLine();
-        check_librarian.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
-
-        System.out.println("Enter Phone Number: ");
-        check_librarian.setUserPhoneNumb(scanner.nextLine());
-
-        System.out.println("Enter Password: ");
-        check_librarian.setUserPassword(scanner.nextLine());
-
-        libraryManagementSystem.userNumb ++;
-        check_librarian.setUserID(libraryManagementSystem.userNumb);
-        libraryManagementSystem.librarianList.add(check_librarian);
-
-        System.out.println("Librarian information has been entered successfully: ");
-        check_librarian.printUserInfo();
-        //
+        //TO DO 1
 
         while (true) {
             pendingUser.loginProcess(libraryManagementSystem);
@@ -39,7 +17,6 @@ public class Main {
                 borrower = (Borrower)libraryManagementSystem.findUser(pendingUser.getPendingUserID());
 
                 while (true) {
-                    System.out.println("\n");
                     System.out.println("Welcome to My Application!");
                     System.out.println("[0] Exit");
                     System.out.println("[1] Find Document");
@@ -72,7 +49,6 @@ public class Main {
                 librarian = (Librarian)libraryManagementSystem.findUser(pendingUser.getPendingUserID());
 
                 while (true) {
-                    System.out.println("\n");
                     System.out.println("Welcome to My Application!");
                     System.out.println("[0] Exit");
                     System.out.println("[1] Add Document");
@@ -103,5 +79,8 @@ public class Main {
             }
             pendingUser.deleteLoginInfo();
         }
+
+        //TO DO 2
+
     }
 }

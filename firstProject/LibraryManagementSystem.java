@@ -111,19 +111,8 @@ public class LibraryManagementSystem {
                 String iSBNSearch = scanner.nextLine();
                 Document foundDocument = findDocumentByISBN(iSBNSearch);
                 if (foundDocument != null) {
-                    System.out.println("Document found: ");
-                    if (foundDocument instanceof Book) {
-                        Book foundBook = (Book)foundDocument;
-                        foundBook.printDocInfo();
-                    }
-                    if (foundDocument instanceof Thesis) {
-                        Thesis foundThesis = (Thesis)foundDocument;
-                        foundThesis.printDocInfo();
-                    }
-                    if (foundDocument instanceof Magazine) {
-                        Magazine foundMagazine = (Magazine)foundDocument;
-                        foundMagazine.printDocInfo();
-                    }
+                    System.out.printf(foundDocument.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
+                            foundDocument.getDocumentTitle(), foundDocument.getDocumentAuthor());
                 } else {
                     System.out.println("No document found with ISBN: " + iSBNSearch);
                 }
@@ -134,20 +123,9 @@ public class LibraryManagementSystem {
                 String titleSearch = scanner.nextLine();
                 Vector<Document> documentsByTitle = findDocumentByTitle(titleSearch);
                 if (documentsByTitle != null) {
-                    System.out.println("Documents found: ");
                     for (Document doc : documentsByTitle) {
-                        if (doc instanceof Book) {
-                            Book foundBook = (Book)doc;
-                            foundBook.printDocInfo();
-                        }
-                        if (doc instanceof Thesis) {
-                            Thesis foundThesis = (Thesis)doc;
-                            foundThesis.printDocInfo();
-                        }
-                        if (doc instanceof Magazine) {
-                            Magazine foundMagazine = (Magazine)doc;
-                            foundMagazine.printDocInfo();
-                        }
+                        System.out.printf(doc.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
+                                doc.getDocumentTitle(), doc.getDocumentAuthor());
                     }
                 } else {
                     System.out.println("No documents found with title: " + titleSearch);
@@ -159,20 +137,9 @@ public class LibraryManagementSystem {
                 String authorSearch = scanner.nextLine();
                 Vector<Document> documentsByAuthor = findDocumentByAuthor(authorSearch);
                 if (documentsByAuthor != null) {
-                    System.out.println("Documents found:");
                     for (Document doc : documentsByAuthor) {
-                        if (doc instanceof Book) {
-                            Book foundBook = (Book)doc;
-                            foundBook.printDocInfo();
-                        }
-                        if (doc instanceof Thesis) {
-                            Thesis foundThesis = (Thesis)doc;
-                            foundThesis.printDocInfo();
-                        }
-                        if (doc instanceof Magazine) {
-                            Magazine foundMagazine = (Magazine)doc;
-                            foundMagazine.printDocInfo();
-                        }
+                        System.out.printf(doc.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
+                                doc.getDocumentTitle(), doc.getDocumentAuthor());
                     }
                 } else {
                     System.out.println("No documents found by author: " + authorSearch);

@@ -25,24 +25,24 @@ public class Librarian extends User {
         Borrower borrower = new Borrower();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter Name: ");
+        System.out.print("Enter Name: ");
         borrower.setUserName(scanner.nextLine());
 
-        System.out.println("Enter Date of Birth (yyyy-MM-dd): ");
+        System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
         String dateInput = scanner.nextLine();
         borrower.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
 
-        System.out.println("Are you a student (YES/NO): ");
+        System.out.print("Be a student or not (YES/NO): ");
         String isStudentInput = scanner.nextLine();
         if (isStudentInput.equals("YES"))
             borrower.setIsStudent(true);
         else if (isStudentInput.equals("NO"))
             borrower.setIsStudent(false);
 
-        System.out.println("Enter Phone Number: ");
+        System.out.print("Enter Phone Number: ");
         borrower.setUserPhoneNumb(scanner.nextLine());
 
-        System.out.println("Enter Password: ");
+        System.out.print("Enter Password: ");
         borrower.setUserPassword(scanner.nextLine());
 
         libraryManagementSystem.userNumb ++;
@@ -57,17 +57,17 @@ public class Librarian extends User {
         Librarian librarian = new Librarian();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter Name: ");
+        System.out.print("Enter Name: ");
         librarian.setUserName(scanner.nextLine());
 
-        System.out.println("Enter Date of Birth (yyyy-MM-dd): ");
+        System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
         String dateInput = scanner.nextLine();
         librarian.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
 
-        System.out.println("Enter Phone Number: ");
+        System.out.print("Enter Phone Number: ");
         librarian.setUserPhoneNumb(scanner.nextLine());
 
-        System.out.println("Enter Password: ");
+        System.out.print("Enter Password: ");
         librarian.setUserPassword(scanner.nextLine());
 
         libraryManagementSystem.userNumb ++;
@@ -81,26 +81,26 @@ public class Librarian extends User {
     public void addDocument(LibraryManagementSystem libraryManagementSystem) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Is the document a book, a thesis or a magazine (book/thesis/magazine): ");
+        System.out.print("Is the document a book, a thesis or a magazine (book/thesis/magazine): ");
         String typeInput = scanner.nextLine();
 
-        System.out.println("Enter Quantity: ");
+        System.out.print("Enter Quantity: ");
         int quantityInput = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter Title: ");
+        System.out.print("Enter Title: ");
         String titleInput = scanner.nextLine();
 
-        System.out.println("Enter Author: ");
+        System.out.print("Enter Author: ");
         String authorInput = scanner.nextLine();
 
-        System.out.println("Enter Description: ");
+        System.out.print("Enter Description: ");
         String descriptionInput = scanner.nextLine();
 
-        System.out.println("Enter Language: ");
+        System.out.print("Enter Language: ");
         String languageInput = scanner.nextLine();
 
-        System.out.println("Enter Number of Pages: ");
+        System.out.print("Enter Number of Pages: ");
         int pageInput = scanner.nextInt();
         scanner.nextLine();
 
@@ -170,6 +170,21 @@ public class Librarian extends User {
 
             libraryManagementSystem.magazineList.add(magazine);
         }
+
+    }
+
+    public void removeDocument(LibraryManagementSystem libraryManagementSystem) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter ISBN: ");
+        String iSBNInput = scanner.nextLine();
+
+        //TO DO 3
+
+    }
+
+    public void updateDocument(LibraryManagementSystem libraryManagementSystem) {
+
+        //TO DO 4
 
     }
 

@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07cc627b-e014-49ba-bcac-906c7a5f517a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BorrowData.java" beforeDir="false" afterPath="$PROJECT_DIR$/BorrowData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Borrower.java" beforeDir="false" afterPath="$PROJECT_DIR$/Borrower.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/Document.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Librarian.java" beforeDir="false" afterPath="$PROJECT_DIR$/Librarian.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LibraryManagementSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/LibraryManagementSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/Magazine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PendingUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/PendingUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Thesis.java" beforeDir="false" afterPath="$PROJECT_DIR$/Thesis.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,19 +26,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="firstProject" />
@@ -85,6 +79,7 @@
       <workItem from="1729497702718" duration="80000" />
       <workItem from="1729497928919" duration="9000" />
       <workItem from="1729498018315" duration="15380000" />
+      <workItem from="1729527210256" duration="4000" />
     </task>
     <servers />
   </component>
