@@ -183,9 +183,219 @@ public class Librarian extends User {
     }
 
     public void updateDocument(LibraryManagementSystem libraryManagementSystem) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter ISBN of the document to update: ");
+        String iSBNInput = scanner.nextLine();
 
-        //TO DO 4
+        // I don't think this following code to find a document by ISBN will work :)) 頑張れ
+        Book bookToUpdate = libraryManagementSystem.bookList.stream()
+                .filter(book -> book.getDocumentISBN().equals(iSBNInput))
+                .findFirst().orElse(null);
+        Thesis thesisToUpdate = libraryManagementSystem.thesisList.stream()
+                .filter(thesis -> thesis.getDocumentISBN().equals(iSBNInput))
+                .findFirst().orElse(null);
+        Magazine magazineToUpdate = libraryManagementSystem.magazineList.stream()
+                .filter(magazine -> magazine.getDocumentISBN().equals(iSBNInput))
+                .findFirst().orElse(null);
 
+        if (bookToUpdate != null) {
+            System.out.println("Updating book information. Choose the attribute you want to update:");
+            boolean continueUpdate = true;
+
+            while (continueUpdate) {
+                System.out.println("[1] Quantity");
+                System.out.println("[2] Title");
+                System.out.println("[3] Author");
+                System.out.println("[4] Description");
+                System.out.println("[5] Language");
+                System.out.println("[6] Number of Pages");
+                System.out.println("[7] Genre");
+                System.out.println("[8] Publisher");
+                System.out.println("[0] Finish updating");
+
+                System.out.print("Enter the number corresponding to the attribute to update: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.print("Enter new Quantity: ");
+                        bookToUpdate.documentQuantity = scanner.nextInt();
+                        scanner.nextLine();
+                    }
+                    case 2 -> {
+                        System.out.print("Enter new Title: ");
+                        bookToUpdate.setDocumentTitle(scanner.nextLine());
+                    }
+                    case 3 -> {
+                        System.out.print("Enter new Author: ");
+                        bookToUpdate.setDocumentAuthor(scanner.nextLine());
+                    }
+                    case 4 -> {
+                        System.out.print("Enter new Description: ");
+                        bookToUpdate.setDocumentDescription(scanner.nextLine());
+                    }
+                    case 5 -> {
+                        System.out.print("Enter new Language: ");
+                        bookToUpdate.setDocumentLanguage(scanner.nextLine());
+                    }
+                    case 6 -> {
+                        System.out.print("Enter new Number of Pages: ");
+                        bookToUpdate.setDocumentPage(scanner.nextInt());
+                        scanner.nextLine();
+                    }
+                    case 7 -> {
+                        System.out.print("Enter new Genre: ");
+                        bookToUpdate.setBookGenre(scanner.nextLine());
+                    }
+                    case 8 -> {
+                        System.out.print("Enter new Publisher: ");
+                        bookToUpdate.setBookPublisher(scanner.nextLine());
+                    }
+                    case 0 -> {
+                        continueUpdate = false;
+                        System.out.println("Finished updating book information.");
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } else if (thesisToUpdate != null) {
+            System.out.println("Updating thesis information. Choose the attribute you want to update:");
+            boolean continueUpdate = true;
+
+            while (continueUpdate) {
+                System.out.println("[1] Quantity");
+                System.out.println("[2] Title");
+                System.out.println("[3] Author");
+                System.out.println("[4] Description");
+                System.out.println("[5] Language");
+                System.out.println("[6] Number of Pages");
+                System.out.println("[7] Subject");
+                System.out.println("[8] Degree");
+                System.out.println("[9] University");
+                System.out.println("[0] Finish updating");
+
+                System.out.print("Enter the number corresponding to the attribute to update: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.print("Enter new Quantity: ");
+                        thesisToUpdate.documentQuantity = scanner.nextInt();
+                        scanner.nextLine();
+                    }
+                    case 2 -> {
+                        System.out.print("Enter new Title: ");
+                        thesisToUpdate.setDocumentTitle(scanner.nextLine());
+                    }
+                    case 3 -> {
+                        System.out.print("Enter new Author: ");
+                        thesisToUpdate.setDocumentAuthor(scanner.nextLine());
+                    }
+                    case 4 -> {
+                        System.out.print("Enter new Description: ");
+                        thesisToUpdate.setDocumentDescription(scanner.nextLine());
+                    }
+                    case 5 -> {
+                        System.out.print("Enter new Language: ");
+                        thesisToUpdate.setDocumentLanguage(scanner.nextLine());
+                    }
+                    case 6 -> {
+                        System.out.print("Enter new Number of Pages: ");
+                        thesisToUpdate.setDocumentPage(scanner.nextInt());
+                        scanner.nextLine();
+                    }
+                    case 7 -> {
+                        System.out.print("Enter new Subject: ");
+                        thesisToUpdate.setThesisSubject(scanner.nextLine());
+                    }
+                    case 8 -> {
+                        System.out.print("Enter new Degree: ");
+                        thesisToUpdate.setThesisDegree(scanner.nextLine());
+                    }
+                    case 9 -> {
+                        System.out.print("Enter new University: ");
+                        thesisToUpdate.setThesisUniversity(scanner.nextLine());
+                    }
+                    case 0 -> {
+                        continueUpdate = false;
+                        System.out.println("Finished updating thesis information.");
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } else if (magazineToUpdate != null) {
+            System.out.println("Updating magazine information. Choose the attribute you want to update:");
+            boolean continueUpdate = true;
+
+            while (continueUpdate) {
+                System.out.println("[1] Quantity");
+                System.out.println("[2] Title");
+                System.out.println("[3] Author");
+                System.out.println("[4] Description");
+                System.out.println("[5] Language");
+                System.out.println("[6] Number of Pages");
+                System.out.println("[7] Subject");
+                System.out.println("[8] Frequency");
+                System.out.println("[9] Issue Number");
+                System.out.println("[0] Finish updating");
+
+                System.out.print("Enter the number corresponding to the attribute to update: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.print("Enter new Quantity: ");
+                        magazineToUpdate.documentQuantity = scanner.nextInt();
+                        scanner.nextLine();
+                    }
+                    case 2 -> {
+                        System.out.print("Enter new Title: ");
+                        magazineToUpdate.setDocumentTitle(scanner.nextLine());
+                    }
+                    case 3 -> {
+                        System.out.print("Enter new Author: ");
+                        magazineToUpdate.setDocumentAuthor(scanner.nextLine());
+                    }
+                    case 4 -> {
+                        System.out.print("Enter new Description: ");
+                        magazineToUpdate.setDocumentDescription(scanner.nextLine());
+                    }
+                    case 5 -> {
+                        System.out.print("Enter new Language: ");
+                        magazineToUpdate.setDocumentLanguage(scanner.nextLine());
+                    }
+                    case 6 -> {
+                        System.out.print("Enter new Number of Pages: ");
+                        magazineToUpdate.setDocumentPage(scanner.nextInt());
+                        scanner.nextLine();
+                    }
+                    case 7 -> {
+                        System.out.print("Enter new Subject: ");
+                        magazineToUpdate.setMagazineSubject(scanner.nextLine());
+                    }
+                    case 8 -> {
+                        System.out.print("Enter new Frequency: ");
+                        magazineToUpdate.setMagazineFrequency(scanner.nextInt());
+                        scanner.nextLine();
+                    }
+                    case 9 -> {
+                        System.out.print("Enter new Issue Number: ");
+                        magazineToUpdate.setMagazineIssueNumb(scanner.nextInt());
+                        scanner.nextLine();
+                    }
+                    case 0 -> {
+                        continueUpdate = false;
+                        System.out.println("Finished updating magazine information.");
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } else {
+            System.out.println("Document not found.");
+        }
     }
 
 }

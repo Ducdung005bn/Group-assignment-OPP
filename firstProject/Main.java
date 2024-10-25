@@ -80,7 +80,5 @@ public class Main {
             pendingUser.deleteLoginInfo();
         }
 
-        //TO DO 2
-
     }
 }
