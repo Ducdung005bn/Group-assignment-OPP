@@ -191,4 +191,33 @@ public class LibraryManagementSystem {
         allUsers.addAll(librarianList);
         return allUsers;
     }
+    public class IntInputValidator {
+        private Scanner sc;
+
+        public IntInputValidator() {
+            this.sc = new Scanner(System.in);
+        }
+
+        // Phương thức kiểm tra đầu vào số nguyên
+        public int getValidIntInput() {
+            int number;
+            while (true) {
+                System.out.print("Enter an integer: ");
+                if (sc.hasNextInt()) {
+                    number = sc.nextInt();
+                    sc.nextLine(); // Xóa bộ đệm sau khi đọc số nguyên
+                    return number; // Trả về số nguyên hợp lệ
+                } else {
+                    System.out.println("Invalid input. Please enter an integer.");
+                    sc.nextLine(); // Xóa bộ đệm để tránh vòng lặp vô hạn
+                }
+            }
+        }
+
+        public static void main(String[] args) {
+            IntInputValidator validator = new IntInputValidator();
+            int validNumber = validator.getValidIntInput();
+            System.out.println("Valid integer entered: " + validNumber);
+        }
+    }
 }

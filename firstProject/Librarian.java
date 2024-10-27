@@ -1,6 +1,9 @@
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Librarian extends User {
     private int librarianSalary = 200; //dollars per month
@@ -19,6 +22,39 @@ public class Librarian extends User {
     }
     public void setLibrarianSalary(int librarianSalary) {
         this.librarianSalary = librarianSalary;
+    }
+    public class DateValidator {
+        private DateTimeFormatter dateFormatter;
+        private Scanner sc;
+
+        // Constructor
+        public DateValidator(DateTimeFormatter dateFormatter) {
+            this.dateFormatter = dateFormatter;
+            this.sc = new Scanner(System.in);
+        }
+
+        // Phương thức kiểm tra tính hợp lệ của ngày
+        public boolean isValid(String dateStr) {
+            try {
+                LocalDate.parse(dateStr, this.dateFormatter);
+                return true;
+            } catch (DateTimeParseException e) {
+                return false;
+            }
+        }
+
+        // Phương thức để nhận đầu vào ngày hợp lệ
+        public String dateValidInput() {
+            String date;
+            do {
+                System.out.print("Enter a valid date (" + dateFormatter.toString() + "): ");
+                date = sc.nextLine();
+                if (!isValid(date)) {
+                    System.out.println("Invalid date. Try again!");
+                }
+            } while (!isValid(date));
+            return date; // Trả về ngày hợp lệ
+        }
     }
 
     public void addBorrower(LibraryManagementSystem libraryManagementSystem) {
@@ -186,19 +222,9 @@ public class Librarian extends User {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter ISBN of the document to update: ");
         String iSBNInput = scanner.nextLine();
+        Document documentToUpdate = findDocumentByISBN(iSBNInput);
 
-        // I don't think this following code to find a document by ISBN will work :)) 頑張れ
-        Book bookToUpdate = libraryManagementSystem.bookList.stream()
-                .filter(book -> book.getDocumentISBN().equals(iSBNInput))
-                .findFirst().orElse(null);
-        Thesis thesisToUpdate = libraryManagementSystem.thesisList.stream()
-                .filter(thesis -> thesis.getDocumentISBN().equals(iSBNInput))
-                .findFirst().orElse(null);
-        Magazine magazineToUpdate = libraryManagementSystem.magazineList.stream()
-                .filter(magazine -> magazine.getDocumentISBN().equals(iSBNInput))
-                .findFirst().orElse(null);
-
-        if (bookToUpdate != null) {
+        if (documentToUpdate instanceof Book) {
             System.out.println("Updating book information. Choose the attribute you want to update:");
             boolean continueUpdate = true;
 
@@ -259,7 +285,7 @@ public class Librarian extends User {
                     default -> System.out.println("Invalid choice. Please try again.");
                 }
             }
-        } else if (thesisToUpdate != null) {
+        } else if (documentToUpdate instanceof Thesis) {
             System.out.println("Updating thesis information. Choose the attribute you want to update:");
             boolean continueUpdate = true;
 
@@ -325,7 +351,7 @@ public class Librarian extends User {
                     default -> System.out.println("Invalid choice. Please try again.");
                 }
             }
-        } else if (magazineToUpdate != null) {
+        } else if (documentToUpdate instanceof Magazine) {
             System.out.println("Updating magazine information. Choose the attribute you want to update:");
             boolean continueUpdate = true;
 
