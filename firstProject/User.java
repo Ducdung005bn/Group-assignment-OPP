@@ -59,13 +59,4 @@ public class User {
     public void setUserPhoneNumb(String userPhoneNumb) {
         this.userPhoneNumb = userPhoneNumb;
     }
-
-    /**
-     * Changes the user's password to the given new password.
-     *
-     * @param newUserPassword the new password for the user
-     */
-    public void changePassword(String newUserPassword) {
-        userPassword = newUserPassword;
-    }
 }

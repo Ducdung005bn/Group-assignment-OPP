@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Vector;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,7 +8,27 @@ public class Main {
         PendingUser pendingUser = new PendingUser();
         Scanner scanner = new Scanner(System.in);
 
-        //TO DO 1
+        //check; sua public static thanh private
+        Librarian check_librarian = new Librarian();
+
+        System.out.print("Enter Name: ");
+        check_librarian.setUserName(scanner.nextLine());
+
+        Librarian.setValidDate(scanner, check_librarian);
+
+        System.out.print("Enter Phone Number: ");
+        check_librarian.setUserPhoneNumb(scanner.nextLine());
+
+        System.out.print("Enter Password: ");
+        check_librarian.setUserPassword(scanner.nextLine());
+
+        libraryManagementSystem.userNumb ++;
+        check_librarian.setUserID(libraryManagementSystem.userNumb);
+        libraryManagementSystem.librarianList.add(check_librarian);
+
+        System.out.println("Librarian information has been entered successfully: ");
+        check_librarian.printUserInfo();
+        //check
 
         while (true) {
             pendingUser.loginProcess(libraryManagementSystem);
@@ -42,6 +63,8 @@ public class Main {
                         borrower.returnBook(scanner.nextLine(), libraryManagementSystem);
                     } else if (menuInput.equals("5")) {
                         borrower.printUserInfo();
+                    } else {
+                        System.out.println("Action is not supported.");
                     }
                 }
             } else if (pendingUser.getIsLibrarian()) {
@@ -52,9 +75,11 @@ public class Main {
                     System.out.println("Welcome to My Application!");
                     System.out.println("[0] Exit");
                     System.out.println("[1] Add Document");
+                    System.out.println("[2] Remove Document");
+                    System.out.println("[3] Update Document");
                     System.out.println("[4] Find Document");
                     System.out.println("[5] Display Document");
-                    System.out.println("[6] Add User");
+                    System.out.println("[6] Add Borrower");
                     System.out.println("[7] Add Librarian");
                     System.out.println("[8] Display User Info");
 
@@ -64,6 +89,10 @@ public class Main {
                         break;
                     } else if (menuInput.equals("1")) {
                         librarian.addDocument(libraryManagementSystem);
+                    } else if (menuInput.equals("2")) {
+                        librarian.removeDocument(libraryManagementSystem);
+                    } else if (menuInput.equals("3")) {
+                        librarian.updateDocument(libraryManagementSystem);
                     } else if (menuInput.equals("4")) {
                         libraryManagementSystem.findAndPrintDocuments();
                     } else if (menuInput.equals("5")) {
@@ -74,13 +103,13 @@ public class Main {
                         librarian.addLibrarian(libraryManagementSystem);
                     } else if (menuInput.equals("8")) {
                         librarian.printUserInfo();
+                    } else {
+                        System.out.println("Action is not supported.");
                     }
                 }
             }
             pendingUser.deleteLoginInfo();
         }
-
-        //TO DO 2
 
     }
 }

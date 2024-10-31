@@ -167,6 +167,23 @@ public class LibraryManagementSystem {
         return null;
     }
 
+    public static int setValidInteger() {
+        Scanner scanner = new Scanner(System.in);
+        int value = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                value = Integer.parseInt(scanner.nextLine());
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+            }
+        }
+
+        return value;
+    }
+
     /**
      * Combines all types of documents (Books, Theses, and Magazines) into one list for easier searching.
      *

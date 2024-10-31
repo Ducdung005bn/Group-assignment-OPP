@@ -1,13 +1,12 @@
+import java.util.InputMismatchException;
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.Date;
+import java.util.Arrays;
 
 public class Librarian extends User {
     private int librarianSalary = 200; //dollars per month
 
-    /**
-     * Prints the user information, including the librarian's salary.
-     */
     @Override
     public void printUserInfo() {
         super.printUserInfo();
@@ -17,6 +16,7 @@ public class Librarian extends User {
     public int getLibrarianSalary() {
         return librarianSalary;
     }
+
     public void setLibrarianSalary(int librarianSalary) {
         this.librarianSalary = librarianSalary;
     }
@@ -28,16 +28,22 @@ public class Librarian extends User {
         System.out.print("Enter Name: ");
         borrower.setUserName(scanner.nextLine());
 
-        System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
-        String dateInput = scanner.nextLine();
-        borrower.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
+        setValidDate(scanner, borrower);
 
-        System.out.print("Be a student or not (YES/NO): ");
-        String isStudentInput = scanner.nextLine();
-        if (isStudentInput.equals("YES"))
-            borrower.setIsStudent(true);
-        else if (isStudentInput.equals("NO"))
-            borrower.setIsStudent(false);
+        String isStudentInput;
+
+        while (true) {
+            System.out.print("Be a student or not (yes/no): ");
+            isStudentInput = scanner.nextLine().trim().toLowerCase();
+
+            if (isStudentInput.equals("yes") || isStudentInput.equals("no")) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            }
+        }
+
+        borrower.setIsStudent(isStudentInput.equals("yes"));
 
         System.out.print("Enter Phone Number: ");
         borrower.setUserPhoneNumb(scanner.nextLine());
@@ -60,9 +66,7 @@ public class Librarian extends User {
         System.out.print("Enter Name: ");
         librarian.setUserName(scanner.nextLine());
 
-        System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
-        String dateInput = scanner.nextLine();
-        librarian.setUserDateOfBirth(java.sql.Date.valueOf(dateInput)); // Chuyển đổi từ String sang Date
+        setValidDate(scanner, librarian);
 
         System.out.print("Enter Phone Number: ");
         librarian.setUserPhoneNumb(scanner.nextLine());
@@ -81,12 +85,22 @@ public class Librarian extends User {
     public void addDocument(LibraryManagementSystem libraryManagementSystem) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Is the document a book, a thesis or a magazine (book/thesis/magazine): ");
-        String typeInput = scanner.nextLine();
+        String typeInput;
+        String[] validTypes = {"book", "magazine", "thesis"};
+
+        while (true) {
+            System.out.print("Enter type (book, magazine, thesis): ");
+            typeInput = scanner.nextLine().trim().toLowerCase();
+
+            if (Arrays.asList(validTypes).contains(typeInput)) {
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter 'book', 'magazine', or 'thesis'.");
+            }
+        }
 
         System.out.print("Enter Quantity: ");
-        int quantityInput = scanner.nextInt();
-        scanner.nextLine();
+        int quantityInput = LibraryManagementSystem.setValidInteger();
 
         System.out.print("Enter Title: ");
         String titleInput = scanner.nextLine();
@@ -101,8 +115,7 @@ public class Librarian extends User {
         String languageInput = scanner.nextLine();
 
         System.out.print("Enter Number of Pages: ");
-        int pageInput = scanner.nextInt();
-        scanner.nextLine();
+        int pageInput = LibraryManagementSystem.setValidInteger();
 
         System.out.print("Enter ISBN: ");
         String iSBNInput = scanner.nextLine();
@@ -161,12 +174,10 @@ public class Librarian extends User {
             magazine.setMagazineSubject(scanner.nextLine());
 
             System.out.print("Enter Frequency: ");
-            magazine.setMagazineFrequency(scanner.nextInt());
-            scanner.nextLine();
+            magazine.setMagazineFrequency(LibraryManagementSystem.setValidInteger());
 
             System.out.print("Enter Issue Number: ");
-            magazine.setMagazineIssueNumb(scanner.nextInt());
-            scanner.nextLine();
+            magazine.setMagazineIssueNumb(LibraryManagementSystem.setValidInteger());
 
             libraryManagementSystem.magazineList.add(magazine);
         }
@@ -177,15 +188,164 @@ public class Librarian extends User {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter ISBN: ");
         String iSBNInput = scanner.nextLine();
-
-        //TO DO 3
-
+        Document removedDocument = libraryManagementSystem.findDocumentByISBN(iSBNInput);
+        if (removedDocument == null) {
+            System.out.println("Document not found");
+        } else {
+            if (removedDocument instanceof Book) {
+                libraryManagementSystem.bookList.remove(removedDocument);
+            } else if (removedDocument instanceof Thesis) {
+                libraryManagementSystem.thesisList.remove(removedDocument);
+            } else if (removedDocument instanceof Magazine) {
+                libraryManagementSystem.magazineList.remove(removedDocument);
+            }
+        }
     }
 
     public void updateDocument(LibraryManagementSystem libraryManagementSystem) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter ISBN: ");
+        String iSBNInput = scanner.nextLine();
+        Document documentToUpdate = libraryManagementSystem.findDocumentByISBN(iSBNInput);
+        boolean continueUpdating = true;
 
-        //TO DO 4
+        while (continueUpdating) {
+            System.out.println("[0] Finish updating");
+            System.out.println("[1] Quantity");
+            System.out.println("[2] Title");
+            System.out.println("[3] Author");
+            System.out.println("[4] Description");
+            System.out.println("[5] Language");
+            System.out.println("[6] Number of Pages");
 
+            if (documentToUpdate instanceof Book) {
+                System.out.println("[7] Genre");
+                System.out.println("[8] Publisher");
+            } else if (documentToUpdate instanceof Thesis) {
+                System.out.println("[7] Subject");
+                System.out.println("[8] Degree");
+                System.out.println("[9] University");
+            } else if (documentToUpdate instanceof Magazine) {
+                System.out.println("[7] Subject");
+                System.out.println("[8] Frequency");
+                System.out.println("[9] Issue Number");
+            }
+
+            System.out.print("Select the attribute you want to update: ");
+
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1 -> {
+                        System.out.print("Enter new Quantity: ");
+                        documentToUpdate.documentQuantity = LibraryManagementSystem.setValidInteger();
+                    }
+                    case 2 -> {
+                        System.out.print("Enter new Title: ");
+                        documentToUpdate.setDocumentTitle(scanner.nextLine());
+                    }
+                    case 3 -> {
+                        System.out.print("Enter new Author: ");
+                        documentToUpdate.setDocumentAuthor(scanner.nextLine());
+                    }
+                    case 4 -> {
+                        System.out.print("Enter new Description: ");
+                        documentToUpdate.setDocumentDescription(scanner.nextLine());
+                    }
+                    case 5 -> {
+                        System.out.print("Enter new Language: ");
+                        documentToUpdate.setDocumentLanguage(scanner.nextLine());
+                    }
+                    case 6 -> {
+                        System.out.print("Enter new Number of Pages: ");
+                        documentToUpdate.setDocumentPage(LibraryManagementSystem.setValidInteger());
+                    }
+                    case 7 -> {
+                        if (documentToUpdate instanceof Book) {
+                            System.out.print("Enter new Genre: ");
+                            ((Book) documentToUpdate).setBookGenre(scanner.nextLine());
+                        } else if (documentToUpdate instanceof Thesis) {
+                            System.out.print("Enter new Subject: ");
+                            ((Thesis) documentToUpdate).setThesisSubject(scanner.nextLine());
+                        } else if (documentToUpdate instanceof Magazine) {
+                            System.out.print("Enter new Subject: ");
+                            ((Magazine) documentToUpdate).setMagazineSubject(scanner.nextLine());
+                        }
+                    }
+                    case 8 -> {
+                        if (documentToUpdate instanceof Book) {
+                            System.out.print("Enter new Publisher: ");
+                            ((Book) documentToUpdate).setBookPublisher(scanner.nextLine());
+                        } else if (documentToUpdate instanceof Thesis) {
+                            System.out.print("Enter new Degree: ");
+                            ((Thesis) documentToUpdate).setThesisDegree(scanner.nextLine());
+                        } else if (documentToUpdate instanceof Magazine) {
+                            System.out.print("Enter new Frequency: ");
+                            ((Magazine) documentToUpdate).setMagazineFrequency(LibraryManagementSystem.setValidInteger());
+                        }
+                    }
+                    case 9 -> {
+                        if (documentToUpdate instanceof Book) {
+                            System.out.println("Invalid choice. Please try again.");
+                        } else if (documentToUpdate instanceof Thesis) {
+                            System.out.print("Enter new University: ");
+                            ((Thesis) documentToUpdate).setThesisUniversity(scanner.nextLine());
+                        } else if (documentToUpdate instanceof Magazine) {
+                            System.out.print("Enter new Issue Number: ");
+                            ((Magazine) documentToUpdate).setMagazineIssueNumb(LibraryManagementSystem.setValidInteger());
+                        }
+                    }
+                    case 0 -> {
+                        continueUpdating = false;
+                        System.out.println("Updating has finished.");
+                    }
+                    default -> System.out.println("Invalid choice. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public static void setValidDate(Scanner scanner, User user) {
+        String dateInput;
+
+        while (true) {
+            System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
+            dateInput = scanner.nextLine();
+
+            if (isValidDate(dateInput)) {
+                user.setUserDateOfBirth(java.sql.Date.valueOf(dateInput));
+                break;
+            } else {
+                System.out.println("Invalid date format or value. Please enter a valid date (yyyy-MM-dd).");
+            }
+        }
+    }
+
+    public static boolean isValidDate(String dateInput) {
+        String regex = "^\\d{4}-(\\d{1,2})-(\\d{1,2})$";
+
+        if (!dateInput.matches(regex)) {
+            return false;
+        }
+
+        String[] parts = dateInput.split("-");
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+        String normalizedDate = String.format("%04d-%02d-%02d", year, month, day);
+
+        try {
+            java.sql.Date.valueOf(normalizedDate);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
 }

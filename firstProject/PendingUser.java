@@ -74,8 +74,7 @@ public class PendingUser {
     private void setIDandPword(LibraryManagementSystem libraryManagementSystem) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please enter your ID: ");
-        pendingUserID = scanner.nextInt();
-        scanner.nextLine();
+        pendingUserID = LibraryManagementSystem.setValidInteger();
         System.out.print("Please enter your password: ");
         pendingUserPword = scanner.nextLine();
         checkIDandPword(libraryManagementSystem);

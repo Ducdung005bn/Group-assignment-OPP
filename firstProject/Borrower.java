@@ -23,10 +23,10 @@ public class Borrower extends User {
     @Override
     public void printUserInfo() {
         super.printUserInfo();
-        System.out.println("isStudent: " + isStudent);
-        System.out.println("borrowedBookCount: " + borrowedBookCount);
-        System.out.println("borrowingBookCount: " + borrowingBookCount);
-        System.out.println("overdueCount: " + overdueCount);
+        System.out.println("Is student: " + isStudent);
+        System.out.println("The number of borrowed books: " + borrowedBookCount);
+        System.out.println("The number of borrowing books: " + borrowingBookCount);
+        System.out.println("The number of overdue books: " + overdueCount);
     }
 
     /**
