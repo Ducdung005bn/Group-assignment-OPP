@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * The {@code Thesis} class is a subclass of {@code Document} that represents an academic thesis
  * with additional properties such as subject, degree level, and university.
@@ -6,7 +8,7 @@
  * to set and get the subject, degree, and university of the thesis.
  * </p>
  */
-public class Thesis extends Document {
+public class Thesis extends Document implements Serializable {
     private String thesisSubject;
     private String thesisDegree;
     private String thesisUniversity;

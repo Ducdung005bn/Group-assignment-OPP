@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * The {@code Book} class is a subclass of {@code Document} that represents a book
  * with additional properties such as genre and publisher.
@@ -6,7 +8,7 @@
  * additional methods to set and get the genre and publisher of the book.
  * </p>
  */
-public class Book extends Document {
+public class Book extends Document implements Serializable {
     private String bookGenre;
     private String bookPublisher;
 

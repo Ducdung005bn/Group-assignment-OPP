@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * The {@code Magazine} class is a subclass of {@code Document} that represents a magazine
  * with additional properties such as subject, frequency of publication, and issue number.
@@ -6,7 +8,7 @@
  * to set and get the subject, publication frequency, and issue number of the magazine.
  * </p>
  */
-public class Magazine extends Document {
+public class Magazine extends Document implements Serializable {
     private String magazineSubject;
     private int magazineFrequency;
     private int magazineIssueNumb;

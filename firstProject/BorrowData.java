@@ -1,10 +1,11 @@
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Represents the borrowing data of a book, including the borrower's ID, book ISBN,
  * borrowed date, planned return date, and the current status of the borrow.
  */
-public class BorrowData {
+public class BorrowData implements Serializable {
     private int borrowerID;
     private String borrowedBookISBN;
     private Date borrowDate;
