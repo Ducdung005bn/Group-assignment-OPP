@@ -1,3 +1,5 @@
+package main.classes;
+
 import java.util.InputMismatchException;
 import java.util.Vector;
 import java.util.Scanner;

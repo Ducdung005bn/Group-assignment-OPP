@@ -1,3 +1,7 @@
+package main.classes;
+import java.io.Serializable;
+
+
 /**
  * The {@code Document} class represents a document with various properties
  * such as title, author, description, language, page count and ISBN. It also
@@ -7,7 +11,7 @@
  * management system.
  * </p>
  */
-public class Document {
+public class Document implements Serializable {
     public int documentQuantity;
     private String documentTitle;
     private String documentAuthor;

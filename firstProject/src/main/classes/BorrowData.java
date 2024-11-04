@@ -1,3 +1,5 @@
+package main.classes;
+
 import java.util.Date;
 import java.io.Serializable;
 

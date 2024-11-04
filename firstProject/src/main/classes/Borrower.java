@@ -1,3 +1,5 @@
+package main.classes;
+
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Vector;
@@ -10,11 +12,12 @@ import java.util.concurrent.TimeUnit;
  * and contains information about borrowed books and their borrowing history.
  */
 public class Borrower extends User implements Serializable {
+    public Vector<BorrowData> borrowingHistory = new Vector<>();
+    public int borrowingBookCount;
+
     private boolean isStudent;
     private Vector<BorrowData> borrowedHistory = new Vector<>();
     private int borrowedBookCount;
-    private Vector<BorrowData> borrowingHistory = new Vector<>();
-    private int borrowingBookCount;
     private int overdueCount;
 
     /**
@@ -50,43 +53,6 @@ public class Borrower extends User implements Serializable {
         this.isStudent = isStudent;
     }
 
-    /**
-     * Attempts to borrow a book from the library based on the provided ISBN.
-     * <p>
-     * If the book is available and the borrower has not reached the borrowing limit,
-     * the method will create a new {@code BorrowData} entry and update the borrowing history.
-     * </p>
-     *
-     * @param documentISBN the ISBN of the book to be borrowed
-     * @param libraryManagementSystem the system managing library operations, which is used to verify the document's availability
-     */
-    public void borrowBook(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
-        String reason = isAbleToBorrow(documentISBN, libraryManagementSystem);
-
-        if (reason == null) {  //is able to borrow the book
-            BorrowData borrowData = new BorrowData();
-            borrowData.setBorrowerID(getUserID());
-            borrowData.setBorrowedBookISBN(documentISBN);
-            borrowData.setBorrowDate(new Date());
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            calendar.add(Calendar.DAY_OF_YEAR, LibraryManagementSystem.BORROW_DURATION_DAYS);
-
-            borrowData.setPlannedReturnDate(calendar.getTime());
-            borrowData.setBorrowStatus("Not Returned");
-
-            borrowingHistory.add(borrowData);
-            borrowingBookCount++;
-
-            Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
-            document.documentQuantity--;
-
-            System.out.println("You have successfully borrowed the book.");
-        } else {
-            System.out.println(reason);
-        }
-    }
 
     /**
      * Checks whether the user is eligible to borrow a book based on the provided ISBN.
@@ -99,13 +65,22 @@ public class Borrower extends User implements Serializable {
      * @param libraryManagementSystem the system managing library operations, which is used to verify the document's status
      * @return {@code null} if the user can borrow the book, or a string describing the reason why borrowing is not allowed
      */
-    private String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
+    public String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
         Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
 
+        boolean alreadyBorrow = false;
+        for (BorrowData borrowData : borrowingHistory) {
+            if (borrowData.getBorrowedBookISBN() == documentISBN) {
+                alreadyBorrow = true;
+                break;
+            }
+        }
         if (document == null) {
             return "The book with ISBN " + documentISBN + " was not found.";
         } else if (document.documentQuantity == 0) {
             return "The book with ISBN " + documentISBN + " is out of stock.";
+        } else if (alreadyBorrow) {
+            return "You have already borrowed this book.";
         } else if (borrowingBookCount >= LibraryManagementSystem.MAX_BORROW_LIMIT) {
             return "You have reached the maximum borrow limit of " + LibraryManagementSystem.MAX_BORROW_LIMIT + " books.";
         } else {

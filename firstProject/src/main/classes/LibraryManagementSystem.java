@@ -1,3 +1,5 @@
+package main.classes;
+
 import java.io.*;
 import java.util.Vector;
 import java.util.Scanner;
@@ -221,7 +223,7 @@ public class LibraryManagementSystem implements Serializable {
      *
      * @return a {@code Vector} of all {@code Document}s in the library
      */
-    private Vector<Document> getAllDocuments() {
+    public Vector<Document> getAllDocuments() {
         Vector<Document> allDocuments = new Vector<>();
         allDocuments.addAll(bookList);
         allDocuments.addAll(thesisList);
