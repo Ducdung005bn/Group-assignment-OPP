@@ -3,8 +3,9 @@ import java.util.Vector;
 import java.util.Scanner;
 import java.util.Date;
 import java.util.Arrays;
+import java.io.*;
 
-public class Librarian extends User {
+public class Librarian extends User implements Serializable {
     private int librarianSalary = 200; //dollars per month
 
     @Override

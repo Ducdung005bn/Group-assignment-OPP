@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Vector;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * Represents a borrower in the library system. This class extends the User class
  * and contains information about borrowed books and their borrowing history.
  */
-public class Borrower extends User {
+public class Borrower extends User implements Serializable {
     private boolean isStudent;
     private Vector<BorrowData> borrowedHistory = new Vector<>();
     private int borrowedBookCount;

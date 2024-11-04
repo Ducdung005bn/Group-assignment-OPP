@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="07cc627b-e014-49ba-bcac-906c7a5f517a" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/MyQr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
@@ -17,14 +18,21 @@
       <change beforePath="$PROJECT_DIR$/PendingUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/PendingUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/User.java" afterDir="false" />
     </list>
+=======
+    <list default="true" id="07cc627b-e014-49ba-bcac-906c7a5f517a" name="Changes" comment="" />
+>>>>>>> 0541020130718299293bd9ef9db15caf1c5f0912
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+<<<<<<< HEAD
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+=======
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+>>>>>>> 0541020130718299293bd9ef9db15caf1c5f0912
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -37,7 +45,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -45,7 +53,11 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+<<<<<<< HEAD
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+=======
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+>>>>>>> 0541020130718299293bd9ef9db15caf1c5f0912
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -88,6 +100,7 @@
       <workItem from="1729992986182" duration="5000" />
       <workItem from="1729993041635" duration="1069000" />
       <workItem from="1730042550870" duration="1667000" />
+<<<<<<< HEAD
       <workItem from="1730429957574" duration="11000" />
       <workItem from="1730429977559" duration="261000" />
       <workItem from="1730555697792" duration="107000" />
@@ -97,6 +110,12 @@
       <workItem from="1730732083699" duration="18000" />
       <workItem from="1730732169984" duration="41000" />
       <workItem from="1730732257340" duration="627000" />
+=======
+      <workItem from="1730652109965" duration="65000" />
+      <workItem from="1730652181792" duration="21000" />
+      <workItem from="1730652297989" duration="159000" />
+      <workItem from="1730652506385" duration="15000" />
+>>>>>>> 0541020130718299293bd9ef9db15caf1c5f0912
     </task>
     <servers />
   </component>

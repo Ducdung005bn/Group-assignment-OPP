@@ -1,9 +1,10 @@
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Represents a user with an ID, password, name, date of birth, and phone number.
  */
-public class User {
+public class User implements Serializable {
     private int userID;
     private String userPassword;
     private String userName;

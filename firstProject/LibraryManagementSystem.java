@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Vector;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ import java.util.Scanner;
  * It provides methods to print document information, find documents by various criteria,
  * and find users by their ID.
  */
-public class LibraryManagementSystem {
+public class LibraryManagementSystem implements Serializable {
     public static final int MAX_BORROW_LIMIT = 5;
     public static final int BORROW_DURATION_DAYS = 10;
     public int userNumb;
@@ -24,6 +25,37 @@ public class LibraryManagementSystem {
         magazineList = new Vector<>();
         borrowerList = new Vector<>();
         librarianList = new Vector<>();
+    }
+
+    public void loadData() {
+        File dataFile = new File("libraryData.dat");
+        if (!dataFile.exists()) {
+            saveData();
+            return;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("libraryData.dat"))) {
+            LibraryManagementSystem loadedData = (LibraryManagementSystem) ois.readObject();
+            this.userNumb = loadedData.userNumb;
+            this.bookList = (Vector<Book>) loadedData.bookList;
+            this.thesisList = (Vector<Thesis>) loadedData.thesisList;
+            this.magazineList = (Vector<Magazine>) loadedData.magazineList;
+            this.borrowerList = (Vector<Borrower>) loadedData.borrowerList;
+            this.librarianList = (Vector<Librarian>) loadedData.librarianList;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File doesn't exist.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("libraryData.dat"))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
