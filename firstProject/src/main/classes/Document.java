@@ -77,7 +77,7 @@ public class Document implements Serializable {
         return documentPage;
     }
 
-    public String getDocumentISBN() {
+        public String getDocumentISBN() {
         return documentISBN;
     }
 
@@ -85,22 +85,4 @@ public class Document implements Serializable {
         return documentQR;
     }
 
-    public void generateQRDocument() {
-        if (documentQR == null) {
-            documentQR = new MyQr();
-        }
-        String data = MyQr.fullFillInformationQR(this);
-        String path = "qr_" + documentISBN + ".png";
-        String charset = "UTF-8";
-
-        Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
-        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-
-        try {
-            MyQr.createQR(data, path, charset, hashMap, MyQr.QR_IMAGE_HEIGHT, MyQr.QR_IMAGE_WIDTH);
-            System.out.println("QR Code Generated for document ISBN: " + documentISBN);
-        } catch (Exception e) {
-            System.err.println("Failed to generate QR Code: " + e.getMessage());
-        }
-    }
 }
