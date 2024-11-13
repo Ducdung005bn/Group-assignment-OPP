@@ -17,20 +17,19 @@ import main.classes.BorrowData;
 import main.classes.Borrower;
 import main.classes.Document;
 import main.classes.LibraryManagementSystem;
-import main.classes.PendingUser;
 
 public class BorrowDocumentController {
     private JPanel jpnView;
     private JTextField jtfBorrowDocument;
     private JButton jbtBorrowDocument;
-    private PendingUser pendingUser;
+    private Borrower borrower;
     private LibraryManagementSystem libraryManagementSystem; 
     
-    public BorrowDocumentController (JPanel jpnView, JTextField jtfBorrowDocument, JButton jbtBorrowDocument, PendingUser pendingUser, LibraryManagementSystem libraryManagementSystem) {
+    public BorrowDocumentController (JPanel jpnView, JTextField jtfBorrowDocument, JButton jbtBorrowDocument, Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
         this.jtfBorrowDocument = jtfBorrowDocument;
         this.jbtBorrowDocument = jbtBorrowDocument;
-        this.pendingUser = pendingUser;
+        this.borrower = borrower;
         this.libraryManagementSystem = libraryManagementSystem;
         
         jtfBorrowDocument.getDocument().addDocumentListener(new DocumentListener() {
@@ -104,7 +103,6 @@ public class BorrowDocumentController {
             
         String isbn = matchingDocuments.get(0).getDocumentISBN();
            
-        Borrower borrower = (Borrower) libraryManagementSystem.findUser(pendingUser.getPendingUserID());
         String reason = borrower.isAbleToBorrow(isbn, libraryManagementSystem);
             
         if (reason == null) {  //is able to borrow the book

@@ -47,33 +47,32 @@ public class FindDocumentController {
         rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
 
-    jtfFindByGenre.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void removeUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void changedUpdate(DocumentEvent e) { applyFilters(); }
-    });
+        jtfFindByGenre.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { applyFilters(); }
+        });
 
-    jtfFindByTitle.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void removeUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void changedUpdate(DocumentEvent e) { applyFilters(); }
-    });
+        jtfFindByTitle.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { applyFilters(); }
+        });
 
-    jtfFindByAuthor.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void removeUpdate(DocumentEvent e) { applyFilters(); }
-        @Override
-        public void changedUpdate(DocumentEvent e) { applyFilters(); }
-    });
-
+        jtfFindByAuthor.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void removeUpdate(DocumentEvent e) { applyFilters(); }
+            @Override
+            public void changedUpdate(DocumentEvent e) { applyFilters(); }
+        });
 
         // design
         table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
@@ -118,7 +117,7 @@ public class FindDocumentController {
         }
     }
     
-    public class TableDisplay {
+    private class TableDisplay {
         public DefaultTableModel setDocumentTable(List<Document> documentList, String[] columnList) {
             int columns = columnList.length;
             DefaultTableModel dtm = new DefaultTableModel() {

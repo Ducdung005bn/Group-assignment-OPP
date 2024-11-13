@@ -1,31 +1,33 @@
 package library.management.system;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import main.classes.Borrower;
+import main.classes.Librarian;
 import main.classes.LibraryManagementSystem;
 
-public class StudentJFrame extends javax.swing.JFrame {
-                
-    public StudentJFrame(Borrower borrower,LibraryManagementSystem libraryManagementSystem) {
+public class LibrarianJFrame extends javax.swing.JFrame {
+
+        public LibrarianJFrame(Librarian librarian,LibraryManagementSystem libraryManagementSystem) {
         initComponents();
         setTitle("Library Management System");
         
-        ScreenSwitchController controller = new ScreenSwitchController(jpnView, borrower, libraryManagementSystem);
+        ScreenSwitchController controller = new ScreenSwitchController(jpnView, librarian, libraryManagementSystem);
         controller.setView(jpnMainInterface, jlbMainInterface);
         
         List<MenuItem> itemList = new ArrayList<>();
         itemList.add(new MenuItem("MainInterface", jpnMainInterface, jlbMainInterface));
         itemList.add(new MenuItem("FindDocument", jpnFindDocument, jlbFindDocument));
         itemList.add(new MenuItem("DisplayDocument", jpnDisplayDocument, jlbDisplayDocument));
-        itemList.add(new MenuItem("BorrowDocument", jpnBorrowDocument, jlbBorrowDocument));
-        itemList.add(new MenuItem("ReturnDocument", jpnReturnDocument, jlbReturnDocument));
+        itemList.add(new MenuItem("AddDocument", jpnAddDocument, jlbAddDocument));
+        itemList.add(new MenuItem("RemoveDocument", jpnRemoveDocument, jlbRemoveDocument));
+        itemList.add(new MenuItem("UpdateDocument", jpnUpdateDocument, jlbUpdateDocument));
+        itemList.add(new MenuItem("AddBorrower", jpnAddBorrower, jlbAddBorrower));
+        itemList.add(new MenuItem("AddLibrarian", jpnAddLibrarian, jlbAddLibrarian));
         itemList.add(new MenuItem("DisplayUserInfo", jpnDisplayUserInfo, jlbDisplayUserInfo));
                 
         controller.setEvent(jbtExit, itemList);
-    }
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,8 +38,7 @@ public class StudentJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jpnRoot = new javax.swing.JPanel();
+        jpnView = new javax.swing.JPanel();
         jpnMenu = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -47,31 +48,32 @@ public class StudentJFrame extends javax.swing.JFrame {
         jlbFindDocument = new javax.swing.JLabel();
         jpnDisplayDocument = new javax.swing.JPanel();
         jlbDisplayDocument = new javax.swing.JLabel();
-        jpnBorrowDocument = new javax.swing.JPanel();
-        jlbBorrowDocument = new javax.swing.JLabel();
-        jpnReturnDocument = new javax.swing.JPanel();
-        jlbReturnDocument = new javax.swing.JLabel();
+        jpnAddDocument = new javax.swing.JPanel();
+        jlbAddDocument = new javax.swing.JLabel();
+        jpnRemoveDocument = new javax.swing.JPanel();
+        jlbRemoveDocument = new javax.swing.JLabel();
         jpnDisplayUserInfo = new javax.swing.JPanel();
         jlbDisplayUserInfo = new javax.swing.JLabel();
         jbtExit = new javax.swing.JButton();
-        jpnView = new javax.swing.JPanel();
-
-        jPanel2.setPreferredSize(new java.awt.Dimension(175, 52));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 52, Short.MAX_VALUE)
-        );
+        jpnUpdateDocument = new javax.swing.JPanel();
+        jlbUpdateDocument = new javax.swing.JLabel();
+        jpnAddBorrower = new javax.swing.JPanel();
+        jlbAddBorrower = new javax.swing.JLabel();
+        jpnAddLibrarian = new javax.swing.JPanel();
+        jlbAddLibrarian = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jpnRoot.setPreferredSize(new java.awt.Dimension(1000, 500));
+        javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
+        jpnView.setLayout(jpnViewLayout);
+        jpnViewLayout.setHorizontalGroup(
+            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 624, Short.MAX_VALUE)
+        );
+        jpnViewLayout.setVerticalGroup(
+            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         jPanel1.setBackground(new java.awt.Color(255, 0, 0));
 
@@ -166,49 +168,49 @@ public class StudentJFrame extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jpnBorrowDocument.setBackground(new java.awt.Color(76, 175, 80));
-        jpnBorrowDocument.setPreferredSize(new java.awt.Dimension(0, 36));
+        jpnAddDocument.setBackground(new java.awt.Color(76, 175, 80));
+        jpnAddDocument.setPreferredSize(new java.awt.Dimension(0, 36));
 
-        jlbBorrowDocument.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jlbBorrowDocument.setText("BORROW DOCUMENT");
+        jlbAddDocument.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlbAddDocument.setText("ADD DOCUMENT");
 
-        javax.swing.GroupLayout jpnBorrowDocumentLayout = new javax.swing.GroupLayout(jpnBorrowDocument);
-        jpnBorrowDocument.setLayout(jpnBorrowDocumentLayout);
-        jpnBorrowDocumentLayout.setHorizontalGroup(
-            jpnBorrowDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnBorrowDocumentLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpnAddDocumentLayout = new javax.swing.GroupLayout(jpnAddDocument);
+        jpnAddDocument.setLayout(jpnAddDocumentLayout);
+        jpnAddDocumentLayout.setHorizontalGroup(
+            jpnAddDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddDocumentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbBorrowDocument)
+                .addComponent(jlbAddDocument)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jpnBorrowDocumentLayout.setVerticalGroup(
-            jpnBorrowDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnBorrowDocumentLayout.createSequentialGroup()
+        jpnAddDocumentLayout.setVerticalGroup(
+            jpnAddDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddDocumentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbBorrowDocument)
+                .addComponent(jlbAddDocument)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jpnReturnDocument.setBackground(new java.awt.Color(76, 175, 80));
-        jpnReturnDocument.setPreferredSize(new java.awt.Dimension(0, 36));
+        jpnRemoveDocument.setBackground(new java.awt.Color(76, 175, 80));
+        jpnRemoveDocument.setPreferredSize(new java.awt.Dimension(0, 36));
 
-        jlbReturnDocument.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jlbReturnDocument.setText("RETURN DOCUMENT");
+        jlbRemoveDocument.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlbRemoveDocument.setText("REMOVE DOCUMENT");
 
-        javax.swing.GroupLayout jpnReturnDocumentLayout = new javax.swing.GroupLayout(jpnReturnDocument);
-        jpnReturnDocument.setLayout(jpnReturnDocumentLayout);
-        jpnReturnDocumentLayout.setHorizontalGroup(
-            jpnReturnDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnReturnDocumentLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpnRemoveDocumentLayout = new javax.swing.GroupLayout(jpnRemoveDocument);
+        jpnRemoveDocument.setLayout(jpnRemoveDocumentLayout);
+        jpnRemoveDocumentLayout.setHorizontalGroup(
+            jpnRemoveDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnRemoveDocumentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbReturnDocument)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jlbRemoveDocument)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
-        jpnReturnDocumentLayout.setVerticalGroup(
-            jpnReturnDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnReturnDocumentLayout.createSequentialGroup()
+        jpnRemoveDocumentLayout.setVerticalGroup(
+            jpnRemoveDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnRemoveDocumentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlbReturnDocument)
+                .addComponent(jlbRemoveDocument)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -225,7 +227,7 @@ public class StudentJFrame extends javax.swing.JFrame {
             .addGroup(jpnDisplayUserInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlbDisplayUserInfo)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jpnDisplayUserInfoLayout.setVerticalGroup(
             jpnDisplayUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,21 +245,93 @@ public class StudentJFrame extends javax.swing.JFrame {
             }
         });
 
+        jpnUpdateDocument.setBackground(new java.awt.Color(76, 175, 80));
+        jpnUpdateDocument.setPreferredSize(new java.awt.Dimension(0, 36));
+
+        jlbUpdateDocument.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlbUpdateDocument.setText("UPDATE DOCUMENT");
+
+        javax.swing.GroupLayout jpnUpdateDocumentLayout = new javax.swing.GroupLayout(jpnUpdateDocument);
+        jpnUpdateDocument.setLayout(jpnUpdateDocumentLayout);
+        jpnUpdateDocumentLayout.setHorizontalGroup(
+            jpnUpdateDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnUpdateDocumentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbUpdateDocument)
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+        jpnUpdateDocumentLayout.setVerticalGroup(
+            jpnUpdateDocumentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnUpdateDocumentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbUpdateDocument)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jpnAddBorrower.setBackground(new java.awt.Color(76, 175, 80));
+        jpnAddBorrower.setPreferredSize(new java.awt.Dimension(0, 36));
+
+        jlbAddBorrower.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlbAddBorrower.setText("ADD BORROWER");
+
+        javax.swing.GroupLayout jpnAddBorrowerLayout = new javax.swing.GroupLayout(jpnAddBorrower);
+        jpnAddBorrower.setLayout(jpnAddBorrowerLayout);
+        jpnAddBorrowerLayout.setHorizontalGroup(
+            jpnAddBorrowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddBorrowerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbAddBorrower)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        jpnAddBorrowerLayout.setVerticalGroup(
+            jpnAddBorrowerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddBorrowerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbAddBorrower)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jpnAddLibrarian.setBackground(new java.awt.Color(76, 175, 80));
+        jpnAddLibrarian.setPreferredSize(new java.awt.Dimension(0, 36));
+
+        jlbAddLibrarian.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlbAddLibrarian.setText("ADD LIBRARIAN");
+
+        javax.swing.GroupLayout jpnAddLibrarianLayout = new javax.swing.GroupLayout(jpnAddLibrarian);
+        jpnAddLibrarian.setLayout(jpnAddLibrarianLayout);
+        jpnAddLibrarianLayout.setHorizontalGroup(
+            jpnAddLibrarianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddLibrarianLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbAddLibrarian)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jpnAddLibrarianLayout.setVerticalGroup(
+            jpnAddLibrarianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnAddLibrarianLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlbAddLibrarian)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jpnMenuLayout = new javax.swing.GroupLayout(jpnMenu);
         jpnMenu.setLayout(jpnMenuLayout);
         jpnMenuLayout.setHorizontalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpnMainInterface, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-            .addComponent(jpnFindDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-            .addComponent(jpnDisplayDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-            .addComponent(jpnReturnDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-            .addComponent(jpnDisplayUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-            .addComponent(jpnBorrowDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+            .addComponent(jpnMainInterface, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnFindDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnDisplayDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnRemoveDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnDisplayUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnAddDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnUpdateDocument, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnAddBorrower, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+            .addComponent(jpnAddLibrarian, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
             .addGroup(jpnMenuLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(60, 60, 60)
                 .addComponent(jbtExit)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         jpnMenuLayout.setVerticalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,51 +344,38 @@ public class StudentJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpnDisplayDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpnBorrowDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpnAddDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jpnReturnDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpnRemoveDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpnUpdateDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpnAddBorrower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jpnAddLibrarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpnDisplayUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtExit)
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
-        jpnView.setLayout(jpnViewLayout);
-        jpnViewLayout.setHorizontalGroup(
-            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
-        );
-        jpnViewLayout.setVerticalGroup(
-            jpnViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jpnRootLayout = new javax.swing.GroupLayout(jpnRoot);
-        jpnRoot.setLayout(jpnRootLayout);
-        jpnRootLayout.setHorizontalGroup(
-            jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnRootLayout.createSequentialGroup()
-                .addComponent(jpnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jpnRootLayout.setVerticalGroup(
-            jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpnView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpnRoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jpnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpnRoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jpnView, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpnMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
@@ -327,22 +388,26 @@ public class StudentJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtExit;
-    private javax.swing.JLabel jlbBorrowDocument;
+    private javax.swing.JLabel jlbAddBorrower;
+    private javax.swing.JLabel jlbAddDocument;
+    private javax.swing.JLabel jlbAddLibrarian;
     private javax.swing.JLabel jlbDisplayDocument;
     private javax.swing.JLabel jlbDisplayUserInfo;
     private javax.swing.JLabel jlbFindDocument;
     private javax.swing.JLabel jlbMainInterface;
-    private javax.swing.JLabel jlbReturnDocument;
-    private javax.swing.JPanel jpnBorrowDocument;
+    private javax.swing.JLabel jlbRemoveDocument;
+    private javax.swing.JLabel jlbUpdateDocument;
+    private javax.swing.JPanel jpnAddBorrower;
+    private javax.swing.JPanel jpnAddDocument;
+    private javax.swing.JPanel jpnAddLibrarian;
     private javax.swing.JPanel jpnDisplayDocument;
     private javax.swing.JPanel jpnDisplayUserInfo;
     private javax.swing.JPanel jpnFindDocument;
     private javax.swing.JPanel jpnMainInterface;
     private javax.swing.JPanel jpnMenu;
-    private javax.swing.JPanel jpnReturnDocument;
-    private javax.swing.JPanel jpnRoot;
+    private javax.swing.JPanel jpnRemoveDocument;
+    private javax.swing.JPanel jpnUpdateDocument;
     private javax.swing.JPanel jpnView;
     // End of variables declaration//GEN-END:variables
 }

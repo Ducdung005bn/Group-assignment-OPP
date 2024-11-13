@@ -24,67 +24,6 @@ public class Librarian extends User implements Serializable {
         this.librarianSalary = librarianSalary;
     }
 
-    public void addBorrower(LibraryManagementSystem libraryManagementSystem) {
-        Borrower borrower = new Borrower();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter Name: ");
-        borrower.setUserName(scanner.nextLine());
-
-        setValidDate(scanner, borrower);
-
-        String isStudentInput;
-
-        while (true) {
-            System.out.print("Be a student or not (yes/no): ");
-            isStudentInput = scanner.nextLine().trim().toLowerCase();
-
-            if (isStudentInput.equals("yes") || isStudentInput.equals("no")) {
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
-            }
-        }
-
-        borrower.setIsStudent(isStudentInput.equals("yes"));
-
-        System.out.print("Enter Phone Number: ");
-        borrower.setUserPhoneNumb(scanner.nextLine());
-
-        System.out.print("Enter Password: ");
-        borrower.setUserPassword(scanner.nextLine());
-
-        libraryManagementSystem.userNumb ++;
-        borrower.setUserID(libraryManagementSystem.userNumb);
-        libraryManagementSystem.borrowerList.add(borrower);
-
-        System.out.println("Borrower information has been entered successfully:");
-        borrower.printUserInfo();
-    }
-
-    public void addLibrarian(LibraryManagementSystem libraryManagementSystem) {
-        Librarian librarian = new Librarian();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter Name: ");
-        librarian.setUserName(scanner.nextLine());
-
-        setValidDate(scanner, librarian);
-
-        System.out.print("Enter Phone Number: ");
-        librarian.setUserPhoneNumb(scanner.nextLine());
-
-        System.out.print("Enter Password: ");
-        librarian.setUserPassword(scanner.nextLine());
-
-        libraryManagementSystem.userNumb ++;
-        librarian.setUserID(libraryManagementSystem.userNumb);
-        libraryManagementSystem.librarianList.add(librarian);
-
-        System.out.println("Librarian information has been entered successfully: ");
-        librarian.printUserInfo();
-    }
-
     public void addDocument(LibraryManagementSystem libraryManagementSystem) {
         Scanner scanner = new Scanner(System.in);
 
@@ -313,42 +252,5 @@ public class Librarian extends User implements Serializable {
         }
     }
 
-    public static void setValidDate(Scanner scanner, User user) {
-        String dateInput;
-
-        while (true) {
-            System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
-            dateInput = scanner.nextLine();
-
-            if (isValidDate(dateInput)) {
-                user.setUserDateOfBirth(java.sql.Date.valueOf(dateInput));
-                break;
-            } else {
-                System.out.println("Invalid date format or value. Please enter a valid date (yyyy-MM-dd).");
-            }
-        }
-    }
-
-    public static boolean isValidDate(String dateInput) {
-        String regex = "^\\d{4}-(\\d{1,2})-(\\d{1,2})$";
-
-        if (!dateInput.matches(regex)) {
-            return false;
-        }
-
-        String[] parts = dateInput.split("-");
-        int year = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-        int day = Integer.parseInt(parts[2]);
-
-        String normalizedDate = String.format("%04d-%02d-%02d", year, month, day);
-
-        try {
-            java.sql.Date.valueOf(normalizedDate);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
 
 }

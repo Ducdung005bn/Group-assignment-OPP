@@ -14,10 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class Borrower extends User implements Serializable {
     public Vector<BorrowData> borrowingHistory = new Vector<>();
     public int borrowingBookCount;
-
+    public Vector<BorrowData> borrowedHistory = new Vector<>();
     private boolean isStudent;
-    private Vector<BorrowData> borrowedHistory = new Vector<>();
-    private int borrowedBookCount;
     private int overdueCount;
 
     /**
@@ -28,7 +26,7 @@ public class Borrower extends User implements Serializable {
     public void printUserInfo() {
         super.printUserInfo();
         System.out.println("Is student: " + isStudent);
-        System.out.println("The number of borrowed books: " + borrowedBookCount);
+        System.out.println("The number of borrowed books: " + borrowedHistory.size());
         System.out.println("The number of borrowing books: " + borrowingBookCount);
         System.out.println("The number of overdue books: " + overdueCount);
     }
@@ -51,6 +49,14 @@ public class Borrower extends User implements Serializable {
 
     public void setIsStudent(boolean isStudent) {
         this.isStudent = isStudent;
+    }
+    
+    public void setOverdueCount(int overdueCount) {
+        this.overdueCount = overdueCount;
+    }
+    
+    public int getOverdueCount() {
+        return overdueCount;
     }
 
 
@@ -86,48 +92,5 @@ public class Borrower extends User implements Serializable {
         } else {
             return null;  //is able to borrow the book
         }
-    }
-
-    /**
-     * Processes the return of a borrowed book by updating the borrowing history
-     * and the document quantity in the library management system.
-     *
-     * <p>This method searches for the specified book by its ISBN in the user's
-     * borrowing history. If the book is found, it updates the status of the
-     * borrow record, checks if the book was returned on time or late,
-     * and adjusts the quantity of the book in the library accordingly.</p>
-     *
-     * @param documentISBN the ISBN of the book being returned
-     * @param libraryManagementSystem the library management system containing
-     *                                 the document information
-     */
-    public void returnBook(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
-        BorrowData borrowData = null;
-        for (BorrowData data : borrowingHistory) {
-            if (data.getBorrowedBookISBN().equals(documentISBN)) {
-                borrowData = data;
-                break;
-            }
-        }
-        if (borrowData == null) {
-            System.out.println("The book with ISBN " + documentISBN + " was not found in your borrowing history.");
-        } else {
-            borrowingHistory.remove(borrowData);
-            Date actualReturnDate = new Date();
-            if (actualReturnDate.after(borrowData.getPlannedReturnDate())) {
-                System.out.println("You have returned the book after the due date.");
-                borrowData.setBorrowStatus("Not Returned On Time");
-                overdueCount++;
-            } else {
-                System.out.println("You have returned the book before the due date.");
-                borrowData.setBorrowStatus("Returned On Time");
-            }
-            borrowedHistory.add(borrowData);
-            borrowingBookCount--;
-
-            Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
-            if (document != null)
-                document.documentQuantity++;
-        }
-    }
+    }    
 }

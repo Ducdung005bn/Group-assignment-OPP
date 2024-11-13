@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import main.classes.Borrower;
+import main.classes.Librarian;
 import main.classes.PendingUser;
 import main.classes.LibraryManagementSystem;
 
@@ -26,8 +28,7 @@ public class LogInController {
         this.pendingUser = pendingUser;
         this.libraryManagementSystem = libraryManagementSystem;
 
-        jbtLogIn.addActionListener(e -> handleLogIn());
-        
+        jbtLogIn.addActionListener(e -> handleLogIn()); 
     }
 
     private void handleLogIn() {
@@ -52,10 +53,16 @@ public class LogInController {
 
         pendingUser.checkIDandPword(libraryManagementSystem);
 
-        if (pendingUser.getIsBorrower() || pendingUser.getIsLibrarian()) {
+        if (pendingUser.getIsBorrower()) {
             JOptionPane.showMessageDialog(null, "Login successful!", "Notification", JOptionPane.INFORMATION_MESSAGE);
             logInJFrame.dispose();
-            new StudentJFrame(pendingUser, libraryManagementSystem).setVisible(true);  
+            Borrower borrower = (Borrower) libraryManagementSystem.findUser(pendingUser.getPendingUserID());
+            new StudentJFrame(borrower, libraryManagementSystem).setVisible(true);  
+        } else if (pendingUser.getIsLibrarian()) {
+            JOptionPane.showMessageDialog(null, "Login successful!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            logInJFrame.dispose();
+            Librarian librarian = (Librarian) libraryManagementSystem.findUser(pendingUser.getPendingUserID());
+            new LibrarianJFrame(librarian, libraryManagementSystem).setVisible(true);  
         } else {
             JOptionPane.showMessageDialog(null, "Incorrect ID or password.", "Error", JOptionPane.ERROR_MESSAGE);
         }

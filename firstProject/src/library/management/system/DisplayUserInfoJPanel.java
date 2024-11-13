@@ -1,20 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package library.management.system;
 
-/**
- *
- * @author Admin
- */
+import main.classes.Borrower;
+import main.classes.Librarian;
+
 public class DisplayUserInfoJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form DisplayUserInfoJPanel
-     */
-    public DisplayUserInfoJPanel() {
+    public DisplayUserInfoJPanel(Borrower borrower, boolean isDealingWithBorrower) {
         initComponents();
+        DisplayUserInfoController controller = new DisplayUserInfoController(jpnUserInfo, jpnBorrowedHistory, borrower, isDealingWithBorrower);
+    }
+    
+    public DisplayUserInfoJPanel(Librarian librarian, boolean isDealingWithBorrower) {
+        initComponents();
+        DisplayUserInfoController controller = new DisplayUserInfoController(jpnUserInfo, jpnBorrowedHistory, librarian, isDealingWithBorrower);
     }
 
     /**
@@ -26,19 +24,63 @@ public class DisplayUserInfoJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jpnRoot = new javax.swing.JPanel();
+        jpnUserInfo = new javax.swing.JPanel();
+        jpnBorrowedHistory = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout jpnUserInfoLayout = new javax.swing.GroupLayout(jpnUserInfo);
+        jpnUserInfo.setLayout(jpnUserInfoLayout);
+        jpnUserInfoLayout.setHorizontalGroup(
+            jpnUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jpnUserInfoLayout.setVerticalGroup(
+            jpnUserInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jpnBorrowedHistoryLayout = new javax.swing.GroupLayout(jpnBorrowedHistory);
+        jpnBorrowedHistory.setLayout(jpnBorrowedHistoryLayout);
+        jpnBorrowedHistoryLayout.setHorizontalGroup(
+            jpnBorrowedHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jpnBorrowedHistoryLayout.setVerticalGroup(
+            jpnBorrowedHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 194, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jpnRootLayout = new javax.swing.GroupLayout(jpnRoot);
+        jpnRoot.setLayout(jpnRootLayout);
+        jpnRootLayout.setHorizontalGroup(
+            jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jpnUserInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpnBorrowedHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jpnRootLayout.setVerticalGroup(
+            jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnRootLayout.createSequentialGroup()
+                .addComponent(jpnUserInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnBorrowedHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jpnRoot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jpnRoot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jpnBorrowedHistory;
+    private javax.swing.JPanel jpnRoot;
+    private javax.swing.JPanel jpnUserInfo;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,6 @@ public class Main {
         
         
         
-        
         PendingUser pendingUser = new PendingUser();
         
         new LogInJFrame(pendingUser, libraryManagementSystem).setVisible(true);

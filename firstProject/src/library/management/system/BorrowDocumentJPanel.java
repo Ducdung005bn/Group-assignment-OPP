@@ -1,12 +1,12 @@
 package library.management.system;
 
+import main.classes.Borrower;
 import main.classes.LibraryManagementSystem;
-import main.classes.PendingUser;
 
 public class BorrowDocumentJPanel extends javax.swing.JPanel {
-    public BorrowDocumentJPanel(PendingUser pendingUser, LibraryManagementSystem libraryManagementSystem) {
+    public BorrowDocumentJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
-        BorrowDocumentController controller = new BorrowDocumentController(jpnView, jtfBorrowDocument, jbtBorrowDocument, pendingUser, libraryManagementSystem);
+        BorrowDocumentController controller = new BorrowDocumentController(jpnView, jtfBorrowDocument, jbtBorrowDocument, borrower, libraryManagementSystem);
 
     }
 

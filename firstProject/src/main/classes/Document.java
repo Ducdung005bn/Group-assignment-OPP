@@ -19,7 +19,7 @@ public class Document implements Serializable {
     private String documentLanguage;
     private int documentPage;
     private String documentISBN;
-    private MyQr documentQR;
+
     /**
      * Prints the document's information to the console.
      */
@@ -77,12 +77,7 @@ public class Document implements Serializable {
         return documentPage;
     }
 
-        public String getDocumentISBN() {
+    public String getDocumentISBN() {
         return documentISBN;
     }
-
-    public MyQr getDocumentQR() {
-        return documentQR;
-    }
-
 }
