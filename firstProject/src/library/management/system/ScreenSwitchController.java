@@ -138,9 +138,9 @@ public class ScreenSwitchController {
                     case "DisplayDocument" :
                         node = new DisplayDocumentJPanel(libraryManagementSystem);
                         break;
-//                    case "AddDocument" :
-//                        node = new AddDocumentJPanel(librarian, libraryManagementSystem);
-//                        break;
+                    case "AddDocument" :
+                        node = new AddInformationJPanel("document", libraryManagementSystem);
+                        break;
 //                    case "RemoveDocument" :
 //                        node = new RemoveDocumentJPanel(librarian, libraryManagementSystem);
 //                        break;

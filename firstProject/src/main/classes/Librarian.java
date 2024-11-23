@@ -1,10 +1,7 @@
 package main.classes;
 
 import java.util.InputMismatchException;
-import java.util.Vector;
 import java.util.Scanner;
-import java.util.Date;
-import java.util.Arrays;
 import java.io.*;
 
 public class Librarian extends User implements Serializable {
@@ -22,108 +19,6 @@ public class Librarian extends User implements Serializable {
 
     public void setLibrarianSalary(int librarianSalary) {
         this.librarianSalary = librarianSalary;
-    }
-
-    public void addDocument(LibraryManagementSystem libraryManagementSystem) {
-        Scanner scanner = new Scanner(System.in);
-
-        String typeInput;
-        String[] validTypes = {"book", "magazine", "thesis"};
-
-        while (true) {
-            System.out.print("Enter type (book, magazine, thesis): ");
-            typeInput = scanner.nextLine().trim().toLowerCase();
-
-            if (Arrays.asList(validTypes).contains(typeInput)) {
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter 'book', 'magazine', or 'thesis'.");
-            }
-        }
-
-        System.out.print("Enter Quantity: ");
-        int quantityInput = LibraryManagementSystem.setValidInteger();
-
-        System.out.print("Enter Title: ");
-        String titleInput = scanner.nextLine();
-
-        System.out.print("Enter Author: ");
-        String authorInput = scanner.nextLine();
-
-        System.out.print("Enter Description: ");
-        String descriptionInput = scanner.nextLine();
-
-        System.out.print("Enter Language: ");
-        String languageInput = scanner.nextLine();
-
-        System.out.print("Enter Number of Pages: ");
-        int pageInput = LibraryManagementSystem.setValidInteger();
-
-        System.out.print("Enter ISBN: ");
-        String iSBNInput = scanner.nextLine();
-
-        if (typeInput.equals("book")) {
-            Book book = new Book();
-
-            book.documentQuantity = quantityInput;
-            book.setDocumentTitle(titleInput);
-            book.setDocumentAuthor(authorInput);
-            book.setDocumentDescription(descriptionInput);
-            book.setDocumentLanguage(languageInput);
-            book.setDocumentPage(pageInput);
-            book.setDocumentISBN(iSBNInput);
-
-            System.out.print("Enter Genre: ");
-            book.setBookGenre(scanner.nextLine());
-
-            System.out.print("Enter Publisher: ");
-            book.setBookPublisher(scanner.nextLine());
-
-            libraryManagementSystem.bookList.add(book);
-        } else if (typeInput.equals("thesis")) {
-            Thesis thesis = new Thesis();
-
-            thesis.documentQuantity = quantityInput;
-            thesis.setDocumentTitle(titleInput);
-            thesis.setDocumentAuthor(authorInput);
-            thesis.setDocumentDescription(descriptionInput);
-            thesis.setDocumentLanguage(languageInput);
-            thesis.setDocumentPage(pageInput);
-            thesis.setDocumentISBN(iSBNInput);
-
-            System.out.print("Enter Subject: ");
-            thesis.setThesisSubject(scanner.nextLine());
-
-            System.out.print("Enter Degree: ");
-            thesis.setThesisDegree(scanner.nextLine());
-
-            System.out.print("Enter University: ");
-            thesis.setThesisUniversity(scanner.nextLine());
-
-            libraryManagementSystem.thesisList.add(thesis);
-        } else if (typeInput.equals("magazine")) {
-            Magazine magazine = new Magazine();
-
-            magazine.documentQuantity = quantityInput;
-            magazine.setDocumentTitle(titleInput);
-            magazine.setDocumentAuthor(authorInput);
-            magazine.setDocumentDescription(descriptionInput);
-            magazine.setDocumentLanguage(languageInput);
-            magazine.setDocumentPage(pageInput);
-            magazine.setDocumentISBN(iSBNInput);
-
-            System.out.print("Enter Subject: ");
-            magazine.setMagazineSubject(scanner.nextLine());
-
-            System.out.print("Enter Frequency: ");
-            magazine.setMagazineFrequency(LibraryManagementSystem.setValidInteger());
-
-            System.out.print("Enter Issue Number: ");
-            magazine.setMagazineIssueNumb(LibraryManagementSystem.setValidInteger());
-
-            libraryManagementSystem.magazineList.add(magazine);
-        }
-
     }
 
     public void removeDocument(LibraryManagementSystem libraryManagementSystem) {

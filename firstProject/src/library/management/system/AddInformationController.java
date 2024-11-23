@@ -8,14 +8,18 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import main.classes.Book;
 import main.classes.Borrower;
 import main.classes.Document;
 import main.classes.Librarian;
 import main.classes.LibraryManagementSystem;
+import main.classes.Magazine;
+import main.classes.Thesis;
 
 public class AddInformationController {
     private String kind;
@@ -32,7 +36,7 @@ public class AddInformationController {
         if (kind.equals("borrower") || kind.equals("librarian")) {
             setupAddUserForm();
         } else if (kind.equals("document")) {
-//            setupAddDocumentForm();
+          setupAddDocumentForm();
         }
 
     }
@@ -151,6 +155,237 @@ public class AddInformationController {
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
+    
+    private void setupAddDocumentForm() {
+        jpnView.removeAll();
+        jpnView.setLayout(new GridLayout(0, 2, 5, 5));
+
+        // Dropdown for selecting document type
+        JLabel typeLabel = new JLabel("Select Type (book, magazine, thesis): ");
+        JComboBox<String> typeComboBox = new JComboBox<>(new String[]{"book", "magazine", "thesis"});
+        jpnView.add(typeLabel);
+        jpnView.add(typeComboBox);
+
+        // Shared fields
+        JLabel quantityLabel = new JLabel("Enter Quantity: ");
+        JTextField quantityField = new JTextField(20);
+        jpnView.add(quantityLabel);
+        jpnView.add(quantityField);
+
+        JLabel titleLabel = new JLabel("Enter Title: ");
+        JTextField titleField = new JTextField(20);
+        jpnView.add(titleLabel);
+        jpnView.add(titleField);
+
+        JLabel authorLabel = new JLabel("Enter Author: ");
+        JTextField authorField = new JTextField(20);
+        jpnView.add(authorLabel);
+        jpnView.add(authorField);
+
+        JLabel descriptionLabel = new JLabel("Enter Description: ");
+        JTextField descriptionField = new JTextField(20);
+        jpnView.add(descriptionLabel);
+        jpnView.add(descriptionField);
+
+        JLabel languageLabel = new JLabel("Enter Language: ");
+        JTextField languageField = new JTextField(20);
+        jpnView.add(languageLabel);
+        jpnView.add(languageField);
+
+        JLabel pagesLabel = new JLabel("Enter Number of Pages: ");
+        JTextField pagesField = new JTextField(20);
+        jpnView.add(pagesLabel);
+        jpnView.add(pagesField);
+
+        JLabel isbnLabel = new JLabel("Enter ISBN: ");
+        JTextField isbnField = new JTextField(20);
+        jpnView.add(isbnLabel);
+        jpnView.add(isbnField);
+
+        // Dynamic fields
+        JLabel dynamicField1Label = new JLabel();
+        JTextField dynamicField1Field = new JTextField(20);
+        jpnView.add(dynamicField1Label);
+        jpnView.add(dynamicField1Field);
+
+        JLabel dynamicField2Label = new JLabel();
+        JTextField dynamicField2Field = new JTextField(20);
+        jpnView.add(dynamicField2Label);
+        jpnView.add(dynamicField2Field);
+
+        JLabel dynamicField3Label = new JLabel();
+        JTextField dynamicField3Field = new JTextField(20);
+        jpnView.add(dynamicField3Label);
+        jpnView.add(dynamicField3Field);
+                
+        //the default in the combo box is "book"
+        if ("book".equals((String) typeComboBox.getSelectedItem())) {
+            dynamicField1Label.setText("Enter Genre: ");
+            dynamicField2Label.setText("Enter Publisher: ");
+            dynamicField3Label.setText("");
+            dynamicField3Field.setVisible(false);
+        }
+
+        // Add action listener to update dynamic fields
+        typeComboBox.addActionListener(e -> {
+            String selectedType = (String) typeComboBox.getSelectedItem();
+            if ("book".equals(selectedType)) {
+                dynamicField1Label.setText("Enter Genre: ");
+                dynamicField2Label.setText("Enter Publisher: ");
+                dynamicField3Label.setText("");
+                dynamicField3Field.setVisible(false);
+            } else if ("magazine".equals(selectedType)) {
+                dynamicField1Label.setText("Enter Subject: ");
+                dynamicField2Label.setText("Enter Frequency: ");
+                dynamicField3Label.setText("Enter Issue Number: ");
+                dynamicField3Field.setVisible(true);
+            } else if ("thesis".equals(selectedType)) {
+                dynamicField1Label.setText("Enter Subject: ");
+                dynamicField2Label.setText("Enter Degree: ");
+                dynamicField3Label.setText("Enter University: ");
+                dynamicField3Field.setVisible(true);
+            }
+            jpnView.revalidate();
+            jpnView.repaint();
+        });
+        
+        // jcbUseAPI to choose whether to use API
+        JCheckBox jcbUseAPI = new JCheckBox("Use API to autofill details");
+        jpnView.add(jcbUseAPI);
+        jpnView.add(new JLabel()); // Empty label for grid layout alignment
+        
+        JButton jbtAutoFill = new JButton("Auto-fill Data");
+        jbtAutoFill.setVisible(false);  // Hide initially
+        jpnView.add(jbtAutoFill);
+        
+        // Add action listener to jcbUseAPI to toggle button visibility
+        jcbUseAPI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (jcbUseAPI.isSelected()) {
+                    jbtAutoFill.setVisible(true);  // Show the button if checkbox is selected
+                } else {
+                    jbtAutoFill.setVisible(false);  // Hide the button if checkbox is deselected
+                }
+                jpnView.revalidate();
+                jpnView.repaint();
+            }
+        });
+    
+        
+        jbtAutoFill.addActionListener(e -> {
+            String isbn = isbnField.getText();
+                
+            if (isbn.isEmpty()) {
+                JOptionPane.showMessageDialog(jpnView, "Please enter ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Mock API call to autofill data based on ISBN
+            String title = "Mock Title";  // Example data, would be fetched from the API
+            String author = "Mock Author";
+            String description = "Mock Description";
+            String language = "English";
+            int pages = 200;
+            String dynamicField1 = "Mock Genre";
+            String dynamicField2 = "Mock Publisher";
+            String dynamicField3 = "";  // Leave empty for book
+            
+            //HUNG OI LA HUNG
+
+            // Fill the fields with mock data
+            titleField.setText(title);
+            authorField.setText(author);
+            descriptionField.setText(description);
+            languageField.setText(language);
+            pagesField.setText(String.valueOf(pages));
+            dynamicField1Field.setText(dynamicField1);
+            dynamicField2Field.setText(dynamicField2);
+            dynamicField3Field.setText(dynamicField3);   
+        });
+        
+
+        // Add action listener to add button
+        jbtAdd.addActionListener(e -> {
+            try {
+                if (quantityField.getText().isEmpty() || titleField.getText().isEmpty() ||
+                        authorField.getText().isEmpty() || descriptionField.getText().isEmpty() ||
+                        languageField.getText().isEmpty() || pagesField.getText().isEmpty() || 
+                        isbnField.getText().isEmpty() || dynamicField1Field.getText().isEmpty() || 
+                        dynamicField2Field.getText().isEmpty() || (!"book".equals((String) typeComboBox.getSelectedItem()) &&
+                        dynamicField3Field.getText().isEmpty())) {
+                    JOptionPane.showMessageDialog(jpnView, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }                
+
+                int quantity = Integer.parseInt(quantityField.getText());
+                String title = titleField.getText();
+                String author = authorField.getText();
+                String description = descriptionField.getText();
+                String language = languageField.getText();
+                int pages = Integer.parseInt(pagesField.getText());
+                String isbn = isbnField.getText();
+
+                String dynamicField1 = dynamicField1Field.getText();
+                String dynamicField2 = dynamicField2Field.getText();
+                String dynamicField3 = dynamicField3Field.getText();
+
+                String selectedType = (String) typeComboBox.getSelectedItem();
+                if ("book".equals(selectedType)) {
+                    Book book = new Book();
+                    book.documentQuantity = quantity;
+                    book.setDocumentTitle(title);
+                    book.setDocumentAuthor(author);
+                    book.setDocumentDescription(description);
+                    book.setDocumentLanguage(language);
+                    book.setDocumentPage(pages);
+                    book.setDocumentISBN(isbn);
+                    book.setBookGenre(dynamicField1);
+                    book.setBookPublisher(dynamicField2);
+
+                    libraryManagementSystem.bookList.add(book);
+                } else if ("magazine".equals(selectedType)) {
+                    Magazine magazine = new Magazine();
+                    magazine.documentQuantity = quantity;
+                    magazine.setDocumentTitle(title);
+                    magazine.setDocumentAuthor(author);
+                    magazine.setDocumentDescription(description);
+                    magazine.setDocumentLanguage(language);
+                    magazine.setDocumentPage(pages);
+                    magazine.setDocumentISBN(isbn);
+                    magazine.setMagazineSubject(dynamicField1);
+                    magazine.setMagazineFrequency(Integer.parseInt(dynamicField2));
+                    magazine.setMagazineIssueNumb(Integer.parseInt(dynamicField3));
+
+                    libraryManagementSystem.magazineList.add(magazine);
+                } else if ("thesis".equals(selectedType)) {
+                    Thesis thesis = new Thesis();
+                    thesis.documentQuantity = quantity;
+                    thesis.setDocumentTitle(title);
+                    thesis.setDocumentAuthor(author);
+                    thesis.setDocumentDescription(description);
+                    thesis.setDocumentLanguage(language);
+                    thesis.setDocumentPage(pages);
+                    thesis.setDocumentISBN(isbn);
+                    thesis.setThesisSubject(dynamicField1);
+                    thesis.setThesisDegree(dynamicField2);
+                    thesis.setThesisUniversity(dynamicField3);
+
+                    libraryManagementSystem.thesisList.add(thesis);
+                }
+                
+
+                libraryManagementSystem.saveData();
+                JOptionPane.showMessageDialog(jpnView, "The document is added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                setupAddDocumentForm();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(jpnView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        jpnView.revalidate();
+        jpnView.repaint();
     }
 
 }
