@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -13,13 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import main.classes.Book;
-import main.classes.Borrower;
-import main.classes.Document;
-import main.classes.Librarian;
-import main.classes.LibraryManagementSystem;
-import main.classes.Magazine;
-import main.classes.Thesis;
+
+import main.classes.*;
 
 public class AddInformationController {
     private String kind;
@@ -275,6 +271,12 @@ public class AddInformationController {
     
         
         jbtAutoFill.addActionListener(e -> {
+            typeComboBox.setSelectedItem("book");
+            dynamicField1Label.setText("Enter Genre: ");
+            dynamicField2Label.setText("Enter Publisher: ");
+            dynamicField3Label.setText("");
+            dynamicField3Field.setVisible(false);
+
             String isbn = isbnField.getText();
                 
             if (isbn.isEmpty()) {
@@ -282,18 +284,30 @@ public class AddInformationController {
                 return;
             }
 
-            // Mock API call to autofill data based on ISBN
-            String title = "Mock Title";  // Example data, would be fetched from the API
-            String author = "Mock Author";
-            String description = "Mock Description";
-            String language = "English";
-            int pages = 200;
-            String dynamicField1 = "Mock Genre";
-            String dynamicField2 = "Mock Publisher";
+            Book book = null;
+            try {
+                book = GoogleBooksAPI.getBookFromISBN(isbn);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "Failed to fetch book information. Please check your internet connection.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+            if (book == null) {
+                JOptionPane.showMessageDialog(null, "No book found with this ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String title = book.getDocumentTitle();
+            String author = book.getDocumentAuthor();
+            String description = book.getDocumentDescription();
+            String language = book.getDocumentLanguage();
+            int pages = book.getDocumentPage();
+            String dynamicField1 = book.getBookGenre();
+            String dynamicField2 = book.getBookPublisher();
             String dynamicField3 = "";  // Leave empty for book
             
-            //HUNG OI LA HUNG
-
             // Fill the fields with mock data
             titleField.setText(title);
             authorField.setText(author);

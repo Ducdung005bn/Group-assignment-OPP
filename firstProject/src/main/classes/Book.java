@@ -14,17 +14,6 @@ public class Book extends Document implements Serializable {
     private String bookGenre;
     private String bookPublisher;
 
-    /**
-     * Overrides the {@code printDocInfo} method from the {@code Document} class
-     * to print additional information specific to a book, such as its genre and publisher.
-     */
-    @Override
-    public void printDocInfo() {
-        super.printDocInfo();
-        System.out.println("Book Genre: " + bookGenre);
-        System.out.println("Book Publisher: " + bookPublisher);
-    }
-
     public void setBookGenre(String bookGenre) {
         this.bookGenre = bookGenre;
     }

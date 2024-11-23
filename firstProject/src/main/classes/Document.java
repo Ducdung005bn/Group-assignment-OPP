@@ -20,19 +20,6 @@ public class Document implements Serializable {
     private int documentPage;
     private String documentISBN;
 
-    /**
-     * Prints the document's information to the console.
-     */
-    public void printDocInfo() {
-        System.out.println("Document Quantity : " + documentQuantity);
-        System.out.println("Document Title : " + documentTitle);
-        System.out.println("Document Author : " + documentAuthor);
-        System.out.println("Document Description : " + documentDescription);
-        System.out.println("Document Language : " + documentLanguage);
-        System.out.println("Document Page : " + documentPage);
-        System.out.println("Document ISBN : " + documentISBN);
-    }
-
     public void setDocumentTitle(String documentTitle) {
         this.documentTitle = documentTitle;
     }

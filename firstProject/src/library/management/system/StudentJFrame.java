@@ -78,7 +78,6 @@ public class StudentJFrame extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 9)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/library/management/system/library_icon.png"))); // NOI18N
         jLabel1.setText("LIBRARY MANAGEMENT SYSTEM");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

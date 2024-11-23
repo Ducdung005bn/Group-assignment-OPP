@@ -114,10 +114,10 @@ public class ScreenSwitchController {
                         node = new FindDocumentJPanel(libraryManagementSystem);
                         break;
                     case "DisplayDocument" :
-                        node = new DisplayDocumentJPanel(libraryManagementSystem);
+                        node = new DisplayOrUpdateDocumentJPanel("display", libraryManagementSystem);
                         break;
                     case "BorrowDocument" :
-                        node = new BorrowDocumentJPanel(borrower, libraryManagementSystem);
+                        node = new BorrowOrRemoveDocumentJPanel(borrower, libraryManagementSystem);
                         break;
                     case "ReturnDocument" :
                         node = new ReturnDocumentJPanel(borrower, libraryManagementSystem);
@@ -136,17 +136,17 @@ public class ScreenSwitchController {
                         node = new FindDocumentJPanel(libraryManagementSystem);
                         break;
                     case "DisplayDocument" :
-                        node = new DisplayDocumentJPanel(libraryManagementSystem);
+                        node = new DisplayOrUpdateDocumentJPanel("display", libraryManagementSystem);
                         break;
                     case "AddDocument" :
                         node = new AddInformationJPanel("document", libraryManagementSystem);
                         break;
-//                    case "RemoveDocument" :
-//                        node = new RemoveDocumentJPanel(librarian, libraryManagementSystem);
-//                        break;
-//                    case "UpdateDocument" :
-//                        node = new UpdateDocumentJPanel(librarian, libraryManagementSystem);
-//                        break;
+                    case "RemoveDocument" :
+                        node = new BorrowOrRemoveDocumentJPanel(libraryManagementSystem);
+                        break;
+                    case "UpdateDocument" :
+                        node = new DisplayOrUpdateDocumentJPanel("update", libraryManagementSystem);
+                        break;
                     case "AddBorrower" :
                         node = new AddInformationJPanel("borrower", libraryManagementSystem);
                         break;

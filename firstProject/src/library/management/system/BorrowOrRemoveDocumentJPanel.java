@@ -3,10 +3,19 @@ package library.management.system;
 import main.classes.Borrower;
 import main.classes.LibraryManagementSystem;
 
-public class BorrowDocumentJPanel extends javax.swing.JPanel {
-    public BorrowDocumentJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
+public class BorrowOrRemoveDocumentJPanel extends javax.swing.JPanel {
+    
+    //JPanel for borrowing documents
+    public BorrowOrRemoveDocumentJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
-        BorrowDocumentController controller = new BorrowDocumentController(jpnView, jtfBorrowDocument, jbtBorrowDocument, borrower, libraryManagementSystem);
+        BorrowOrRemoveDocumentController controller = new BorrowOrRemoveDocumentController(jpnView, jtfBorrowOrRemoveDocument, jbtBorrowOrRemoveDocument, borrower, libraryManagementSystem);
+
+    }
+    
+    //JPanel for removing documents
+    public BorrowOrRemoveDocumentJPanel(LibraryManagementSystem libraryManagementSystem) {
+        initComponents();
+        BorrowOrRemoveDocumentController controller = new BorrowOrRemoveDocumentController(jpnView, jtfBorrowOrRemoveDocument, jbtBorrowOrRemoveDocument, libraryManagementSystem);
 
     }
 
@@ -19,19 +28,19 @@ public class BorrowDocumentJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtfBorrowDocument = new javax.swing.JTextField();
+        jtfBorrowOrRemoveDocument = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jpnView = new javax.swing.JPanel();
-        jbtBorrowDocument = new javax.swing.JButton();
+        jbtBorrowOrRemoveDocument = new javax.swing.JButton();
 
-        jtfBorrowDocument.addActionListener(new java.awt.event.ActionListener() {
+        jtfBorrowOrRemoveDocument.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfBorrowDocumentActionPerformed(evt);
+                jtfBorrowOrRemoveDocumentActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel2.setText("Borrow the document with ISBN:");
+        jLabel2.setText("Deal with the document with ISBN:");
 
         javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
         jpnView.setLayout(jpnViewLayout);
@@ -44,10 +53,11 @@ public class BorrowDocumentJPanel extends javax.swing.JPanel {
             .addGap(0, 215, Short.MAX_VALUE)
         );
 
-        jbtBorrowDocument.setText("BORROW");
-        jbtBorrowDocument.addActionListener(new java.awt.event.ActionListener() {
+        jbtBorrowOrRemoveDocument.setActionCommand("BUTTON");
+        jbtBorrowOrRemoveDocument.setLabel("BUTTON\n");
+        jbtBorrowOrRemoveDocument.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtBorrowDocumentActionPerformed(evt);
+                jbtBorrowOrRemoveDocumentActionPerformed(evt);
             }
         });
 
@@ -59,11 +69,11 @@ public class BorrowDocumentJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtBorrowDocument)
+                        .addComponent(jbtBorrowOrRemoveDocument)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jtfBorrowDocument, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfBorrowOrRemoveDocument, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -73,27 +83,27 @@ public class BorrowDocumentJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbtBorrowDocument))
-                    .addComponent(jtfBorrowDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jbtBorrowOrRemoveDocument))
+                    .addComponent(jtfBorrowOrRemoveDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jpnView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfBorrowDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBorrowDocumentActionPerformed
+    private void jtfBorrowOrRemoveDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBorrowOrRemoveDocumentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfBorrowDocumentActionPerformed
+    }//GEN-LAST:event_jtfBorrowOrRemoveDocumentActionPerformed
 
-    private void jbtBorrowDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBorrowDocumentActionPerformed
+    private void jbtBorrowOrRemoveDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBorrowOrRemoveDocumentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtBorrowDocumentActionPerformed
+    }//GEN-LAST:event_jbtBorrowOrRemoveDocumentActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JButton jbtBorrowDocument;
+    private javax.swing.JButton jbtBorrowOrRemoveDocument;
     private javax.swing.JPanel jpnView;
-    private javax.swing.JTextField jtfBorrowDocument;
+    private javax.swing.JTextField jtfBorrowOrRemoveDocument;
     // End of variables declaration//GEN-END:variables
 }

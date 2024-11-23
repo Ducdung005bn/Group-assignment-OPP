@@ -5,7 +5,7 @@ import main.classes.Borrower;
 import main.classes.LibraryManagementSystem;
 import main.classes.PendingUser;
 
-public class ReturnDocumentJPanel extends javax.swing.JPanel {
+public class ReturnDocumentJPanel extends JPanel {
 
     public ReturnDocumentJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
@@ -21,7 +21,7 @@ public class ReturnDocumentJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnView = new javax.swing.JPanel();
+        jpnView = new JPanel();
 
         jpnView.setBackground(new java.awt.Color(204, 255, 204));
 
@@ -54,6 +54,6 @@ public class ReturnDocumentJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jpnView;
+    private JPanel jpnView;
     // End of variables declaration//GEN-END:variables
 }

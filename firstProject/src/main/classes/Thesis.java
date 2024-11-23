@@ -15,19 +15,6 @@ public class Thesis extends Document implements Serializable {
     private String thesisDegree;
     private String thesisUniversity;
 
-    /**
-     * Overrides the {@code printDocInfo} method from the {@code Document} class
-     * to print additional information specific to a thesis, such as its subject,
-     * degree, and university.
-     */
-    @Override
-    public void printDocInfo() {
-        super.printDocInfo();
-        System.out.println("Thesis Subject: " + this.thesisSubject);
-        System.out.println("Thesis Degree: " + this.thesisDegree);
-        System.out.println("Thesis University: " + this.thesisUniversity);
-    }
-
     public void setThesisSubject(String thesisSubject) {
         this.thesisSubject = thesisSubject;
     }

@@ -40,10 +40,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="118" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="102" max="32767" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                          <Component id="jtfDisplayDocument" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="jtfDisplayOrUpdateDocument" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jpnView" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -55,7 +55,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jtfDisplayDocument" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtfDisplayOrUpdateDocument" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -71,12 +71,12 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Black" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Display the document with ISBN:"/>
+            <Property name="text" type="java.lang.String" value="Deal with the document with ISBN:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtfDisplayDocument">
+        <Component class="javax.swing.JTextField" name="jtfDisplayOrUpdateDocument">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfDisplayDocumentActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfDisplayOrUpdateDocumentActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jpnView">

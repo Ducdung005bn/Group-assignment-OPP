@@ -22,7 +22,7 @@ public class LogInJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnView = new javax.swing.JPanel();
+        jpnView = new JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -134,7 +134,7 @@ public class LogInJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton jbtLogIn;
-    private javax.swing.JPanel jpnView;
+    private JPanel jpnView;
     private javax.swing.JTextField jtfID;
     private javax.swing.JTextField jtfPassword;
     // End of variables declaration//GEN-END:variables

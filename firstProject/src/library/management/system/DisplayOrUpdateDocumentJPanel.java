@@ -2,12 +2,13 @@ package library.management.system;
 
 import main.classes.LibraryManagementSystem;
 
-public class DisplayDocumentJPanel extends javax.swing.JPanel {
+public class DisplayOrUpdateDocumentJPanel extends javax.swing.JPanel {
 
-    public DisplayDocumentJPanel(LibraryManagementSystem libraryManagementSystem) {
+    public DisplayOrUpdateDocumentJPanel(String kind, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
-        DisplayDocumentController controller = new DisplayDocumentController(
-                jpnView, jtfDisplayDocument, libraryManagementSystem);
+        
+        DisplayOrUpdateDocumentController controller = new DisplayOrUpdateDocumentController(kind,
+                jpnView, jtfDisplayOrUpdateDocument, libraryManagementSystem);
     }
 
     /**
@@ -21,17 +22,17 @@ public class DisplayDocumentJPanel extends javax.swing.JPanel {
 
         jpnRoot = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jtfDisplayDocument = new javax.swing.JTextField();
+        jtfDisplayOrUpdateDocument = new javax.swing.JTextField();
         jpnView = new javax.swing.JPanel();
 
         jpnRoot.setPreferredSize(new java.awt.Dimension(786, 68));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel1.setText("Display the document with ISBN:");
+        jLabel1.setText("Deal with the document with ISBN:");
 
-        jtfDisplayDocument.addActionListener(new java.awt.event.ActionListener() {
+        jtfDisplayOrUpdateDocument.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfDisplayDocumentActionPerformed(evt);
+                jtfDisplayOrUpdateDocumentActionPerformed(evt);
             }
         });
 
@@ -56,10 +57,10 @@ public class DisplayDocumentJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpnRootLayout.createSequentialGroup()
-                        .addGap(0, 118, Short.MAX_VALUE)
+                        .addGap(0, 102, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(27, 27, 27)
-                        .addComponent(jtfDisplayDocument, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfDisplayOrUpdateDocument, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -67,7 +68,7 @@ public class DisplayDocumentJPanel extends javax.swing.JPanel {
             jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnRootLayout.createSequentialGroup()
                 .addGroup(jpnRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jtfDisplayDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfDisplayOrUpdateDocument, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addComponent(jpnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -86,15 +87,15 @@ public class DisplayDocumentJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtfDisplayDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDisplayDocumentActionPerformed
+    private void jtfDisplayOrUpdateDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDisplayOrUpdateDocumentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfDisplayDocumentActionPerformed
+    }//GEN-LAST:event_jtfDisplayOrUpdateDocumentActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jpnRoot;
     private javax.swing.JPanel jpnView;
-    private javax.swing.JTextField jtfDisplayDocument;
+    private javax.swing.JTextField jtfDisplayOrUpdateDocument;
     // End of variables declaration//GEN-END:variables
 }

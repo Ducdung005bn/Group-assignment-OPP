@@ -13,26 +13,31 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import main.classes.Book;
 import main.classes.BorrowData;
 import main.classes.Borrower;
 import main.classes.Document;
 import main.classes.LibraryManagementSystem;
+import main.classes.Magazine;
+import main.classes.Thesis;
 
-public class BorrowDocumentController {
+public class BorrowOrRemoveDocumentController {
     private JPanel jpnView;
-    private JTextField jtfBorrowDocument;
-    private JButton jbtBorrowDocument;
+    private JTextField jtfBorrowOrRemoveDocument;
+    private JButton jbtBorrowOrRemoveDocument;
     private Borrower borrower;
     private LibraryManagementSystem libraryManagementSystem; 
     
-    public BorrowDocumentController (JPanel jpnView, JTextField jtfBorrowDocument, JButton jbtBorrowDocument, Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
+    //Constructer for borrowing documents
+    public BorrowOrRemoveDocumentController (JPanel jpnView, JTextField jtfBorrowOrRemoveDocument, JButton jbtBorrowOrRemoveDocument, Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
-        this.jtfBorrowDocument = jtfBorrowDocument;
-        this.jbtBorrowDocument = jbtBorrowDocument;
+        this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
+        this.jbtBorrowOrRemoveDocument = jbtBorrowOrRemoveDocument;
         this.borrower = borrower;
         this.libraryManagementSystem = libraryManagementSystem;
+        this.jbtBorrowOrRemoveDocument.setText("BORROW");
         
-        jtfBorrowDocument.getDocument().addDocumentListener(new DocumentListener() {
+        jtfBorrowOrRemoveDocument.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 searchAndDisplay();
@@ -49,12 +54,41 @@ public class BorrowDocumentController {
             }
         });
         
-        jbtBorrowDocument.addActionListener(e -> handleBorrowDocument());
-        jbtBorrowDocument.setEnabled(false);
+        jbtBorrowOrRemoveDocument.addActionListener(e -> handleBorrowDocument());
+        jbtBorrowOrRemoveDocument.setEnabled(false);
+    }
+    
+    //Constructer for removing documents
+    public BorrowOrRemoveDocumentController (JPanel jpnView, JTextField jtfBorrowOrRemoveDocument, JButton jbtBorrowOrRemoveDocument, LibraryManagementSystem libraryManagementSystem) {
+        this.jpnView = jpnView;
+        this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
+        this.jbtBorrowOrRemoveDocument = jbtBorrowOrRemoveDocument;
+        this.libraryManagementSystem = libraryManagementSystem;
+        this.jbtBorrowOrRemoveDocument.setText("REMOVE");
+        
+        jtfBorrowOrRemoveDocument.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchAndDisplay();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchAndDisplay();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchAndDisplay();
+            }
+        });
+        
+        jbtBorrowOrRemoveDocument.addActionListener(e -> handleRemoveDocument());
+        jbtBorrowOrRemoveDocument.setEnabled(false);
     }
     
     private void searchAndDisplay() {
-        String isbnInput = jtfBorrowDocument.getText().trim();
+        String isbnInput = jtfBorrowOrRemoveDocument.getText().trim();
     
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
                 .filter(doc -> doc.getDocumentISBN().startsWith(isbnInput))
@@ -83,14 +117,14 @@ public class BorrowDocumentController {
             authorLabel.setFont(font);
             jpnView.add(authorLabel);
             
-            jbtBorrowDocument.setEnabled(true);
+            jbtBorrowOrRemoveDocument.setEnabled(true);
             jpnView.revalidate();
             jpnView.repaint();
         
         } else {
             //clear display
             jpnView.removeAll();
-            jbtBorrowDocument.setEnabled(false);
+            jbtBorrowOrRemoveDocument.setEnabled(false);
             jpnView.revalidate();
             jpnView.repaint();
         }
@@ -98,12 +132,12 @@ public class BorrowDocumentController {
     
     private void handleBorrowDocument() {
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
-            .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowDocument.getText().trim()))
+            .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowOrRemoveDocument.getText().trim()))
             .collect(Collectors.toList());
             
         String isbn = matchingDocuments.get(0).getDocumentISBN();
            
-        String reason = borrower.isAbleToBorrow(isbn, libraryManagementSystem);
+        String reason = isAbleToBorrow(isbn, libraryManagementSystem);
             
         if (reason == null) {  //is able to borrow the book
         BorrowData borrowData = new BorrowData();
@@ -138,6 +172,29 @@ public class BorrowDocumentController {
         }
         libraryManagementSystem.saveData();
     }
+    
+    private String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
+        Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
+
+        boolean alreadyBorrow = false;
+        for (BorrowData borrowData : borrower.borrowingHistory) {
+            if (borrowData.getBorrowedBookISBN() == documentISBN) {
+                alreadyBorrow = true;
+                break;
+            }
+        }
+        if (document == null) {
+            return "The book with ISBN " + documentISBN + " was not found.";
+        } else if (document.documentQuantity == 0) {
+            return "The book with ISBN " + documentISBN + " is out of stock.";
+        } else if (alreadyBorrow) {
+            return "You have already borrowed this book.";
+        } else if (borrower.borrowingBookCount >= LibraryManagementSystem.MAX_BORROW_LIMIT) {
+            return "You have reached the maximum borrow limit of " + LibraryManagementSystem.MAX_BORROW_LIMIT + " books.";
+        } else {
+            return null;  //is able to borrow the book
+        }
+    }  
         
     private void displayBorrowData(BorrowData borrowData) {
         jpnView.removeAll();
@@ -162,5 +219,23 @@ public class BorrowDocumentController {
 
         jpnView.revalidate();
         jpnView.repaint();
+    }
+    
+    private void handleRemoveDocument() {
+        List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
+            .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowOrRemoveDocument.getText().trim()))
+            .collect(Collectors.toList());
+        Document removedDocument = matchingDocuments.get(0);
+        if (removedDocument instanceof Book) {
+            libraryManagementSystem.bookList.remove((Book) removedDocument);
+        } else if (removedDocument instanceof Thesis) {
+            libraryManagementSystem.thesisList.remove( (Thesis) removedDocument);
+        } else if (removedDocument instanceof Magazine) {
+            libraryManagementSystem.magazineList.remove( (Magazine) removedDocument);
+        }
+                      
+        JOptionPane.showMessageDialog(null, "You have removed the book successfully.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+        jtfBorrowOrRemoveDocument.setText("");
+        libraryManagementSystem.saveData();
     }
 }

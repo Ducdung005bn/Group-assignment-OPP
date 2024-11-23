@@ -13,16 +13,6 @@ public class User implements Serializable {
     private Date userDateOfBirth;
     private String userPhoneNumb;
 
-    /**
-     * Prints the user's information to the console.
-     */
-    public void printUserInfo() {
-        System.out.println("User ID: " + userID);
-        System.out.println("User Name: " + userName);
-        System.out.println("User Date of Birth: " + userDateOfBirth);
-        System.out.println("User Phone Numb: " + userPhoneNumb);
-    }
-
     public int getUserID() {
         return userID;
     }

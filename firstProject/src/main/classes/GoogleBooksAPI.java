@@ -1,3 +1,5 @@
+package main.classes;
+
 import okhttp3.OkHttpClient; // Manages HTTP connections and performs HTTP requests efficiently.
 import okhttp3.Request; // Constructs an HTTP request with a URL and necessary parameters.
 import okhttp3.Response; // Handles the server’s response, including status code and JSON content.
@@ -49,91 +51,72 @@ public class GoogleBooksAPI {
     }
 
     /**
-     * Retrieves and prints book information based on ISBN.
+     * Retrieves book information from Google Books API and maps it to a Book object.
      *
-     * @param isbn The ISBN of the book to retrieve and print information for.
+     * @param isbn The ISBN of the book to retrieve information for.
+     * @return A Book object with the retrieved information.
      * @throws IOException If there is an error with network or server response.
      */
-    public static void printBookInfo(String isbn) throws IOException {
-        // Call searchByISBN to get JSON data from the API
+    public static Book getBookFromISBN(String isbn) throws IOException {
         String jsonResponse = searchByISBN(isbn);
-        System.out.println("JSON Response: " + jsonResponse);
-
-        // Parse JSON to extract book information
         JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-        if (jsonObject.has("items")) {
-            JsonObject book = jsonObject.getAsJsonArray("items").get(0).getAsJsonObject();
-            JsonObject volumeInfo = book.getAsJsonObject("volumeInfo");
 
-            // Extract and print title
-            String title = volumeInfo.has("title") ? volumeInfo.get("title").getAsString() : "N/A";
-            System.out.println("Title: " + title);
-
-            // Extract and print authors
-            if (volumeInfo.has("authors")) {
-                JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
-                System.out.print("Authors: ");
-                for (JsonElement author : authorsArray) {
-                    System.out.print(author.getAsString() + " ");
-                }
-                System.out.println();
-            } else {
-                System.out.println("Authors: N/A");
-            }
-
-            // Extract and print publisher
-            String publisher = volumeInfo.has("publisher") ? volumeInfo.get("publisher").getAsString() : "N/A";
-            System.out.println("Publisher: " + publisher);
-
-            // Extract and print published date
-            String publishedDate = volumeInfo.has("publishedDate") ? volumeInfo.get("publishedDate").getAsString() : "N/A";
-            System.out.println("Published Date: " + publishedDate);
-
-            // Extract and print description
-            String description = volumeInfo.has("description") ? volumeInfo.get("description").getAsString() : "N/A";
-            System.out.println("Description: " + description);
-
-            // Extract and print page count
-            int pageCount = volumeInfo.has("pageCount") ? volumeInfo.get("pageCount").getAsInt() : 0;
-            System.out.println("Page Count: " + pageCount);
-
-            // Extract and print categories
-            if (volumeInfo.has("categories")) {
-                JsonArray categoriesArray = volumeInfo.getAsJsonArray("categories");
-                System.out.print("Categories: ");
-                for (JsonElement category : categoriesArray) {
-                    System.out.print(category.getAsString() + " ");
-                }
-                System.out.println();
-            } else {
-                System.out.println("Categories: N/A");
-            }
-
-            // Extract and print average rating
-            double averageRating = volumeInfo.has("averageRating") ? volumeInfo.get("averageRating").getAsDouble() : 0.0;
-            System.out.println("Average Rating: " + averageRating);
-
-            // Extract and print ratings count
-            int ratingsCount = volumeInfo.has("ratingsCount") ? volumeInfo.get("ratingsCount").getAsInt() : 0;
-            System.out.println("Ratings Count: " + ratingsCount);
-
-            // Extract and print ISBNs (if available)
-            if (volumeInfo.has("industryIdentifiers")) {
-                JsonArray identifiers = volumeInfo.getAsJsonArray("industryIdentifiers");
-                for (JsonElement identifier : identifiers) {
-                    JsonObject idObj = identifier.getAsJsonObject();
-                    String type = idObj.has("type") ? idObj.get("type").getAsString() : "N/A";
-                    String id = idObj.has("identifier") ? idObj.get("identifier").getAsString() : "N/A";
-                    System.out.println(type + ": " + id);
-                }
-            }
-
-            // Extract and print language
-            String language = volumeInfo.has("language") ? volumeInfo.get("language").getAsString() : "N/A";
-            System.out.println("Language: " + language);
-
-        } else {
+        if (!jsonObject.has("items")) {
             System.out.println("Book not found with ISBN: " + isbn);
+            return null;
         }
+
+        JsonObject bookJson = jsonObject.getAsJsonArray("items").get(0).getAsJsonObject();
+        JsonObject volumeInfo = bookJson.getAsJsonObject("volumeInfo");
+
+        Book book = new Book();
+        book.setDocumentISBN(isbn);
+
+        // Set title
+        if (volumeInfo.has("title")) {
+            book.setDocumentTitle(volumeInfo.get("title").getAsString());
+        }
+
+        // Set authors
+        if (volumeInfo.has("authors")) {
+            JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
+            StringBuilder authors = new StringBuilder();
+            for (JsonElement author : authorsArray) {
+                authors.append(author.getAsString()).append(", ");
+            }
+            book.setDocumentAuthor(authors.toString().replaceAll(", $", ""));
+        }
+
+        // Set publisher
+        if (volumeInfo.has("publisher")) {
+            book.setBookPublisher(volumeInfo.get("publisher").getAsString());
+        }
+
+        // Set description
+        if (volumeInfo.has("description")) {
+            book.setDocumentDescription(volumeInfo.get("description").getAsString());
+        }
+
+        // Set page count
+        if (volumeInfo.has("pageCount")) {
+            book.setDocumentPage(volumeInfo.get("pageCount").getAsInt());
+        }
+
+        // Set categories
+        if (volumeInfo.has("categories")) {
+            JsonArray categoriesArray = volumeInfo.getAsJsonArray("categories");
+            StringBuilder categories = new StringBuilder();
+            for (JsonElement category : categoriesArray) {
+                categories.append(category.getAsString()).append(", ");
+            }
+            book.setBookGenre(categories.toString().replaceAll(", $", ""));
+        }
+
+        // Set language
+        if (volumeInfo.has("language")) {
+            book.setDocumentLanguage(volumeInfo.get("language").getAsString());
+        }
+        return book;
     }
+
 }

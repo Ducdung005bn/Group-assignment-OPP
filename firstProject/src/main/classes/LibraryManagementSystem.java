@@ -128,64 +128,6 @@ public class LibraryManagementSystem implements Serializable {
         return documentsOfAuthor.isEmpty() ? null : documentsOfAuthor;
     }
 
-    public void findAndPrintDocuments() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Search by: ");
-        System.out.println("[1] ISBN");
-        System.out.println("[2] Title");
-        System.out.println("[3] Author");
-        System.out.print("Enter your choice: ");
-
-        String searchInput = scanner.nextLine();
-
-        switch (searchInput) {
-            case "1":
-                System.out.print("Enter ISBN: ");
-                String iSBNSearch = scanner.nextLine();
-                Document foundDocument = findDocumentByISBN(iSBNSearch);
-                if (foundDocument != null) {
-                    System.out.printf(foundDocument.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
-                            foundDocument.getDocumentTitle(), foundDocument.getDocumentAuthor());
-                } else {
-                    System.out.println("No document found with ISBN: " + iSBNSearch);
-                }
-                break;
-
-            case "2":
-                System.out.print("Enter Title: ");
-                String titleSearch = scanner.nextLine();
-                Vector<Document> documentsByTitle = findDocumentByTitle(titleSearch);
-                if (documentsByTitle != null) {
-                    for (Document doc : documentsByTitle) {
-                        System.out.printf(doc.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
-                                doc.getDocumentTitle(), doc.getDocumentAuthor());
-                    }
-                } else {
-                    System.out.println("No documents found with title: " + titleSearch);
-                }
-                break;
-
-            case "3":
-                System.out.print("Enter Author: ");
-                String authorSearch = scanner.nextLine();
-                Vector<Document> documentsByAuthor = findDocumentByAuthor(authorSearch);
-                if (documentsByAuthor != null) {
-                    for (Document doc : documentsByAuthor) {
-                        System.out.printf(doc.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
-                                doc.getDocumentTitle(), doc.getDocumentAuthor());
-                    }
-                } else {
-                    System.out.println("No documents found by author: " + authorSearch);
-                }
-                break;
-
-            default:
-                System.out.println("Invalid search option.");
-                break;
-        }
-    }
-
     /**
      * Finds a user by their unique ID.
      *

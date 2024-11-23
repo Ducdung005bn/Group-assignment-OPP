@@ -15,19 +15,6 @@ public class Magazine extends Document implements Serializable {
     private int magazineFrequency;
     private int magazineIssueNumb;
 
-    /**
-     * Overrides the {@code printDocInfo} method from the {@code Document} class
-     * to print additional information specific to a magazine, such as its subject,
-     * frequency, and issue number.
-     */
-    @Override
-    public void printDocInfo() {
-        super.printDocInfo();
-        System.out.println("Magazine Subject: " + this.magazineSubject);
-        System.out.println("Magazine Frequency: " + this.magazineFrequency);
-        System.out.println("Magazine Issue Number: " + this.magazineIssueNumb);
-    }
-
     public void setMagazineSubject(String magazineSubject) {
         this.magazineSubject = magazineSubject;
     }

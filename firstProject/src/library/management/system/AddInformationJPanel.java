@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import main.classes.LibraryManagementSystem;
 
-public class AddInformationJPanel extends javax.swing.JPanel {
+public class AddInformationJPanel extends JPanel {
 
     public AddInformationJPanel(String kind, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
@@ -20,9 +20,9 @@ public class AddInformationJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jpnRoot = new javax.swing.JPanel();
-        jbtAdd = new javax.swing.JButton();
-        jpnView = new javax.swing.JPanel();
+        jpnRoot = new JPanel();
+        jbtAdd = new JButton();
+        jpnView = new JPanel();
 
         jpnRoot.setPreferredSize(new java.awt.Dimension(786, 0));
 
@@ -87,8 +87,8 @@ public class AddInformationJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jbtAdd;
-    private javax.swing.JPanel jpnRoot;
-    private javax.swing.JPanel jpnView;
+    private JButton jbtAdd;
+    private JPanel jpnRoot;
+    private JPanel jpnView;
     // End of variables declaration//GEN-END:variables
 }
