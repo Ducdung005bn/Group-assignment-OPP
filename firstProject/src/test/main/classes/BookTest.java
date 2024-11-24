@@ -37,7 +37,6 @@ public class BookTest {
         book.setBookGenre("Fantasy");
         book.setBookPublisher("HarperCollins");
 
-
         final String[] output = new String[2];
         Document document = new Document() {
             @Override
@@ -46,7 +45,6 @@ public class BookTest {
                 output[0] = "Document Info";
             }
         };
-
 
         Book testBook = new Book() {
             @Override
@@ -59,7 +57,6 @@ public class BookTest {
         testBook.setBookGenre("Fantasy");
         testBook.setBookPublisher("HarperCollins");
         testBook.printDocInfo();
-
 
         assertEquals("Document Info", output[0]);
         assertEquals("Book Genre: Fantasy\nBook Publisher: HarperCollins", output[1]);
