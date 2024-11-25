@@ -25,6 +25,6 @@
 # Bỏ qua file cấu hình cá nhân
 *.properties
 *.xml
-
+*.iml
 # Bỏ qua thư mục chứa thông tin phiên bản
 .vscode/
