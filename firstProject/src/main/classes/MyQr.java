@@ -20,6 +20,12 @@ public class MyQr {
 
     public static String fullFillInformationQR(Document document) {
         String fullFillInformation = "ISBN: " + document.getDocumentISBN();
+        fullFillInformation += "\nQuantity: " + document.documentQuantity;
+        fullFillInformation += "\nTitle: " + document.getDocumentTitle();
+        fullFillInformation += "\nAuthor: " + document.getDocumentAuthor();
+        fullFillInformation += "\nDescription: " + document.getDocumentDescription();
+        fullFillInformation += "\nLanguage: " + document.getDocumentLanguage();
+        fullFillInformation += "\nPage: " + document.getDocumentPage();
 
         if (document instanceof Book) {
             Book book = (Book) document;

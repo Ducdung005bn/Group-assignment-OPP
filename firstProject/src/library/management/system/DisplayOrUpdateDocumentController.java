@@ -3,6 +3,7 @@ package library.management.system;
 import main.classes.Book;
 import main.classes.Document;
 import main.classes.LibraryManagementSystem;
+import main.classes.MyQr;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -59,67 +60,83 @@ public class DisplayOrUpdateDocumentController {
     }
     private void displayOrUpdateDocumentDetails(Document document) {
         jpnView.removeAll();
-        jpnView.setLayout(new GridLayout(0, 1));
-        
-        JButton updateButton = new JButton("UPDATE");
-        if (kind.equals("update")){
-            jpnView.add(updateButton);
+        jpnView.setLayout(new BorderLayout(10, 10)); // Set BorderLayout
+
+        // Create a panel for QR Code at the top
+        JPanel qrPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        try {
+            // Generate QR Code file for the document
+            MyQr myQr = new MyQr();
+            myQr.generateQRDocument(document);
+
+            // Load the QR Code image
+            String qrFilePath = "qr_" + document.getDocumentISBN() + ".png";
+            ImageIcon qrIcon = new ImageIcon(qrFilePath);
+
+            // Scale image for better display
+            Image scaledImage = qrIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            qrIcon = new ImageIcon(scaledImage);
+
+            // Create a label to hold the QR image
+            JLabel qrLabel = new JLabel(qrIcon);
+            qrLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+            // Add the QR label to the panel
+            qrPanel.add(qrLabel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(jpnView, "Failed to generate QR Code: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-           
-        Font font = new Font("Arial", Font.PLAIN, 16); 
-        
+        jpnView.add(qrPanel, BorderLayout.NORTH); // Place QR Panel at the top
+
+        // Create a panel for the form fields (Quantity, Title, etc.)
+        JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10)); // Two columns for labels and fields
+        Font font = new Font("Arial", Font.PLAIN, 16);
+
         // Shared fields
-        JLabel quantityLabel = new JLabel("Quantity: ");
+        formPanel.add(new JLabel("Quantity: ", JLabel.RIGHT));
         JTextField quantityField = new JTextField(String.valueOf(document.documentQuantity));
-        jpnView.add(quantityLabel);
-        jpnView.add(quantityField);
+        formPanel.add(quantityField);
 
-        JLabel titleLabel = new JLabel("Title: ");
+        formPanel.add(new JLabel("Title: ", JLabel.RIGHT));
         JTextField titleField = new JTextField(document.getDocumentTitle());
-        jpnView.add(titleLabel);
-        jpnView.add(titleField);
+        formPanel.add(titleField);
 
-        JLabel authorLabel = new JLabel("Author: ");
+        formPanel.add(new JLabel("Author: ", JLabel.RIGHT));
         JTextField authorField = new JTextField(document.getDocumentAuthor());
-        jpnView.add(authorLabel);
-        jpnView.add(authorField);
+        formPanel.add(authorField);
 
-        JLabel descriptionLabel = new JLabel("Description: ");
+        formPanel.add(new JLabel("Description: ", JLabel.RIGHT));
         JTextField descriptionField = new JTextField(document.getDocumentDescription());
-        jpnView.add(descriptionLabel);
-        jpnView.add(descriptionField);
+        formPanel.add(descriptionField);
 
-        JLabel languageLabel = new JLabel("Language: ");
+        formPanel.add(new JLabel("Language: ", JLabel.RIGHT));
         JTextField languageField = new JTextField(document.getDocumentLanguage());
-        jpnView.add(languageLabel);
-        jpnView.add(languageField);
+        formPanel.add(languageField);
 
-        JLabel pagesLabel = new JLabel("Number of Pages: ");
+        formPanel.add(new JLabel("Number of Pages: ", JLabel.RIGHT));
         JTextField pagesField = new JTextField(String.valueOf(document.getDocumentPage()));
-        jpnView.add(pagesLabel);
-        jpnView.add(pagesField);
+        formPanel.add(pagesField);
 
-        JLabel isbnLabel = new JLabel("ISBN: ");
+        formPanel.add(new JLabel("ISBN: ", JLabel.RIGHT));
         JTextField isbnField = new JTextField(document.getDocumentISBN());
-        jpnView.add(isbnLabel);
-        jpnView.add(isbnField);
+        formPanel.add(isbnField);
 
-        // Dynamic fields
-        JLabel dynamicField1Label = new JLabel();
+        // Dynamic fields based on document type
+        JLabel dynamicField1Label = new JLabel("", JLabel.RIGHT);
         JTextField dynamicField1Field = new JTextField(20);
-        jpnView.add(dynamicField1Label);
-        jpnView.add(dynamicField1Field);
+        formPanel.add(dynamicField1Label);
+        formPanel.add(dynamicField1Field);
 
-        JLabel dynamicField2Label = new JLabel();
+        JLabel dynamicField2Label = new JLabel("", JLabel.RIGHT);
         JTextField dynamicField2Field = new JTextField(20);
-        jpnView.add(dynamicField2Label);
-        jpnView.add(dynamicField2Field);
+        formPanel.add(dynamicField2Label);
+        formPanel.add(dynamicField2Field);
 
-        JLabel dynamicField3Label = new JLabel();
+        JLabel dynamicField3Label = new JLabel("", JLabel.RIGHT);
         JTextField dynamicField3Field = new JTextField(20);
-        jpnView.add(dynamicField3Label);
-        jpnView.add(dynamicField3Field);
-        
+        formPanel.add(dynamicField3Label);
+        formPanel.add(dynamicField3Field);
+
         if (document instanceof Book) {
             dynamicField1Label.setText("Genre: ");
             dynamicField1Field.setText(((Book) document).getBookGenre());
@@ -144,7 +161,17 @@ public class DisplayOrUpdateDocumentController {
             dynamicField3Field.setText(String.valueOf(((Magazine) document).getMagazineIssueNumb()));
             dynamicField3Field.setVisible(true);
         }
-        
+
+        jpnView.add(formPanel, BorderLayout.CENTER); // Add the form panel to the center of the main panel
+
+        // Button Panel for Update Button
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton updateButton = new JButton("UPDATE");
+        if (kind.equals("update")) {
+            buttonPanel.add(updateButton);
+        }
+        jpnView.add(buttonPanel, BorderLayout.SOUTH); // Add the button panel at the bottom
+
         if (kind.equals("display")) {
             quantityField.setEditable(false);
             titleField.setEditable(false);
@@ -157,11 +184,7 @@ public class DisplayOrUpdateDocumentController {
             dynamicField1Field.setEditable(false);
             dynamicField2Field.setEditable(false);
             dynamicField3Field.setEditable(false);
-            
-            jpnView.revalidate();
-            jpnView.repaint();
         } else if (kind.equals("update")) {
-           
             quantityField.setEditable(true);
             titleField.setEditable(true);
             authorField.setEditable(true);
@@ -174,12 +197,11 @@ public class DisplayOrUpdateDocumentController {
             dynamicField2Field.setEditable(true);
             dynamicField3Field.setEditable(true);
 
-            
             updateButton.addActionListener(e -> {
                 if (quantityField.getText().isEmpty() || titleField.getText().isEmpty() ||
                         authorField.getText().isEmpty() || descriptionField.getText().isEmpty() ||
-                        languageField.getText().isEmpty() || pagesField.getText().isEmpty() || 
-                        isbnField.getText().isEmpty() || dynamicField1Field.getText().isEmpty() || 
+                        languageField.getText().isEmpty() || pagesField.getText().isEmpty() ||
+                        isbnField.getText().isEmpty() || dynamicField1Field.getText().isEmpty() ||
                         dynamicField2Field.getText().isEmpty() || !(document instanceof Book) &&
                         dynamicField3Field.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(jpnView, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -217,15 +239,16 @@ public class DisplayOrUpdateDocumentController {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(jpnView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
- 
             });
-            jpnView.revalidate();
-            jpnView.repaint();
         }
-    }
-    
 
-    
+        jpnView.revalidate();
+        jpnView.repaint();
+    }
+
+
+
+
     private void clearDisplay() {
         jpnView.removeAll();
         jpnView.revalidate();

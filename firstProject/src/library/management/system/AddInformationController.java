@@ -284,30 +284,33 @@ public class AddInformationController {
                 return;
             }
 
-            Book book = null;
-            try {
-                book = GoogleBooksAPI.getBookFromISBN(isbn);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null,
-                        "Failed to fetch book information. Please check your internet connection.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            String title = "";
+            String author = "";
+            String description = "";
+            String language = "";
+            int pages = 0;
+            String dynamicField1 = "";
+            String dynamicField2 = "";
+            String dynamicField3 = "";  // Leave empty for book
 
-            if (book == null) {
-                JOptionPane.showMessageDialog(null, "No book found with this ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
+            Object result = GoogleBooksSyncFetcher.fetchBook(isbn);
+
+            if (result instanceof Book) {
+                Book book = (Book) result;
+
+                title = book.getDocumentTitle();
+                author = book.getDocumentAuthor();
+                description = book.getDocumentDescription();
+                language = book.getDocumentLanguage();
+                pages = book.getDocumentPage();
+                dynamicField1 = book.getBookGenre();
+                dynamicField2 = book.getBookPublisher();
+                dynamicField3 = "";  // Leave empty for book
+            } else if (result instanceof String) {
+                JOptionPane.showMessageDialog(jpnView, result, "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            String title = book.getDocumentTitle();
-            String author = book.getDocumentAuthor();
-            String description = book.getDocumentDescription();
-            String language = book.getDocumentLanguage();
-            int pages = book.getDocumentPage();
-            String dynamicField1 = book.getBookGenre();
-            String dynamicField2 = book.getBookPublisher();
-            String dynamicField3 = "";  // Leave empty for book
-            
             // Fill the fields with mock data
             titleField.setText(title);
             authorField.setText(author);
