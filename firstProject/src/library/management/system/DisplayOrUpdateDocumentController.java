@@ -14,12 +14,26 @@ import java.util.stream.Collectors;
 import main.classes.Magazine;
 import main.classes.Thesis;
 
+/**
+ * Controller for displaying or updating documents in the library management system.
+ * This class listens for changes in the ISBN input field and performs a search
+ * for matching documents. If a document is found, it displays its details and allows
+ * for updating the information if required.
+ */
 public class DisplayOrUpdateDocumentController {
     private JPanel jpnView;
     private JTextField jtfDisplayOrUpdateDocument;
     private LibraryManagementSystem libraryManagementSystem; 
     private String kind;
 
+    /**
+     * Constructs a DisplayOrUpdateDocumentController.
+     *
+     * @param kind                    The kind of operation ('display' or 'update')
+     * @param jpnView                 The panel where the document details will be displayed
+     * @param jtfDisplayOrUpdateDocument The text field for ISBN input
+     * @param libraryManagementSystem The system containing the library's documents
+     */
     public DisplayOrUpdateDocumentController(String kind, JPanel jpnView, JTextField jtfDisplayOrUpdateDocument, LibraryManagementSystem libraryManagementSystem) {
         this.kind = kind;
         this.jpnView = jpnView;
@@ -43,14 +57,19 @@ public class DisplayOrUpdateDocumentController {
             }
         });
     }
-    
+
+    /**
+     * Searches for documents matching the input ISBN and displays or clears the document details.
+     */
     private void searchAndDisplayOrUpdate() {
         String isbnInput = jtfDisplayOrUpdateDocument.getText().trim();
-    
+
+        // Find matching documents by comparing first letters of the given ISBN
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
                 .filter(doc -> doc.getDocumentISBN().startsWith(isbnInput))
                 .collect(Collectors.toList());
-    
+
+        //There is only one document starting with the given letters
         if (matchingDocuments.size() == 1) {
             Document matchedDocument = matchingDocuments.get(0);
             displayOrUpdateDocumentDetails(matchedDocument);
@@ -58,6 +77,12 @@ public class DisplayOrUpdateDocumentController {
             clearDisplay();
         }
     }
+
+    /**
+     * Displays or updates the details of the selected document.
+     *
+     * @param document The document to display or update.
+     */
     private void displayOrUpdateDocumentDetails(Document document) {
         jpnView.removeAll();
         jpnView.setLayout(new BorderLayout(10, 10)); // Set BorderLayout
@@ -172,6 +197,7 @@ public class DisplayOrUpdateDocumentController {
         }
         jpnView.add(buttonPanel, BorderLayout.SOUTH); // Add the button panel at the bottom
 
+        // Disable fields for 'display' mode, enable them for 'update' mode
         if (kind.equals("display")) {
             quantityField.setEditable(false);
             titleField.setEditable(false);
@@ -197,6 +223,7 @@ public class DisplayOrUpdateDocumentController {
             dynamicField2Field.setEditable(true);
             dynamicField3Field.setEditable(true);
 
+            // Action for the update button
             updateButton.addActionListener(e -> {
                 if (quantityField.getText().isEmpty() || titleField.getText().isEmpty() ||
                         authorField.getText().isEmpty() || descriptionField.getText().isEmpty() ||
@@ -208,6 +235,7 @@ public class DisplayOrUpdateDocumentController {
                     return;
                 }
                 try {
+                    // Update the document fields with the new values
                     document.documentQuantity = Integer.parseInt(quantityField.getText());
                     document.setDocumentTitle(titleField.getText());
                     document.setDocumentAuthor(authorField.getText());
@@ -245,9 +273,6 @@ public class DisplayOrUpdateDocumentController {
         jpnView.revalidate();
         jpnView.repaint();
     }
-
-
-
 
     private void clearDisplay() {
         jpnView.removeAll();

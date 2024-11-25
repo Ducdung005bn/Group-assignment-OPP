@@ -17,18 +17,30 @@ import javax.swing.JTextField;
 
 import main.classes.*;
 
+/**
+ * Controller for managing the addition of new users and documents to the library management system.
+ * Supports adding borrowers, librarians, and documents (books, magazines, or theses).
+ */
 public class AddInformationController {
     private String kind;
     private JPanel jpnView;
     private JButton jbtAdd;
-    private LibraryManagementSystem libraryManagementSystem; 
-    
+    private LibraryManagementSystem libraryManagementSystem;
+
+    /**
+     * Constructor to initialize the AddInformationController.
+     *
+     * @param kind The type of entity being added (either "borrower", "librarian", or "document").
+     * @param jpnView The JPanel where the form will be displayed.
+     * @param jbtAdd The JButton that will trigger the addition of the entity.
+     * @param libraryManagementSystem The instance of the library management system.
+     */
     public AddInformationController(String kind, JPanel jpnView, JButton jbtAdd, LibraryManagementSystem libraryManagementSystem) {
         this.kind = kind;
         this.jpnView = jpnView;
         this.jbtAdd = jbtAdd;
         this.libraryManagementSystem = libraryManagementSystem;
-                
+
         if (kind.equals("borrower") || kind.equals("librarian")) {
             setupAddUserForm();
         } else if (kind.equals("document")) {
@@ -36,18 +48,21 @@ public class AddInformationController {
         }
 
     }
-    
+
+    /**
+     * Sets up the form to add a new user (borrower or librarian).
+     */
     private void setupAddUserForm() {
          // Clear the current view and set gridLayout for label/input pairs
         jpnView.removeAll();
         jpnView.setLayout(new GridLayout(0, 2, 5, 5));
-        
+
         // Label and TextField for userName
         JLabel userNameLabel = new JLabel("Enter Name: ");
         JTextField userNameField = new JTextField(20);
         jpnView.add(userNameLabel);
         jpnView.add(userNameField);
-        
+
         // Label and TextField for userDateOfBirth
         JLabel userDateOfBirthLabel = new JLabel("Enter Date of Birth (yyyy-MM-dd): ");
         JTextField userDateOfBirthField = new JTextField(20);
@@ -61,19 +76,19 @@ public class AddInformationController {
             jpnView.add(isStudentLabel);
             jpnView.add(isStudentCheckBox);
         }
-    
+
         // Label and TextField for userPhoneNumb
         JLabel userPhoneNumbLabel = new JLabel("Enter Phone Number: ");
         JTextField userPhoneNumbField = new JTextField(20);
         jpnView.add(userPhoneNumbLabel);
         jpnView.add(userPhoneNumbField);
-    
+
         // Label and TextField for userPassword
         JLabel userPasswordLabel = new JLabel("Enter Password: ");
         JTextField userPasswordField = new JTextField(20);
         jpnView.add(userPasswordLabel);
         jpnView.add(userPasswordField);
-                        
+
         jbtAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,17 +97,17 @@ public class AddInformationController {
                 String userPhoneNumb = userPhoneNumbField.getText();
                 String userPassword = userPasswordField.getText();
                 boolean isStudent = isStudentCheckBox.isSelected();
-                
+
                 if (userName.isEmpty() || userDateOfBirth.isEmpty() || userPhoneNumb.isEmpty() || userPassword.isEmpty()) {
                     JOptionPane.showMessageDialog(jpnView, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                
+
                 if (!isValidDate(userDateOfBirth)) {
                     JOptionPane.showMessageDialog(jpnView, "Invalid Date format. Please use yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                
+
                 // Process the input depending on the user type (borrower or librarian)
                 if (kind.equals("borrower")) {
                     Borrower borrower = new Borrower();
@@ -101,7 +116,7 @@ public class AddInformationController {
                     borrower.setUserPhoneNumb(userPhoneNumb);
                     borrower.setUserPassword(userPassword);
                     borrower.setIsStudent(isStudent);
-                    
+
                     libraryManagementSystem.userNumb ++;
                     borrower.setUserID(libraryManagementSystem.userNumb);
                     libraryManagementSystem.borrowerList.add(borrower);
@@ -125,34 +140,50 @@ public class AddInformationController {
                 setupAddUserForm();
             }
         });
-        
+
         // Refresh the view
         jpnView.revalidate();
         jpnView.repaint();
     }
-    
+
+    /**
+     * Validates the date input using the format yyyy-MM-dd.
+     *
+     * @param dateInput The date string to validate.
+     * @return true if the date format is valid, false otherwise.
+     */
     private boolean isValidDate(String dateInput) {
+        // Regular expression for matching date in "yyyy-MM-dd" format
         String regex = "^\\d{4}-(\\d{1,2})-(\\d{1,2})$";
 
+        // If the input doesn't match the regular expression for the date format, return false
         if (!dateInput.matches(regex)) {
             return false;
         }
 
+        // Split the date into year, month, and day parts
         String[] parts = dateInput.split("-");
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
         int day = Integer.parseInt(parts[2]);
 
+        // Normalize the date into "yyyy-MM-dd" format, ensuring two-digit month and day values
         String normalizedDate = String.format("%04d-%02d-%02d", year, month, day);
 
         try {
+            // Attempt to parse the normalized date and check if it's a valid date
             java.sql.Date.valueOf(normalizedDate);
             return true;
         } catch (IllegalArgumentException e) {
+            // If an exception is thrown, it means the date is not valid (e.g., invalid day or month)
             return false;
         }
     }
-    
+
+    /**
+     * Sets up the form for adding a new document (book, magazine, or thesis) to the library management system.
+     * It includes dynamic fields that change based on the selected document type.
+     */
     private void setupAddDocumentForm() {
         jpnView.removeAll();
         jpnView.setLayout(new GridLayout(0, 2, 5, 5));
@@ -214,7 +245,7 @@ public class AddInformationController {
         JTextField dynamicField3Field = new JTextField(20);
         jpnView.add(dynamicField3Label);
         jpnView.add(dynamicField3Field);
-                
+
         //the default in the combo box is "book"
         if ("book".equals((String) typeComboBox.getSelectedItem())) {
             dynamicField1Label.setText("Enter Genre: ");
@@ -245,16 +276,16 @@ public class AddInformationController {
             jpnView.revalidate();
             jpnView.repaint();
         });
-        
-        // jcbUseAPI to choose whether to use API
+
+        // jcbUseAPI to choose whether to use API or not
         JCheckBox jcbUseAPI = new JCheckBox("Use API to autofill details");
         jpnView.add(jcbUseAPI);
         jpnView.add(new JLabel()); // Empty label for grid layout alignment
-        
+
         JButton jbtAutoFill = new JButton("Auto-fill Data");
         jbtAutoFill.setVisible(false);  // Hide initially
         jpnView.add(jbtAutoFill);
-        
+
         // Add action listener to jcbUseAPI to toggle button visibility
         jcbUseAPI.addActionListener(new ActionListener() {
             @Override
@@ -268,8 +299,8 @@ public class AddInformationController {
                 jpnView.repaint();
             }
         });
-    
-        
+
+        // Action listener for auto-fill button to populate fields using an external API
         jbtAutoFill.addActionListener(e -> {
             typeComboBox.setSelectedItem("book");
             dynamicField1Label.setText("Enter Genre: ");
@@ -278,7 +309,7 @@ public class AddInformationController {
             dynamicField3Field.setVisible(false);
 
             String isbn = isbnField.getText();
-                
+
             if (isbn.isEmpty()) {
                 JOptionPane.showMessageDialog(jpnView, "Please enter ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -296,8 +327,8 @@ public class AddInformationController {
             Object result = GoogleBooksSyncFetcher.fetchBook(isbn);
 
             if (result instanceof Book) {
+                // If a Book object is returned, populate the fields with its data
                 Book book = (Book) result;
-
                 title = book.getDocumentTitle();
                 author = book.getDocumentAuthor();
                 description = book.getDocumentDescription();
@@ -311,7 +342,7 @@ public class AddInformationController {
                 return;
             }
 
-            // Fill the fields with mock data
+            // Fill the fields with data got from API
             titleField.setText(title);
             authorField.setText(author);
             descriptionField.setText(description);
@@ -319,22 +350,21 @@ public class AddInformationController {
             pagesField.setText(String.valueOf(pages));
             dynamicField1Field.setText(dynamicField1);
             dynamicField2Field.setText(dynamicField2);
-            dynamicField3Field.setText(dynamicField3);   
+            dynamicField3Field.setText(dynamicField3);
         });
-        
 
         // Add action listener to add button
         jbtAdd.addActionListener(e -> {
             try {
                 if (quantityField.getText().isEmpty() || titleField.getText().isEmpty() ||
                         authorField.getText().isEmpty() || descriptionField.getText().isEmpty() ||
-                        languageField.getText().isEmpty() || pagesField.getText().isEmpty() || 
-                        isbnField.getText().isEmpty() || dynamicField1Field.getText().isEmpty() || 
+                        languageField.getText().isEmpty() || pagesField.getText().isEmpty() ||
+                        isbnField.getText().isEmpty() || dynamicField1Field.getText().isEmpty() ||
                         dynamicField2Field.getText().isEmpty() || (!"book".equals((String) typeComboBox.getSelectedItem()) &&
                         dynamicField3Field.getText().isEmpty())) {
                     JOptionPane.showMessageDialog(jpnView, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
-                }                
+                }
 
                 int quantity = Integer.parseInt(quantityField.getText());
                 String title = titleField.getText();
@@ -391,7 +421,6 @@ public class AddInformationController {
 
                     libraryManagementSystem.thesisList.add(thesis);
                 }
-                
 
                 libraryManagementSystem.saveData();
                 JOptionPane.showMessageDialog(jpnView, "The document is added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);

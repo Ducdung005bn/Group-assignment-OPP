@@ -15,11 +15,6 @@ public class PendingUser {
     private boolean isBorrower;
     private boolean isLibrarian;
 
-    /**
-     * Default constructor for PendingUser.
-     * Initializes pendingUserID to 0, pendingUserPword to an empty string,
-     * and sets isBorrower and isLibrarian to false.
-     */
     public PendingUser() {
         pendingUserID = 0;
         pendingUserPword = "";
@@ -27,10 +22,6 @@ public class PendingUser {
         isLibrarian = false;
     }
 
-    /**
-     * Clears the current login information by resetting the user ID, password,
-     * and status flags for borrower and librarian.
-     */
     public void deleteLoginInfo() {
         pendingUserID = 0;
         pendingUserPword = "";
@@ -62,8 +53,15 @@ public class PendingUser {
         this.pendingUserPword = pendingUserPword;
     }
 
+    /**
+     * Validates a user's ID and password against the library management system's records.
+     * Determines if the user is a borrower or a librarian based on the validation result.
+     *
+     * @param libraryManagementSystem the library management system instance containing user data.
+     */
     public void checkIDandPword(LibraryManagementSystem libraryManagementSystem) {
         User user = libraryManagementSystem.findUser(pendingUserID);
+
         if (user != null && user.getUserPassword().equals(pendingUserPword)) {
             if (user instanceof Borrower) {
                 isBorrower = true;
@@ -72,4 +70,5 @@ public class PendingUser {
             }
         }
     }
+
 }

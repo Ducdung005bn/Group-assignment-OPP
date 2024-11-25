@@ -1,4 +1,3 @@
-package main.classes;
 import main.classes.*;
 
 import org.junit.jupiter.api.AfterEach;
@@ -21,50 +20,50 @@ class GoogleBooksSearchTaskTest {
 
     @BeforeEach
     void setUp() {
-        // Khởi tạo một ISBN mẫu cho việc kiểm thử
-        task = new GoogleBooksSearchTask("9780596004651"); // ISBN ví dụ
+        // Initialize a sample ISBN for testing
+        task = new GoogleBooksSearchTask("9780596004651"); // Example ISBN
     }
 
     @AfterEach
     void tearDown() {
-        // Dọn dẹp sau mỗi kiểm thử nếu cần
+        // Clean up after each test if necessary
         task = null;
     }
 
     @Test
     void run() {
-        // Chạy tác vụ trong một luồng riêng
+        // Run the task in a separate thread
         Thread thread = new Thread(task);
         thread.start();
 
-        // Chờ để tác vụ hoàn tất
+        // Wait for the task to complete
         try {
             thread.join();
         } catch (InterruptedException e) {
             fail("Thread was interrupted: " + e.getMessage());
         }
 
-        // Kiểm tra rằng kết quả không phải là null
+        // Verify that the result is not null
         assertNotNull(task.getResult(), "Expected a valid Book object, but got null");
     }
 
     @Test
     void getResult() {
-        // Chạy tác vụ để lấy kết quả
+        // Run the task to retrieve the result
         Thread thread = new Thread(task);
         thread.start();
 
-        // Chờ để tác vụ hoàn tất
+        // Wait for the task to complete
         try {
             thread.join();
         } catch (InterruptedException e) {
             fail("Thread was interrupted: " + e.getMessage());
         }
 
-        // Kiểm tra rằng kết quả có thông tin mong đợi
+        // Verify that the result contains the expected information
         Book result = task.getResult();
         assertNotNull(result, "Expected a valid Book object, but got null");
         assertEquals("9780596004651", result.getDocumentISBN(), "ISBN does not match");
-        // Thêm các kiểm tra khác cho các thuộc tính của Book nếu cần
+        // Add additional checks for other attributes of Book if necessary
     }
 }

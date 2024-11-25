@@ -1,4 +1,3 @@
-package main.classes;
 import main.classes.*;
 import java.io.*;
 import java.util.Vector;
@@ -17,10 +16,10 @@ class LibraryManagementSystemTest {
     void setUp() {
         library = new LibraryManagementSystem();
 
-        // Thêm tài liệu mẫu mà không sử dụng constructor
+        // Add sample documents without using constructors
         addSampleDocuments();
 
-        // Thêm người dùng mẫu
+        // Add sample users
         addSampleUsers();
     }
 
@@ -30,7 +29,7 @@ class LibraryManagementSystemTest {
     }
 
     private void addSampleDocuments() {
-        // Tạo tài liệu và thiết lập thuộc tính bằng phương thức set()
+        // Create documents and set attributes using setter methods
         Book book1 = new Book();
         book1.setDocumentISBN("1234567890");
         book1.setDocumentTitle("Book Title 1");
@@ -51,7 +50,7 @@ class LibraryManagementSystemTest {
         magazine.setDocumentTitle("Magazine Title 1");
         magazine.setDocumentAuthor("Author D");
 
-        // Thêm vào danh sách
+        // Add to the list
         library.bookList.add(book1);
         library.bookList.add(book2);
         library.thesisList.add(thesis);
@@ -59,26 +58,26 @@ class LibraryManagementSystemTest {
     }
 
     private void addSampleUsers() {
-        // Tạo và thiết lập thông tin cho người mượn
+        // Create and set information for a borrower
         Borrower borrower = new Borrower();
         borrower.setUserID(1);
-        borrower.setUserPassword("password"); // Sử dụng phương thức setter của Borrower
+        borrower.setUserPassword("password");
         borrower.setUserName("User 1");
-        borrower.setUserDateOfBirth(new Date()); // Giả định ngày sinh là ngày hiện tại
+        borrower.setUserDateOfBirth(new Date()); // Assume the current date as the date of birth
         borrower.setUserPhoneNumb("123-456-7890");
-        borrower.setIsStudent(true); // Thiết lập là sinh viên
-        borrower.setOverdueCount(0); // Khởi tạo số sách quá hạn
-        library.borrowerList.add(borrower); // Thêm người mượn vào danh sách
+        borrower.setIsStudent(true);
+        borrower.setOverdueCount(0);
+        library.borrowerList.add(borrower); // Add borrower to the list
 
-        // Tạo và thiết lập thông tin cho thủ thư
+        // Create and set information for a librarian
         Librarian librarian = new Librarian();
-//        librarian.setUserID(999);
-        librarian.setUserPassword("password"); // Thiết lập mật khẩu cho thủ thư
+//      librarian.setUserID(999);
+        librarian.setUserPassword("password");
         librarian.setUserName("Librarian 1");
-        librarian.setUserDateOfBirth(new Date()); // Giả định ngày sinh là ngày hiện tại
+        librarian.setUserDateOfBirth(new Date()); // Assume the current date as the date of birth
         librarian.setUserPhoneNumb("098-765-4321");
-        librarian.setLibrarianSalary(250); // Thiết lập lương cho thủ thư
-        library.librarianList.add(librarian); // Thêm thủ thư vào danh sách
+        librarian.setLibrarianSalary(250);
+        library.librarianList.add(librarian); // Add librarian to the list
     }
 
     @Test

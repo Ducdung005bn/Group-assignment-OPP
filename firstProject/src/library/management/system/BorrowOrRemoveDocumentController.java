@@ -21,14 +21,26 @@ import main.classes.LibraryManagementSystem;
 import main.classes.Magazine;
 import main.classes.Thesis;
 
+/**
+ * Controller for handling document borrowing or removal functionality.
+ * It manages user interactions for borrowing and removing documents from the library.
+ */
 public class BorrowOrRemoveDocumentController {
     private JPanel jpnView;
     private JTextField jtfBorrowOrRemoveDocument;
     private JButton jbtBorrowOrRemoveDocument;
     private Borrower borrower;
-    private LibraryManagementSystem libraryManagementSystem; 
-    
-    //Constructer for borrowing documents
+    private LibraryManagementSystem libraryManagementSystem;
+
+    /**
+     * Constructor for handling document borrowing functionality.
+     *
+     * @param jpnView                The panel where the document details will be displayed.
+     * @param jtfBorrowOrRemoveDocument The text field for entering the document ISBN.
+     * @param jbtBorrowOrRemoveDocument The button to trigger the borrow action.
+     * @param borrower               The borrower attempting to borrow the document.
+     * @param libraryManagementSystem The system managing the library data.
+     */
     public BorrowOrRemoveDocumentController (JPanel jpnView, JTextField jtfBorrowOrRemoveDocument, JButton jbtBorrowOrRemoveDocument, Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
         this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
@@ -36,71 +48,90 @@ public class BorrowOrRemoveDocumentController {
         this.borrower = borrower;
         this.libraryManagementSystem = libraryManagementSystem;
         this.jbtBorrowOrRemoveDocument.setText("BORROW");
-        
+
         jtfBorrowOrRemoveDocument.getDocument().addDocumentListener(new DocumentListener() {
+            //new text is inserted into the text field
             @Override
             public void insertUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
 
+            //text is removed from the text field
             @Override
             public void removeUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
 
+            //the text field undergoes a change in attributes (text font, ...)
             @Override
             public void changedUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
         });
-        
+
         jbtBorrowOrRemoveDocument.addActionListener(e -> handleBorrowDocument());
         jbtBorrowOrRemoveDocument.setEnabled(false);
     }
-    
-    //Constructer for removing documents
+
+    /**
+     * Constructor for handling document removal functionality.
+     *
+     * @param jpnView                The panel where the document details will be displayed.
+     * @param jtfBorrowOrRemoveDocument The text field for entering the document ISBN.
+     * @param jbtBorrowOrRemoveDocument The button to trigger the remove action.
+     * @param libraryManagementSystem The system managing the library data.
+     */
     public BorrowOrRemoveDocumentController (JPanel jpnView, JTextField jtfBorrowOrRemoveDocument, JButton jbtBorrowOrRemoveDocument, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
         this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
         this.jbtBorrowOrRemoveDocument = jbtBorrowOrRemoveDocument;
         this.libraryManagementSystem = libraryManagementSystem;
         this.jbtBorrowOrRemoveDocument.setText("REMOVE");
-        
+
         jtfBorrowOrRemoveDocument.getDocument().addDocumentListener(new DocumentListener() {
+            //new text is inserted into the text field
             @Override
             public void insertUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
 
+            //text is removed from the text field
             @Override
             public void removeUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
 
+            //the text field undergoes a change in attributes (text font, ...)
             @Override
             public void changedUpdate(DocumentEvent e) {
                 searchAndDisplay();
             }
         });
-        
+
         jbtBorrowOrRemoveDocument.addActionListener(e -> handleRemoveDocument());
         jbtBorrowOrRemoveDocument.setEnabled(false);
     }
-    
+
+    /**
+     * Searches for documents based on ISBN input and updates the display.
+     * If exactly one matching document is found, its details are shown.
+     */
     private void searchAndDisplay() {
         String isbnInput = jtfBorrowOrRemoveDocument.getText().trim();
-    
+
+        // Find matching documents by comparing first letters of the given ISBN
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
                 .filter(doc -> doc.getDocumentISBN().startsWith(isbnInput))
                 .collect(Collectors.toList());
-    
+
+        //There is only one document starting with the given letters
         if (matchingDocuments.size() == 1) {
             Document matchedDocument = matchingDocuments.get(0);
             jpnView.removeAll();
             jpnView.setLayout(new GridLayout(0, 1));
 
             Font font = new Font("Arial", Font.PLAIN, 16);
-            
+
             JLabel isbnLabel = new JLabel("ISBN: " + matchedDocument.getDocumentISBN());
             isbnLabel.setFont(font);
             jpnView.add(isbnLabel);
@@ -116,11 +147,11 @@ public class BorrowOrRemoveDocumentController {
             JLabel authorLabel = new JLabel("Author: " + matchedDocument.getDocumentAuthor());
             authorLabel.setFont(font);
             jpnView.add(authorLabel);
-            
+
             jbtBorrowOrRemoveDocument.setEnabled(true);
             jpnView.revalidate();
             jpnView.repaint();
-        
+
         } else {
             //clear display
             jpnView.removeAll();
@@ -129,50 +160,64 @@ public class BorrowOrRemoveDocumentController {
             jpnView.repaint();
         }
     }
-    
+
+    /**
+     * Handles the process of borrowing a document.
+     * It checks if the borrower can borrow the document and updates borrowing history.
+     */
     private void handleBorrowDocument() {
+        //Get the ISBN of the book appearing on the screen
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
             .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowOrRemoveDocument.getText().trim()))
             .collect(Collectors.toList());
-            
         String isbn = matchingDocuments.get(0).getDocumentISBN();
-           
+
+        // Check if the borrower is allowed to borrow the document
         String reason = isAbleToBorrow(isbn, libraryManagementSystem);
-            
+
         if (reason == null) {  //is able to borrow the book
-        BorrowData borrowData = new BorrowData();
-        borrowData.setBorrowerID(borrower.getUserID());
-        borrowData.setBorrowedBookISBN(isbn);
-        borrowData.setBorrowDate(new Date());
+            BorrowData borrowData = new BorrowData();
+            borrowData.setBorrowerID(borrower.getUserID());
+            borrowData.setBorrowedBookISBN(isbn);
+            borrowData.setBorrowDate(new Date());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_YEAR, LibraryManagementSystem.BORROW_DURATION_DAYS);
+            // Set the planned return date
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_YEAR, LibraryManagementSystem.BORROW_DURATION_DAYS);
+            borrowData.setPlannedReturnDate(calendar.getTime());
 
-        borrowData.setPlannedReturnDate(calendar.getTime());
-        borrowData.setBorrowStatus("Not Returned");
-        borrower.borrowingHistory.add(borrowData);
-        borrower.borrowingBookCount++;
-        Document document = libraryManagementSystem.findDocumentByISBN(isbn);
-        document.documentQuantity--;
-            
-        JOptionPane.showMessageDialog(null, "You have borrowed the book successfully.", "Notification", JOptionPane.INFORMATION_MESSAGE);
-        displayBorrowData(borrowData);
+            borrowData.setBorrowStatus("Not Returned");
+            borrower.borrowingHistory.add(borrowData);
+            borrower.borrowingBookCount++;
+            Document document = libraryManagementSystem.findDocumentByISBN(isbn);
+            document.documentQuantity--;
+
+            JOptionPane.showMessageDialog(null, "You have borrowed the book successfully.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            displayBorrowData(borrowData);
         } else {
+            // If borrowing is not allowed, display the reason
             JOptionPane.showMessageDialog(null, "You cannot borrow the book.", "Error", JOptionPane.ERROR_MESSAGE);
-                
+
             jpnView.removeAll();
-            jpnView.setLayout(new GridLayout(0, 1)); 
+            jpnView.setLayout(new GridLayout(0, 1));
             JLabel unsuccessfulBorrow = new JLabel(reason);
             unsuccessfulBorrow.setFont(new Font("Arial", Font.PLAIN, 16));
             jpnView.add(unsuccessfulBorrow);
-               
+
             jpnView.revalidate();
             jpnView.repaint();
         }
         libraryManagementSystem.saveData();
     }
-    
+
+    /**
+     * Checks if the borrower is eligible to borrow the document.
+     *
+     * @param documentISBN The ISBN of the document to borrow.
+     * @param libraryManagementSystem The system managing library data.
+     * @return A message indicating why the borrower cannot borrow the document, or null if they can.
+     */
     private String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
         Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
 
@@ -194,11 +239,16 @@ public class BorrowOrRemoveDocumentController {
         } else {
             return null;  //is able to borrow the book
         }
-    }  
-        
+    }
+
+    /**
+     * Displays the details of the borrowed document.
+     *
+     * @param borrowData The borrowing details to display.
+     */
     private void displayBorrowData(BorrowData borrowData) {
         jpnView.removeAll();
-        jpnView.setLayout(new GridLayout(0, 1)); 
+        jpnView.setLayout(new GridLayout(0, 1));
 
         JLabel borrowerIDLabel = new JLabel("Borrower ID: " + borrowData.getBorrowerID());
         borrowerIDLabel.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -220,7 +270,11 @@ public class BorrowOrRemoveDocumentController {
         jpnView.revalidate();
         jpnView.repaint();
     }
-    
+
+    /**
+     * Handles the process of removing a document from the library.
+     * This action removes the document from the library's system.
+     */
     private void handleRemoveDocument() {
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
             .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowOrRemoveDocument.getText().trim()))
@@ -233,7 +287,7 @@ public class BorrowOrRemoveDocumentController {
         } else if (removedDocument instanceof Magazine) {
             libraryManagementSystem.magazineList.remove( (Magazine) removedDocument);
         }
-                      
+
         JOptionPane.showMessageDialog(null, "You have removed the book successfully.", "Notification", JOptionPane.INFORMATION_MESSAGE);
         jtfBorrowOrRemoveDocument.setText("");
         libraryManagementSystem.saveData();

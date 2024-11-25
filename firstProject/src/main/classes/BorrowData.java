@@ -14,17 +14,6 @@ public class BorrowData implements Serializable {
     private Date plannedReturnDate;
     private String borrowStatus;
 
-    /**
-     * Prints the borrowing data information to the console.
-     */
-    public void printBorrowData() {
-        System.out.println("Borrower ID: " + borrowerID);
-        System.out.println("Borrowed Book ISBN: " + borrowedBookISBN);
-        System.out.println("Borrow Date: " + borrowDate);
-        System.out.println("Planned Return Date: " + plannedReturnDate);
-        System.out.println("Borrow Status: " + borrowStatus);
-    }
-
     public int getBorrowerID() {
         return borrowerID;
     }

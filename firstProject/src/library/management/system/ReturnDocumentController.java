@@ -14,6 +14,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import main.classes.Document;
 
+/**
+ * The controller responsible for handling the return of borrowed documents by a borrower.
+ * It updates the borrowing history, status, and library system accordingly.
+ */
 public class ReturnDocumentController {
     private JPanel jpnView;
     private Borrower borrower;
@@ -22,6 +26,13 @@ public class ReturnDocumentController {
     private final String[] COLUMNS = {"Borrower ID", "Book ISBN", "Borrow Date", "Planned Return Date", "Status", "Return"};
     private DefaultTableModel model;
 
+    /**
+     * Constructs a ReturnDocumentController object with the given panel, borrower, and library management system.
+     *
+     * @param jpnView The panel where the table will be shown.
+     * @param borrower The borrower whose borrowed documents will be displayed.
+     * @param libraryManagementSystem The library system instance.
+     */
     public ReturnDocumentController(JPanel jpnView, Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
         this.borrower = borrower;
@@ -30,6 +41,10 @@ public class ReturnDocumentController {
         setDataToTable();
     }
 
+    /**
+     * Sets the data to the table by retrieving the borrowing history of the borrower.
+     * It adds a "Return" button to the last column of the table.
+     */
     public void setDataToTable() {
         List<BorrowData> borrowDataList = borrower.borrowingHistory;
         model = tableDisplay.setBorrowDataTable(borrowDataList, COLUMNS);
@@ -65,6 +80,12 @@ public class ReturnDocumentController {
         jpnView.repaint();
     }
 
+    /**
+     * Handles the return of a borrowed document, updates the borrowing history,
+     * and adjusts the library inventory accordingly.
+     *
+     * @param borrowData The borrow data entry representing the borrowed document.
+     */
     private void returnDocument(BorrowData borrowData) {
         borrower.borrowingHistory.remove(borrowData);
         borrower.borrowingBookCount--;
@@ -72,7 +93,7 @@ public class ReturnDocumentController {
         Date actualReturnDate = new Date();
     
         if (actualReturnDate.after(borrowData.getPlannedReturnDate())) {
-            // Hiển thị thông báo trễ hạn
+            // Notification for late return
             JOptionPane.showMessageDialog(
                 null,
                 "You have returned the book after the due date.",
@@ -83,7 +104,7 @@ public class ReturnDocumentController {
             int overdueCountTemp = borrower.getOverdueCount()+1;
             borrower.setOverdueCount(overdueCountTemp);
         } else {
-            // Hiển thị thông báo trả đúng hạn
+            // Notification for true return
             JOptionPane.showMessageDialog(
                 null,
                 "You have returned the book before the due date.",
@@ -93,10 +114,10 @@ public class ReturnDocumentController {
             borrowData.setBorrowStatus("Returned On Time");
         }
     
-        // Cập nhật lịch sử trả
+        // update borrow history
         borrower.borrowedHistory.add(borrowData);
     
-        // Tăng số lượng tài liệu trong thư viện
+        // increase the numbs of the given book
         Document document = libraryManagementSystem.findDocumentByISBN(borrowData.getBorrowedBookISBN());
         if (document != null) {
             document.documentQuantity++;
@@ -104,7 +125,17 @@ public class ReturnDocumentController {
         libraryManagementSystem.saveData();
     }
 
+    /**
+     * Helper class that sets the borrow data into a table model.
+     */
     private class TableDisplay {
+        /**
+         * Creates a DefaultTableModel for the borrow data list with the given column names.
+         *
+         * @param borrowDataList The list of borrow data entries.
+         * @param columnList The column names for the table.
+         * @return The DefaultTableModel for displaying the borrow data.
+         */
         public DefaultTableModel setBorrowDataTable(List<BorrowData> borrowDataList, String[] columnList) {
             int columns = columnList.length;
             DefaultTableModel dtm = new DefaultTableModel() {
@@ -133,7 +164,10 @@ public class ReturnDocumentController {
             return dtm;
         }
     }
-    
+
+    /**
+     * Helper class to create a button in a specific table column.
+     */
     private class ButtonColumn extends AbstractAction {
         private final JTable table;
         private final int column;
@@ -162,6 +196,9 @@ public class ReturnDocumentController {
         }
     }
 
+    /**
+     * Renderer for rendering the button in the table cells.
+     */
     private class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
@@ -174,6 +211,9 @@ public class ReturnDocumentController {
         }
     }
 
+    /**
+     * Editor for handling the button actions in the table cells.
+     */
     private class ButtonEditor extends DefaultCellEditor {
         private JButton button;
         private boolean clicked;

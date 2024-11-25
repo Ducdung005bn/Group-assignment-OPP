@@ -29,15 +29,26 @@ public class LibraryManagementSystem implements Serializable {
         librarianList = new Vector<>();
     }
 
+    /**
+     * Loads library data from a file named "libraryData.dat".
+     * If the file does not exist, it creates a new file with default data.
+     * This method reads and deserializes the saved state of the LibraryManagementSystem
+     * object from the file and updates the current instance.
+     */
     public void loadData() {
         File dataFile = new File("libraryData.dat");
+
+        // Check if the file doesn't exist. If so, create it with default data.
         if (!dataFile.exists()) {
-            saveData();
+            saveData(); // Save default data to the file.
             return;
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("libraryData.dat"))) {
+            // Read the serialized LibraryManagementSystem object from the file.
             LibraryManagementSystem loadedData = (LibraryManagementSystem) ois.readObject();
+
+            // Update the current instance's attributes with the loaded data.
             this.userNumb = loadedData.userNumb;
             this.bookList = (Vector<Book>) loadedData.bookList;
             this.thesisList = (Vector<Thesis>) loadedData.thesisList;
@@ -46,38 +57,25 @@ public class LibraryManagementSystem implements Serializable {
             this.librarianList = (Vector<Librarian>) loadedData.librarianList;
 
         } catch (FileNotFoundException e) {
+            // Handle the case where the file is not found (should not occur due to the check above).
             System.out.println("File doesn't exist.");
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveData() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("libraryData.dat"))) {
-            oos.writeObject(this);
-        } catch (IOException e) {
+            // Handle other exceptions, such as deserialization errors or file read errors.
             e.printStackTrace();
         }
     }
 
     /**
-     * Prints important information of all documents (Books, Theses, Magazines) in the library.
-     * Each document's ISBN, title, and author are printed.
+     * Saves the current state of the library management system to a file named "libraryData.dat".
+     * This method serializes the LibraryManagementSystem object and writes it to the file.
      */
-    public void printLibraryDocument() {
-        for (Book book : bookList) {
-            System.out.printf(book.getDocumentISBN() + ". The title of the book : %s. Author : %s%n",
-                    book.getDocumentTitle(), book.getDocumentAuthor());
-        }
-
-        for (Thesis thesis : thesisList) {
-            System.out.printf(thesis.getDocumentISBN() + ". The title of the thesis : %s. Author : %s%n",
-                    thesis.getDocumentTitle(), thesis.getDocumentAuthor());
-        }
-
-        for (Magazine magazine : magazineList) {
-            System.out.printf(magazine.getDocumentISBN() + ". The title of the magazine : %s. Author : %s%n",
-                    magazine.getDocumentTitle(), magazine.getDocumentAuthor());
+    public void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("libraryData.dat"))) {
+            // Serialize the current instance and write it to the file.
+            oos.writeObject(this);
+        } catch (IOException e) {
+            // Handle exceptions that may occur during file writing.
+            e.printStackTrace();
         }
     }
 
@@ -141,23 +139,6 @@ public class LibraryManagementSystem implements Serializable {
             }
         }
         return null;
-    }
-
-    public static int setValidInteger() {
-        Scanner scanner = new Scanner(System.in);
-        int value = 0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                value = Integer.parseInt(scanner.nextLine());
-                validInput = true;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-            }
-        }
-
-        return value;
     }
 
     /**

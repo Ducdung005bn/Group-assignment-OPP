@@ -1,5 +1,3 @@
-package main.classes;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +25,7 @@ class MyQrTest {
     void setUp() {
         myQr = new MyQr();
 
-        // Tạo đối tượng Book
+        // Create a Book
         book = new Book();
         book.setDocumentISBN("123456789");
         book.documentQuantity = 10;
@@ -39,7 +37,7 @@ class MyQrTest {
         book.setBookGenre("Fiction");
         book.setBookPublisher("Penguin Books");
 
-        // Tạo đối tượng Thesis
+        // Create a Thesis
         thesis = new Thesis();
         thesis.setDocumentISBN("987654321");
         thesis.documentQuantity = 1;
@@ -52,7 +50,7 @@ class MyQrTest {
         thesis.setThesisDegree("Master");
         thesis.setThesisUniversity("Harvard University");
 
-        // Tạo đối tượng Magazine
+        // Create a Magazine
         magazine = new Magazine();
         magazine.setDocumentISBN("456789123");
         magazine.documentQuantity = 5;

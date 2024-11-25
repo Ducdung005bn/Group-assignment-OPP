@@ -1,4 +1,3 @@
-package main.classes ; 
 import main.classes.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,13 +11,13 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        // Khởi tạo đối tượng User trước mỗi bài kiểm thử
+        // Initialize User object before each test
         user = new User();
     }
 
     @AfterEach
     void tearDown() {
-        // Dọn dẹp sau mỗi bài kiểm thử nếu cần
+        // Clean up after each test if necessary
         user = null;
     }
 
@@ -60,14 +59,14 @@ class UserTest {
 
     @Test
     void getUserDateOfBirth() {
-        Date dob = new Date(90, 1, 1); // Ngày sinh mẫu
+        Date dob = new Date(90, 1, 1); // Sample date of birth
         user.setUserDateOfBirth(dob);
         assertEquals(dob, user.getUserDateOfBirth(), "Expected date of birth to match");
     }
 
     @Test
     void setUserDateOfBirth() {
-        Date dob = new Date(85, 5, 25); // Ngày sinh mẫu
+        Date dob = new Date(85, 5, 25); // Sample date of birth
         user.setUserDateOfBirth(dob);
         assertEquals(dob, user.getUserDateOfBirth(), "Expected date of birth to match");
     }
@@ -99,7 +98,7 @@ class UserTest {
 
     @Test
     void setUserDateOfBirth_futureDate() {
-        Date futureDate = new Date(System.currentTimeMillis() + 1000000000L); // Ngày trong tương lai
+        Date futureDate = new Date(System.currentTimeMillis() + 1000000000L); // Future date
         user.setUserDateOfBirth(futureDate);
         assertEquals(futureDate, user.getUserDateOfBirth(), "Expected date of birth to be set to future date");
     }

@@ -3,6 +3,10 @@ package library.management.system;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+/**
+ * Represents a menu item, consisting of a kind (identifier),
+ * a panel (for GUI purposes), and a label (for displaying text).
+ */
 public class MenuItem {
     private String kind;
     private JPanel jpn;

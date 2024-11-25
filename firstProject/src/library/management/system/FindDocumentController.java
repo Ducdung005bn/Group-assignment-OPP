@@ -22,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+/**
+ * Controller class for searching and displaying documents in the library system.
+ * It includes filtering functionalities for genre, title, and author.
+ */
 public class FindDocumentController {
     private JPanel jpnView;
     private JTextField jtfFindByGenre;
@@ -31,6 +35,14 @@ public class FindDocumentController {
     private final String[] COLUMNS = {"Quantity", "Genre", "ISBN", "Title", "Author"};
     private TableRowSorter<TableModel> rowSorter = null;
 
+    /**
+     * Constructor initializes the panel views and text fields for searching documents.
+     *
+     * @param jpnView The panel where the document table will be displayed.
+     * @param jtfFindByGenre TextField for filtering by genre.
+     * @param jtfFindByTitle TextField for filtering by title.
+     * @param jtfFindByAuthor TextField for filtering by author.
+     */
     public FindDocumentController(JPanel jpnView, JTextField jtfFindByGenre, JTextField jtfFindByTitle, JTextField jtfFindByAuthor) {
         this.jpnView = jpnView;
         this.jtfFindByGenre = jtfFindByGenre;
@@ -38,12 +50,18 @@ public class FindDocumentController {
         this.jtfFindByAuthor = jtfFindByAuthor;
         this.tableDisplay = new TableDisplay();
     }
-    
+
+    /**
+     * Sets the data for the document table, and initializes the filters and table.
+     *
+     * @param libraryManagementSystem The system to fetch the documents from.
+     */
     public void setDataToTable(LibraryManagementSystem libraryManagementSystem) {
         List<Document> documentList = libraryManagementSystem.getAllDocuments();
         DefaultTableModel model = tableDisplay.setDocumentTable(documentList, COLUMNS);
         JTable table = new JTable(model);
 
+        // Enable row sorting
         rowSorter = new TableRowSorter<>(table.getModel());
         table.setRowSorter(rowSorter);
 
@@ -90,8 +108,10 @@ public class FindDocumentController {
         jpnView.validate();
         jpnView.repaint();
     }
-    
-    
+
+    /**
+     * Applies filters to the document table based on the current text in the search fields.
+     */
     private void applyFilters() {
         List<RowFilter<Object, Object>> filters = new ArrayList<>();
 
@@ -116,22 +136,36 @@ public class FindDocumentController {
             rowSorter.setRowFilter(null); // Clear filters if no input is given
         }
     }
-    
+
+    /**
+     * Helper class to manage the creation of the document table and populating it with data.
+     */
     private class TableDisplay {
+        /**
+         * Sets up the document table based on the list of documents.
+         *
+         * @param documentList List of documents to populate in the table.
+         * @param columnList List of column names for the table.
+         * @return DefaultTableModel populated with document data.
+         */
         public DefaultTableModel setDocumentTable(List<Document> documentList, String[] columnList) {
             int columns = columnList.length;
+
             DefaultTableModel dtm = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int rowIndex, int colIndex) {
-                    return false;
+                    return false;  // Make cells non-editable
                 }
     
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnIndex == 7 ? Boolean.class : String.class;
+                    // Set class type for all columns to String (except Boolean)
                 }
             };
             dtm.setColumnIdentifiers(columnList);
+
+            // Populate the table with document data
             Object[] obj;
             Document document = null;
             for (int i = 0; i < documentList.size(); i++) {
