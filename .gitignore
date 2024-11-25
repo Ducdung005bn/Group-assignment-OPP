@@ -1,0 +1,30 @@
+# Bỏ qua thư mục biên dịch
+/out/
+/target/
+
+# Bỏ qua thư mục cấu hình IDE
+/.idea/
+
+# Bỏ qua file log
+*.log
+
+# Bỏ qua file nhị phân
+*.class
+
+# Bỏ qua file cấu hình Maven
+*.jar
+*.war
+*.ear
+
+# Bỏ qua thư mục chứa thư viện bên ngoài
+/lib/
+
+# Bỏ qua file tạm thời
+/tmp/
+
+# Bỏ qua file cấu hình cá nhân
+*.properties
+*.xml
+
+# Bỏ qua thư mục chứa thông tin phiên bản
+.vscode/
