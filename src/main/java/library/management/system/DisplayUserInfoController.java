@@ -55,50 +55,51 @@ public class DisplayUserInfoController {
         jpnUserInfo.setLayout(new GridLayout(7, 2, 10, 10));
         String blank = "                    ";
 
-        if (isDealingWithBorrower) {     
-            jpnUserInfo.add(new JLabel(blank + "User ID:"));
+        if (isDealingWithBorrower) {
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("UserID") + ":"));
             jpnUserInfo.add(new JLabel(String.valueOf(borrower.getUserID())));
-                
-            jpnUserInfo.add(new JLabel(blank + "Name:"));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("Name") + ":"));
             jpnUserInfo.add(new JLabel(borrower.getUserName()));
-        
-            jpnUserInfo.add(new JLabel(blank + "Date of Birth:"));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("DateOfBirth") + ":"));
             jpnUserInfo.add(new JLabel(borrower.getUserDateOfBirth().toString()));
-        
-            jpnUserInfo.add(new JLabel(blank + "Email Address:"));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("EmailAddress") + ":"));
             jpnUserInfo.add(new JLabel(borrower.getUserEmailAddress()));
-            
-            jpnUserInfo.add(new JLabel(blank + "Is Student:"));
-            jpnUserInfo.add(new JLabel(borrower.getIsStudent() ? "Yes" : "No"));
-        
-            jpnUserInfo.add(new JLabel(blank + "Overdue Count:"));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("IsStudent") + ":"));
+            jpnUserInfo.add(new JLabel(borrower.getIsStudent() ? libraryManagementSystem.translate("Yes") : libraryManagementSystem.translate("No")));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("OverdueCount") + ":"));
             jpnUserInfo.add(new JLabel(String.valueOf(borrower.getOverdueCount())));
 
-            jpnUserInfo.add(new JLabel(blank + "Password:"));
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("Password") + ":"));
             jpnUserInfo.add(new JLabel(maskPassword(borrower.getUserPassword())));
         } else {
-            jpnUserInfo.add(new JLabel(blank + "User ID:"));
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("UserID") + ":"));
             jpnUserInfo.add(new JLabel(String.valueOf(librarian.getUserID())));
-                
-            jpnUserInfo.add(new JLabel(blank + "Name:"));
-            jpnUserInfo.add(new JLabel(librarian.getUserName()));
-        
-            jpnUserInfo.add(new JLabel(blank + "Date of Birth:"));
-            jpnUserInfo.add(new JLabel(librarian.getUserDateOfBirth().toString()));
-        
-            jpnUserInfo.add(new JLabel(blank + "Email Address:"));
-            jpnUserInfo.add(new JLabel(librarian.getUserEmailAddress()));
-            
-            jpnUserInfo.add(new JLabel(blank + "Salary:"));
-            jpnUserInfo.add(new JLabel(String.valueOf(librarian.getLibrarianSalary()) + " dollars per month"));
 
-            jpnUserInfo.add(new JLabel(blank + "Password:"));
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("Name") + ":"));
+            jpnUserInfo.add(new JLabel(librarian.getUserName()));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("DateOfBirth") + ":"));
+            jpnUserInfo.add(new JLabel(librarian.getUserDateOfBirth().toString()));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("EmailAddress") + ":"));
+            jpnUserInfo.add(new JLabel(librarian.getUserEmailAddress()));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("Salary") + ":"));
+            jpnUserInfo.add(new JLabel(String.valueOf(librarian.getLibrarianSalary()) + " " + libraryManagementSystem.translate("DollarsPerMonth")));
+
+            jpnUserInfo.add(new JLabel(blank + libraryManagementSystem.translate("Password") + ":"));
             jpnUserInfo.add(new JLabel(maskPassword(librarian.getUserPassword())));
         }
 
         jpnUserInfo.revalidate();
         jpnUserInfo.repaint();
     }
+
 
     /**
      * Displays the borrowed history of the Borrower in the jpnBorrowedHistory panel.
@@ -108,7 +109,13 @@ public class DisplayUserInfoController {
         jpnHistory.removeAll();
 
         // Borrowed history table columns, add a new column for ratings
-        String[] columns = {"Book ISBN", "Borrow Date", "Planned Return Date", "Status", "Rating"};
+        String[] columns = {
+                libraryManagementSystem.translate("BookISBN"),
+                libraryManagementSystem.translate("BorrowDate"),
+                libraryManagementSystem.translate("PlannedReturnDate"),
+                libraryManagementSystem.translate("Status"),
+                libraryManagementSystem.translate("Rating")
+        };
 
         // Fetch the borrowing history
         List<BorrowData> borrowHistory = borrower.borrowedHistory;
@@ -231,7 +238,10 @@ public class DisplayUserInfoController {
         Document document = libraryManagementSystem.findDocumentByISBN(borrowedBookISBN);
 
         if (document == null) {
-            JOptionPane.showMessageDialog(jpnHistory, "This document was removed from the system.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnHistory,
+                    libraryManagementSystem.translate("DocumentRemovedFromSystem"),
+                    libraryManagementSystem.translate("Error"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -332,7 +342,9 @@ public class DisplayUserInfoController {
     }
 
     private void displayLibrarianHistory() {
-        String[] columns = {"Action History"};
+        String[] columns = {
+                libraryManagementSystem.translate("ActionHistory")
+        };
 
         // Fetch the action history
         List<String> actionHistory = librarian.getActionHistory();

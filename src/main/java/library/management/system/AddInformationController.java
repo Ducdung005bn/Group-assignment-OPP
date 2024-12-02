@@ -22,6 +22,13 @@ public class AddInformationController {
     private JButton jbtAdd;
     private LibraryManagementSystem libraryManagementSystem;
 
+    public AddInformationController() {
+        libraryManagementSystem = new LibraryManagementSystem();
+        kind = "";
+        jpnView = new JPanel();
+        jbtAdd = new JButton();
+    }
+
     /**
      * Constructor to initialize the AddInformationController.
      *
@@ -54,20 +61,20 @@ public class AddInformationController {
         String blank = "      ";
 
         // Label and TextField for userName
-        JLabel userNameLabel = new JLabel(blank + "Enter Name: ");
+        JLabel userNameLabel = new JLabel(blank + libraryManagementSystem.translate("EnterName"));
         JTextField userNameField = new JTextField(20);
         jpnView.add(userNameLabel);
         jpnView.add(userNameField);
 
         // Label and TextField for userDateOfBirth
-        JLabel userDateOfBirthLabel = new JLabel(blank + "Enter Date of Birth (yyyy-MM-dd):           ");
+        JLabel userDateOfBirthLabel = new JLabel(blank + libraryManagementSystem.translate("EnterDateOfBirth(yyyy-MM-dd)") + "         ");
         JTextField userDateOfBirthField = new JTextField(20);
         jpnView.add(userDateOfBirthLabel);
         jpnView.add(userDateOfBirthField);
 
         // Label and CheckBox for isStudent
-        JCheckBox isStudentCheckBox = new JCheckBox("Yes");
-        JLabel isStudentLabel = new JLabel(blank + "Be a student or not (yes/no): ");
+        JCheckBox isStudentCheckBox = new JCheckBox(libraryManagementSystem.translate("Yes"));
+        JLabel isStudentLabel = new JLabel(blank + libraryManagementSystem.translate("BeAStudentOrNot(Yes/No)"));
         jpnView.add(isStudentLabel);
         jpnView.add(isStudentCheckBox);
 
@@ -80,25 +87,25 @@ public class AddInformationController {
         }
 
         // Label and TextField for userEmailAddress
-        JLabel userEmailAddressLabel = new JLabel(blank + "Enter Email Address: ");
+        JLabel userEmailAddressLabel = new JLabel(blank + libraryManagementSystem.translate("EnterEmailAddress"));
         JTextField userEmailAddressField = new JTextField(20);
         jpnView.add(userEmailAddressLabel);
         jpnView.add(userEmailAddressField);
 
         // Button for sending verification code
-        JButton jbtSendCode = new JButton("Send Verification Code");
+        JButton jbtSendCode = new JButton(libraryManagementSystem.translate("SendVerificationCode"));
         jbtSendCode.setVisible(true);
         jpnView.add(new JLabel(""));
         jpnView.add(jbtSendCode);
 
         // Label and TextField for verificationCode
-        JLabel verificationCodeLabel = new JLabel(blank + "Enter Verification Code: ");
+        JLabel verificationCodeLabel = new JLabel(blank + libraryManagementSystem.translate("EnterVerificationCode"));
         JTextField verificationCodeField = new JTextField(20);
         jpnView.add(verificationCodeLabel);
         jpnView.add(verificationCodeField);
 
         // Label and TextField for userPassword
-        JLabel userPasswordLabel = new JLabel(blank + "Enter Password: ");
+        JLabel userPasswordLabel = new JLabel(blank + libraryManagementSystem.translate("EnterPassword"));
         JTextField userPasswordField = new JTextField(20);
         jpnView.add(userPasswordLabel);
         jpnView.add(userPasswordField);
@@ -152,24 +159,24 @@ public class AddInformationController {
         // Validate form fields
         if (userName.isEmpty() || userDateOfBirth.isEmpty() || userEmailAddress.isEmpty() ||
                 enteredVerificationCode.isEmpty() || userPassword.isEmpty()) {
-            JOptionPane.showMessageDialog(jpnView, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("PleaseFillAllFields"), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!isValidName(userName)) return;
 
         if (!isValidDate(userDateOfBirth)) {
-            JOptionPane.showMessageDialog(jpnView, "Invalid format for Date", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("InvalidDateFormat"), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!isValidEmail(userEmailAddress)) {
-            JOptionPane.showMessageDialog(jpnView, "Invalid format for Email Address", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("InvalidEmailFormat"), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!enteredVerificationCode.equals(verificationCode)) {
-            JOptionPane.showMessageDialog(jpnView, "Invalid Verification Code", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("InvalidVerificationCode"), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -188,7 +195,7 @@ public class AddInformationController {
             LogInController.librarian.addUserAction(borrower);
             libraryManagementSystem.saveData();
 
-            JOptionPane.showMessageDialog(jpnView, "Borrower added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("BorrowerAddedSuccessfully"), "Success", JOptionPane.INFORMATION_MESSAGE);
         } else if (kind.equals("librarian")) {
             Librarian librarian = new Librarian();
             librarian.setUserName(userName);
@@ -202,7 +209,7 @@ public class AddInformationController {
             LogInController.librarian.addUserAction(librarian);
             libraryManagementSystem.saveData();
 
-            JOptionPane.showMessageDialog(jpnView, "Librarian added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("LibrarianAddedSuccessfully"), "Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
         setupAddUserForm();
@@ -237,7 +244,7 @@ public class AddInformationController {
      * @param dateInput The date string to validate.
      * @return true if the date format is valid, false otherwise.
      */
-    private boolean isValidDate(String dateInput) {
+    public boolean isValidDate(String dateInput) {
         // Regular expression for matching date in "yyyy-MM-dd" format
         String regex = "^\\d{4}-(\\d{1,2})-(\\d{1,2})$";
 
@@ -283,10 +290,10 @@ public class AddInformationController {
         return matcher.matches();
     }
 
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         // Check if the name only contains letters, single spaces between words, and optional dots
         if (!name.matches("^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*\\.$|^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*$")) {
-            JOptionPane.showMessageDialog(null, "Name must only contain letters, single spaces, and optional dots between words", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, libraryManagementSystem.translate("NameInvalid"), "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -304,23 +311,24 @@ public class AddInformationController {
     public void sendVerificationCode(String userEmailAddress, String verificationCode, LibraryManagementSystem libraryManagementSystem, JPanel jpnView) {
         // Check if the email already exists in the system
         if (libraryManagementSystem.findUserByEmail(userEmailAddress) != null) {
-            JOptionPane.showMessageDialog(jpnView, "This email has existed in the system.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("ThisEmailExists"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validate the email format
         if (!isValidEmail(userEmailAddress)) {
-            JOptionPane.showMessageDialog(jpnView, "Invalid format for Email Address", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("InvalidEmailFormat"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Create and send the email
         EmailSender emailSender = new EmailSender();
-        String subject = "Verification Code";
-        String messageText = "Your verification code is: " + verificationCode + ".";
+        String subject = libraryManagementSystem.translate("VerificationCode");
+        String messageText = libraryManagementSystem.translate("YourVerificationCode") + ": " + verificationCode + ".";
 
         emailSender.sendEmail(userEmailAddress, subject, messageText);
     }
+
 
     /**
      * Sets up the form for adding a new document (book, magazine, or thesis) to the library management system.
@@ -332,54 +340,54 @@ public class AddInformationController {
         String blank = "      ";
 
         // Dropdown for selecting document type
-        JLabel typeLabel = new JLabel(blank + "Select Type (book, magazine, thesis):       ");
+        JLabel typeLabel = new JLabel(blank + libraryManagementSystem.translate("SelectType"));
         JComboBox<String> typeComboBox = new JComboBox<>(new String[]{"book", "magazine", "thesis"});
         jpnView.add(typeLabel);
         jpnView.add(typeComboBox);
 
         // Shared fields
-        JLabel quantityLabel = new JLabel(blank + "Enter Quantity: ");
+        JLabel quantityLabel = new JLabel(blank + libraryManagementSystem.translate("EnterQuantity"));
         JTextField quantityField = new JTextField(20);
         jpnView.add(quantityLabel);
         jpnView.add(quantityField);
 
-        JLabel titleLabel = new JLabel(blank + "Enter Title: ");
+        JLabel titleLabel = new JLabel(blank + libraryManagementSystem.translate("EnterTitle"));
         JTextField titleField = new JTextField(20);
         jpnView.add(titleLabel);
         jpnView.add(titleField);
 
-        JLabel authorLabel = new JLabel(blank + "Enter Author: ");
+        JLabel authorLabel = new JLabel(blank + libraryManagementSystem.translate("EnterAuthor"));
         JTextField authorField = new JTextField(20);
         jpnView.add(authorLabel);
         jpnView.add(authorField);
 
-        JLabel descriptionLabel = new JLabel(blank + "Enter Description: ");
+        JLabel descriptionLabel = new JLabel(blank + libraryManagementSystem.translate("EnterDescription"));
         JTextField descriptionField = new JTextField(20);
         jpnView.add(descriptionLabel);
         jpnView.add(descriptionField);
 
-        JLabel languageLabel = new JLabel(blank + "Enter Language: ");
+        JLabel languageLabel = new JLabel(blank + libraryManagementSystem.translate("EnterLanguage"));
         JTextField languageField = new JTextField(20);
         jpnView.add(languageLabel);
         jpnView.add(languageField);
 
-        JLabel pagesLabel = new JLabel(blank + "Enter Number of Pages: ");
+        JLabel pagesLabel = new JLabel(blank + libraryManagementSystem.translate("EnterNumberOfPages"));
         JTextField pagesField = new JTextField(20);
         jpnView.add(pagesLabel);
         jpnView.add(pagesField);
 
-        JLabel isbnLabel = new JLabel(blank + "Enter ISBN: ");
+        JLabel isbnLabel = new JLabel(blank + libraryManagementSystem.translate("EnterISBN"));
         JTextField isbnField = new JTextField(20);
         jpnView.add(isbnLabel);
         jpnView.add(isbnField);
 
-        JLabel googleLinkLabel = new JLabel(blank + "Enter Google Link: ");
+        JLabel googleLinkLabel = new JLabel(blank + libraryManagementSystem.translate("EnterGoogleLink"));
         JTextField googleLinkField = new JTextField(20);
         jpnView.add(googleLinkLabel);
         jpnView.add(googleLinkField);
         googleLinkField.setEditable(false);
 
-        JLabel imageUrlLable = new JLabel(blank + "Enter Image URL: ");
+        JLabel imageUrlLable = new JLabel(blank + libraryManagementSystem.translate("EnterImageUrl"));
         JTextField imageUrlField = new JTextField(20);
         jpnView.add(imageUrlLable);
         jpnView.add(imageUrlField);
@@ -401,10 +409,10 @@ public class AddInformationController {
         jpnView.add(dynamicField3Label);
         jpnView.add(dynamicField3Field);
 
-        //the default in the combo box is "book"
+        // Default when "book" is selected
         if ("book".equals((String) typeComboBox.getSelectedItem())) {
-            dynamicField1Label.setText(blank + "Enter Genre: ");
-            dynamicField2Label.setText(blank + "Enter Publisher: ");
+            dynamicField1Label.setText(blank + libraryManagementSystem.translate("EnterGenre"));
+            dynamicField2Label.setText(blank + libraryManagementSystem.translate("EnterPublisher"));
             dynamicField3Label.setText("");
             dynamicField3Field.setVisible(false);
         }
@@ -416,21 +424,21 @@ public class AddInformationController {
         });
 
         // jcbUseAPI to choose whether to use API or not
-        JCheckBox jcbUseAPI = new JCheckBox("Use API to autofill details");
+        JCheckBox jcbUseAPI = new JCheckBox(libraryManagementSystem.translate("UseAPI"));
         jpnView.add(jcbUseAPI);
 
-        JButton jbtAutoFill = new JButton("Auto-fill Data");
-        jbtAutoFill.setVisible(false);  // Hide initially
+        JButton jbtAutoFill = new JButton(libraryManagementSystem.translate("AutoFillData"));
+        jbtAutoFill.setVisible(false);  // Initially hidden
         jpnView.add(jbtAutoFill);
 
-        // Add action listener to jcbUseAPI to toggle button visibility
+        // Add action listener for jcbUseAPI to toggle button visibility
         jcbUseAPI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (jcbUseAPI.isSelected()) {
-                    jbtAutoFill.setVisible(true);  // Show the button if checkbox is selected
+                    jbtAutoFill.setVisible(true);  // Show button if checkbox is selected
                 } else {
-                    jbtAutoFill.setVisible(false);  // Hide the button if checkbox is deselected
+                    jbtAutoFill.setVisible(false);  // Hide button if checkbox is deselected
                 }
                 jpnView.revalidate();
                 jpnView.repaint();
@@ -444,18 +452,22 @@ public class AddInformationController {
         };
         JLabel[] labels = {dynamicField1Label, dynamicField2Label, dynamicField3Label};
 
-        // Action listener for auto-fill button to populate fields using an external API
+        // Add action listener for autofill button to populate fields using an external API
         jbtAutoFill.addActionListener(e -> {
             handleAutoFillAction(isbnField, fields, labels, typeComboBox, jpnView);
         });
 
-        // Add action listener to add button
+        // Add action listener for add document button
         jbtAdd.addActionListener(e -> {
-            //Check whether the document was added or not
+            // Check if the document was added or not
             Document document = libraryManagementSystem.findDocumentByISBN(fields[11].getText());
             if (document == null) {
                 String selectedType = (String) typeComboBox.getSelectedItem();
                 handleAddDocument(selectedType, fields, libraryManagementSystem, jpnView);
+            } else {
+                JOptionPane.showMessageDialog(jpnView,
+                        libraryManagementSystem.translate("DocumentExistsInSystem"),
+                        libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -482,15 +494,16 @@ public class AddInformationController {
     ) {
         String blank = "      ";
         typeComboBox.setSelectedItem("book");
-        labels[0].setText(blank + "Enter Genre: ");
-        labels[1].setText(blank + "Enter Publisher: ");
+        labels[0].setText(blank + libraryManagementSystem.translate("EnterGenre"));
+        labels[1].setText(blank + libraryManagementSystem.translate("EnterPublisher"));
         labels[2].setText("");
         fields[9].setVisible(false); // Hide dynamicField3Field
 
         String isbn = isbnField.getText();
 
         if (isbn.isEmpty()) {
-            JOptionPane.showMessageDialog(jpnView, "Please enter ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("PleaseEnterISBN"),
+                    libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -520,7 +533,7 @@ public class AddInformationController {
             dynamicField2 = book.getBookPublisher();
             dynamicField3 = "";
         } else if (result instanceof String) {
-            JOptionPane.showMessageDialog(jpnView, result, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, result, libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -550,32 +563,40 @@ public class AddInformationController {
      * @param dynamicField3Field the input field for the third dynamic field
      * @param jpnView the parent panel to revalidate and repaint
      */
-    public void updateDynamicFields(String selectedType, JLabel dynamicField1Label, JLabel dynamicField2Label, JLabel dynamicField3Label, JTextField dynamicField3Field, JPanel jpnView) {
+    public void updateDynamicFields(
+            String selectedType,
+            JLabel dynamicField1Label,
+            JLabel dynamicField2Label,
+            JLabel dynamicField3Label,
+            JTextField dynamicField3Field,
+            JPanel jpnView
+    ) {
         String blank = "      ";
 
         switch (selectedType) {
             case "book":
-                dynamicField1Label.setText(blank + "Enter Genre: ");
-                dynamicField2Label.setText(blank + "Enter Publisher: ");
+                dynamicField1Label.setText(blank + libraryManagementSystem.translate("EnterGenre"));
+                dynamicField2Label.setText(blank + libraryManagementSystem.translate("EnterPublisher"));
                 dynamicField3Label.setText("");
                 dynamicField3Field.setVisible(false);
                 break;
             case "magazine":
-                dynamicField1Label.setText(blank + "Enter Subject: ");
-                dynamicField2Label.setText(blank + "Enter Frequency: ");
-                dynamicField3Label.setText(blank + "Enter Issue Number: ");
+                dynamicField1Label.setText(blank + libraryManagementSystem.translate("EnterSubject"));
+                dynamicField2Label.setText(blank + libraryManagementSystem.translate("EnterFrequency"));
+                dynamicField3Label.setText(blank + libraryManagementSystem.translate("EnterIssueNumber"));
                 dynamicField3Field.setVisible(true);
                 break;
             case "thesis":
-                dynamicField1Label.setText(blank + "Enter Subject: ");
-                dynamicField2Label.setText(blank + "Enter Degree: ");
-                dynamicField3Label.setText(blank + "Enter University: ");
+                dynamicField1Label.setText(blank + libraryManagementSystem.translate("EnterSubject"));
+                dynamicField2Label.setText(blank + libraryManagementSystem.translate("EnterDegree"));
+                dynamicField3Label.setText(blank + libraryManagementSystem.translate("EnterUniversity"));
                 dynamicField3Field.setVisible(true);
                 break;
         }
         jpnView.revalidate();
         jpnView.repaint();
     }
+
 
     /**
      * Adds a new document to the library management system based on the selected type.
@@ -585,12 +606,19 @@ public class AddInformationController {
      * @param libraryManagementSystem the library management system instance
      * @param jpnView the parent panel to display messages
      */
-    private void handleAddDocument(String selectedType, JTextField[] fields, LibraryManagementSystem libraryManagementSystem, JPanel jpnView) {
+    public void handleAddDocument(
+            String selectedType,
+            JTextField[] fields,
+            LibraryManagementSystem libraryManagementSystem,
+            JPanel jpnView
+    ) {
         try {
             // Validate empty fields
             for (JTextField field : fields) {
                 if (field.isVisible() && field.isEditable() && field.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(jpnView, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(jpnView,
+                            libraryManagementSystem.translate("PleaseFillAllFields"),
+                            libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -610,23 +638,20 @@ public class AddInformationController {
             String imageUrl = fields[6].getText();
 
             if (quantity <= 0) {
-                JOptionPane.showMessageDialog(jpnView, "Quantity must be greater than 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView,
+                        libraryManagementSystem.translate("QuantityMustBeGreaterThanZero"),
+                        libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (pages <= 0) {
-                JOptionPane.showMessageDialog(jpnView, "Pages must be greater than 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView,
+                        libraryManagementSystem.translate("PagesMustBeGreaterThanZero"),
+                        libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (!isValidName(author) || !isValidName(language)) {
-                return;
-            }
-
-            //Check whether the document was added or not
-            Document document = libraryManagementSystem.findDocumentByISBN(isbn);
-            if (document != null) {
-                JOptionPane.showMessageDialog(jpnView, "The document has existed in this system.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -684,16 +709,22 @@ public class AddInformationController {
                     break;
 
                 default:
-                    JOptionPane.showMessageDialog(jpnView, "Invalid document type.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(jpnView,
+                            libraryManagementSystem.translate("InvalidDocumentType"),
+                            libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                     return;
             }
 
             // Save and notify success
             LogInController.librarian.dealWithDocumentAction(isbn, "Add");
             libraryManagementSystem.saveData();
-            JOptionPane.showMessageDialog(jpnView, "The document is added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView,
+                    libraryManagementSystem.translate("DocumentAddedSuccessfully"),
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(jpnView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView,
+                    libraryManagementSystem.translate("Error") + ": " + ex.getMessage(),
+                    libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
         }
 
         setupAddDocumentForm();
@@ -701,4 +732,5 @@ public class AddInformationController {
         jpnView.revalidate();
         jpnView.repaint();
     }
+
 }

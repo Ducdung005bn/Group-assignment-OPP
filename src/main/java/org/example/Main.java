@@ -3,7 +3,6 @@ package org.example;
 import library.management.system.LogInJFrame;
 import main.classes.main.opponents.*;
 import main.classes.other.opponents.GoogleBooksAPI;
-import main.classes.other.opponents.LibraryPdfGenerator;
 
 public class Main {
     public static void main(String[] args) {

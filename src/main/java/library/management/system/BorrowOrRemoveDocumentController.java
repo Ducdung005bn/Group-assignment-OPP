@@ -47,7 +47,7 @@ public class BorrowOrRemoveDocumentController {
         this.jbtBorrowOrRemoveDocument = jbtBorrowOrRemoveDocument;
         this.borrower = borrower;
         this.libraryManagementSystem = libraryManagementSystem;
-        this.jbtBorrowOrRemoveDocument.setText("BORROW");
+        this.jbtBorrowOrRemoveDocument.setText(libraryManagementSystem.translate("borrow_button"));
 
         jbtBorrowOrRemoveDocument.setEnabled(false);
 
@@ -89,7 +89,7 @@ public class BorrowOrRemoveDocumentController {
         this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
         this.jbtBorrowOrRemoveDocument = jbtBorrowOrRemoveDocument;
         this.libraryManagementSystem = libraryManagementSystem;
-        this.jbtBorrowOrRemoveDocument.setText("REMOVE");
+        this.jbtBorrowOrRemoveDocument.setText(libraryManagementSystem.translate("remove_button"));
 
         jtfBorrowOrRemoveDocument.getDocument().addDocumentListener(new DocumentListener() {
             //new text is inserted into the text field
@@ -179,7 +179,7 @@ public class BorrowOrRemoveDocumentController {
             displayBorrowData(borrowData);
         } else {
             // If borrowing is not allowed, display the reason
-            JOptionPane.showMessageDialog(null, "You cannot borrow the book.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, reason, "Error", JOptionPane.ERROR_MESSAGE);
 
             jpnView.removeAll();
             jpnView.setLayout(new GridLayout(0, 1));
@@ -200,7 +200,7 @@ public class BorrowOrRemoveDocumentController {
      * @param libraryManagementSystem The system managing library data.
      * @return A message indicating why the borrower cannot borrow the document, or null if they can.
      */
-    private String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
+    public String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
         Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
 
         boolean alreadyBorrow = false;
@@ -219,7 +219,7 @@ public class BorrowOrRemoveDocumentController {
         } else if (borrower.borrowingBookCount >= LibraryManagementSystem.MAX_BORROW_LIMIT) {
             return "You have reached the maximum borrow limit of " + LibraryManagementSystem.MAX_BORROW_LIMIT + " books.";
         } else {
-            return null;  //is able to borrow the book
+            return null;
         }
     }
 
@@ -232,14 +232,14 @@ public class BorrowOrRemoveDocumentController {
      */
     private void displayBorrowData(BorrowData borrowData) {
         // Create a message string with borrower's information
-        String message = "Borrower ID: " + borrowData.getBorrowerID() + "\n" +
-                "Book ISBN: " + borrowData.getBorrowedBookISBN() + "\n" +
-                "Borrow Date: " + borrowData.getBorrowDate() + "\n" +
-                "Planned Return Date: " + borrowData.getPlannedReturnDate() + "\n" +
-                "Status: " + borrowData.getBorrowStatus();
+        String message = libraryManagementSystem.translate("BorrowerID") + borrowData.getBorrowerID() + "\n" +
+                libraryManagementSystem.translate("BookISBN") + borrowData.getBorrowedBookISBN() + "\n" +
+                libraryManagementSystem.translate("BorrowDate") + borrowData.getBorrowDate() + "\n" +
+                libraryManagementSystem.translate("PlannedReturnDate") + borrowData.getPlannedReturnDate() + "\n" +
+                libraryManagementSystem.translate("Status") + borrowData.getBorrowStatus();
 
         // Display the information in a notification dialog
-        JOptionPane.showMessageDialog(null, message, "Borrow Information", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, libraryManagementSystem.translate("borrow_info"), JOptionPane.INFORMATION_MESSAGE);
         jtfBorrowOrRemoveDocument.setText("");
     }
 
@@ -254,7 +254,7 @@ public class BorrowOrRemoveDocumentController {
         Document removedDocument = matchingDocuments.get(0);
 
         if (removedDocument.documentQuantity < removedDocument.getDocumentQuantityAll()) {
-            JOptionPane.showMessageDialog(null, "This document hasn't been returned.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, libraryManagementSystem.translate("remove_failed"), libraryManagementSystem.translate("Error"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -266,7 +266,7 @@ public class BorrowOrRemoveDocumentController {
             libraryManagementSystem.magazineList.remove( (Magazine) removedDocument);
         }
 
-        JOptionPane.showMessageDialog(null, "You have removed the book successfully.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, libraryManagementSystem.translate("remove_success"), libraryManagementSystem.translate("Notification"), JOptionPane.INFORMATION_MESSAGE);
         jtfBorrowOrRemoveDocument.setText("");
         LogInController.librarian.dealWithDocumentAction(removedDocument.getDocumentISBN(), "Remove");
         libraryManagementSystem.saveData();

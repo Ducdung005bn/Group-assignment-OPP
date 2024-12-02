@@ -23,7 +23,6 @@ public class ReturnDocumentController {
     private Borrower borrower;
     private LibraryManagementSystem libraryManagementSystem;
     private TableDisplay tableDisplay;
-    private final String[] COLUMNS = {"Borrower ID", "Book ISBN", "Borrow Date", "Planned Return Date", "Status", "Return"};
     private DefaultTableModel model;
 
     /**
@@ -47,6 +46,16 @@ public class ReturnDocumentController {
      */
     public void setDataToTable() {
         List<BorrowData> borrowDataList = borrower.borrowingHistory;
+        String[] COLUMNS = {
+                libraryManagementSystem.translate("BorrowerID"),
+                libraryManagementSystem.translate("BookISBN"),
+                libraryManagementSystem.translate("BorrowDate"),
+                libraryManagementSystem.translate("PlannedReturnDate"),
+                libraryManagementSystem.translate("Status"),
+                libraryManagementSystem.translate("Return")
+        };
+
+
         model = tableDisplay.setBorrowDataTable(borrowDataList, COLUMNS);
         
         JTable table = new JTable(model);
@@ -89,42 +98,42 @@ public class ReturnDocumentController {
     private void returnDocument(BorrowData borrowData) {
         borrower.borrowingHistory.remove(borrowData);
         borrower.borrowingBookCount--;
-    
+
         Date actualReturnDate = new Date();
-    
+
         if (actualReturnDate.after(borrowData.getPlannedReturnDate())) {
             // Notification for late return
             JOptionPane.showMessageDialog(
-                null,
-                "You have returned the book after the due date.",
-                "Late Return",
-                JOptionPane.WARNING_MESSAGE
+                    null,
+                    libraryManagementSystem.translate("book_late_return"),
+                    libraryManagementSystem.translate("late_return"),
+                    JOptionPane.WARNING_MESSAGE
             );
-            borrowData.setBorrowStatus("Not Returned On Time");
-            int overdueCountTemp = borrower.getOverdueCount()+1;
+            borrowData.setBorrowStatus(libraryManagementSystem.translate("not_returned_on_time"));
+            int overdueCountTemp = borrower.getOverdueCount() + 1;
             borrower.setOverdueCount(overdueCountTemp);
         } else {
             // Notification for true return
             JOptionPane.showMessageDialog(
-                null,
-                "You have returned the book before the due date.",
-                "On Time Return",
-                JOptionPane.INFORMATION_MESSAGE
+                    null,
+                    libraryManagementSystem.translate("book_on_time_return"),
+                    libraryManagementSystem.translate("on_time_return"),
+                    JOptionPane.INFORMATION_MESSAGE
             );
-            borrowData.setBorrowStatus("Returned On Time");
+            borrowData.setBorrowStatus(libraryManagementSystem.translate("returned_on_time"));
         }
 
-        //If the document was borrowed before, set the same rating.
+        // If the document was borrowed before, set the same rating.
         for (BorrowData data : borrower.borrowedHistory) {
             if (data.getBorrowedBookISBN().equals(borrowData.getBorrowedBookISBN())) {
                 borrowData.setUserRating(data.getUserRating());
                 break;
             }
         }
-    
+
         // update borrow history
         borrower.borrowedHistory.add(borrowData);
-    
+
         // increase the numbs of the given book
         Document document = libraryManagementSystem.findDocumentByISBN(borrowData.getBorrowedBookISBN());
         if (document != null) {
@@ -132,6 +141,8 @@ public class ReturnDocumentController {
         }
         libraryManagementSystem.saveData();
     }
+
+
 
     /**
      * Helper class that sets the borrow data into a table model.

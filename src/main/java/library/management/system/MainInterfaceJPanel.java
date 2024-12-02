@@ -13,6 +13,9 @@ public class MainInterfaceJPanel extends javax.swing.JPanel {
     public MainInterfaceJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem) {
         initComponents(); // Initialize components
 
+        jLabel2.setText(libraryManagementSystem.translate("BEST_BORROWED_BOOKS"));
+        jLabel3.setText(libraryManagementSystem.translate("MOST_SUITABLE_BOOKS"));
+
         MainInterfaceController controller = new MainInterfaceController(
                 jpnView,
                 borrower,

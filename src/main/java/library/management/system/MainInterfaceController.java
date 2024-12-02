@@ -7,13 +7,11 @@ import main.classes.other.opponents.LibraryPdfGenerator;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import java.util.HashMap;
 
 public class MainInterfaceController {
     private JPanel jpnView;
@@ -37,6 +35,7 @@ public class MainInterfaceController {
         displayBooks(topSuitableBooksjpn, "most suitable books");
 
         downLoadDocumentsPDF(libraryManagementSystem);
+        changeLanguageHandling(libraryManagementSystem);
     }
 
     MainInterfaceController(JPanel jpnView, Librarian librarian, LibraryManagementSystem libraryManagementSystem) {
@@ -47,12 +46,13 @@ public class MainInterfaceController {
         isDealingWithBorrower = false;
 
         downLoadDocumentsPDF(libraryManagementSystem);
+        changeLanguageHandling(libraryManagementSystem);
     }
 
     private void downLoadDocumentsPDF(LibraryManagementSystem libraryManagementSystem) {
         // Create the button
         JButton downloadPdfButton = new JButton("Download PDF");
-        downloadPdfButton.setBounds(0, 0, 150, 30);
+        downloadPdfButton.setBounds(0, 0, 120, 30);
         jpnView.add(downloadPdfButton);
 
         // Add ActionListener to the button
@@ -77,6 +77,43 @@ public class MainInterfaceController {
             } catch (FileNotFoundException exception) {
                 JOptionPane.showMessageDialog(jpnView, "Error: " + exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        jpnView.revalidate();
+        jpnView.repaint();
+    }
+
+    private void changeLanguageHandling(LibraryManagementSystem libraryManagementSystem){
+        JComboBox<String> languageSelector = new JComboBox<>(new String[] { "English", "Vietnamese", "French", "Italian" });
+        languageSelector.setBounds(120, 0, 100, 30);
+        jpnView.add(languageSelector);
+
+        String language = "";
+        if (libraryManagementSystem.getLanguage().equals("vi")) {
+            language = "Vietnamese";
+        } else if (libraryManagementSystem.getLanguage().equals("fr")) {
+            language = "French";
+        } else if (libraryManagementSystem.getLanguage().equals("en")) {
+            language = "English";
+        } else if (libraryManagementSystem.getLanguage().equals("it")) {
+            language = "Italian";
+        }
+        languageSelector.setSelectedItem(language);
+
+        languageSelector.addActionListener(e -> {
+            String selectedLanguage = (String) languageSelector.getSelectedItem();
+            String languageCode = "";
+            if (selectedLanguage.equals("Vietnamese")) {
+                languageCode = "vi";
+            } else if (selectedLanguage.equals("French")) {
+                languageCode = "fr";
+            } else if (selectedLanguage.equals("English")) {
+                languageCode = "en";
+            } else if (selectedLanguage.equals("Italian")) {
+                languageCode = "it";
+            }
+
+            libraryManagementSystem.setLanguage(languageCode);
         });
 
         jpnView.revalidate();

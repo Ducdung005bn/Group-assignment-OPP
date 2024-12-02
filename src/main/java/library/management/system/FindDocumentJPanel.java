@@ -6,8 +6,13 @@ public class FindDocumentJPanel extends javax.swing.JPanel {
 
     public FindDocumentJPanel(LibraryManagementSystem libraryManagementSystem) {
         initComponents();
+
+        jLabel1.setText(libraryManagementSystem.translate("FIND_BY_GENRE"));
+        jLabel2.setText(libraryManagementSystem.translate("FIND_BY_TITLE"));
+        jLabel3.setText(libraryManagementSystem.translate("FIND_BY_AUTHOR"));
+
         FindDocumentController controller = new FindDocumentController(
-                jpnView, jtfFindByGenre, jtfFindByTitle, jtfFindByAuthor);
+                jpnView, jtfFindByGenre, jtfFindByTitle, jtfFindByAuthor, libraryManagementSystem);
         controller.setDataToTable(libraryManagementSystem);
     }
 

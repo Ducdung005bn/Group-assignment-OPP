@@ -8,10 +8,11 @@ public class DisplayOrUpdateDocumentJPanel extends javax.swing.JPanel {
         initComponents();
 
         if (kind.equals("display")) {
-            jLabel1.setText("Display the document with ISBN:");
+            jLabel1.setText(libraryManagementSystem.translate("DISPLAY_DOCUMENT_ISBN"));
         } else if (kind.equals("update")) {
-            jLabel1.setText("Update the document with ISBN:");
+            jLabel1.setText(libraryManagementSystem.translate("UPDATE_DOCUMENT_ISBN"));
         }
+
 
         DisplayOrUpdateDocumentController controller = new DisplayOrUpdateDocumentController(kind,
                 jpnView, jtfDisplayOrUpdateDocument, libraryManagementSystem);

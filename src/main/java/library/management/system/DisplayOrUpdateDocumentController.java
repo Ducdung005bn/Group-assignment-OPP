@@ -98,55 +98,55 @@ public class DisplayOrUpdateDocumentController {
         Font font = new Font("Arial", Font.PLAIN, 16);
 
         // Shared fields
-        formPanel.add(new JLabel(blank + "Average Rating: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("averageRating")));
         JTextField averageRatingField = null;
         if (document.getDocumentRatingsCount() == 0) {
-            averageRatingField = new JTextField("No one has rated this document yet.");
+            averageRatingField = new JTextField(libraryManagementSystem.translate("noOneHasRatedThisDocumentYet"));
         } else {
             averageRatingField = new JTextField((new DecimalFormat("#.##")).format(document.getDocumentAverageRating()));
         }
         formPanel.add(averageRatingField);
         averageRatingField.setEditable(false);
 
-        formPanel.add(new JLabel(blank + "Remaining Quantity: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("remainingQuantity")));
         JTextField remainingQuantityField = new JTextField(String.valueOf(document.documentQuantity));
         formPanel.add(remainingQuantityField);
         remainingQuantityField.setEditable(false);
 
-        formPanel.add(new JLabel(blank + "Total Quantity: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("totalQuantity")));
         JTextField totalQuantityField = new JTextField(String.valueOf(document.getDocumentQuantityAll()));
         formPanel.add(totalQuantityField);
 
-        formPanel.add(new JLabel(blank + "Title: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("title")));
         JTextField titleField = new JTextField(document.getDocumentTitle());
         formPanel.add(titleField);
 
-        formPanel.add(new JLabel(blank + "Author: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("author")));
         JTextField authorField = new JTextField(document.getDocumentAuthor());
         formPanel.add(authorField);
 
-        formPanel.add(new JLabel(blank + "Description: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("description")));
         JTextField descriptionField = new JTextField(document.getDocumentDescription());
         formPanel.add(descriptionField);
 
-        formPanel.add(new JLabel(blank + "Language: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("language")));
         JTextField languageField = new JTextField(document.getDocumentLanguage());
         formPanel.add(languageField);
 
-        formPanel.add(new JLabel(blank + "Number of Pages: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("numberOfPages")));
         JTextField pagesField = new JTextField(String.valueOf(document.getDocumentPage()));
         formPanel.add(pagesField);
 
-        formPanel.add(new JLabel(blank + "ISBN: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("isbn")));
         JTextField isbnField = new JTextField(document.getDocumentISBN());
         formPanel.add(isbnField);
 
-        formPanel.add(new JLabel(blank + "Google Link: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("googleLink")));
         JTextField googleLinkField = new JTextField(document.getDocumentGoogleLink());
         formPanel.add(googleLinkField);
         googleLinkField.setEditable(false);
 
-        formPanel.add(new JLabel(blank + "Image URL: "));
+        formPanel.add(new JLabel(blank + libraryManagementSystem.translate("imageUrl")));
         JTextField imageUrlField = new JTextField(document.getDocumentImageUrl());
         formPanel.add(imageUrlField);
         imageUrlField.setEditable(false);
@@ -168,26 +168,26 @@ public class DisplayOrUpdateDocumentController {
         formPanel.add(dynamicField3Field);
 
         if (document instanceof Book) {
-            dynamicField1Label.setText(blank + "Genre: ");
+            dynamicField1Label.setText(blank + libraryManagementSystem.translate("genre"));
             dynamicField1Field.setText(((Book) document).getBookGenre());
-            dynamicField2Label.setText(blank + "Publisher: ");
+            dynamicField2Label.setText(blank + libraryManagementSystem.translate("publisher"));
             dynamicField2Field.setText(((Book) document).getBookPublisher());
             dynamicField3Label.setText(blank + "");
             dynamicField3Field.setVisible(false);
         } else if (document instanceof Thesis) {
-            dynamicField1Label.setText(blank + "Subject: ");
+            dynamicField1Label.setText(blank + libraryManagementSystem.translate("subject"));
             dynamicField1Field.setText(((Thesis) document).getThesisSubject());
-            dynamicField2Label.setText(blank + "Degree: ");
+            dynamicField2Label.setText(blank + libraryManagementSystem.translate("degree"));
             dynamicField2Field.setText(((Thesis) document).getThesisDegree());
-            dynamicField3Label.setText(blank + "University: ");
+            dynamicField3Label.setText(blank + libraryManagementSystem.translate("university"));
             dynamicField3Field.setText(((Thesis) document).getThesisUniversity());
             dynamicField3Field.setVisible(true);
         } else if (document instanceof Magazine) {
-            dynamicField1Label.setText(blank + "Subject: ");
+            dynamicField1Label.setText(blank + libraryManagementSystem.translate("subject"));
             dynamicField1Field.setText(((Magazine) document).getMagazineSubject());
-            dynamicField2Label.setText(blank + "Frequency: ");
+            dynamicField2Label.setText(blank + libraryManagementSystem.translate("frequency"));
             dynamicField2Field.setText(String.valueOf(((Magazine) document).getMagazineFrequency()));
-            dynamicField3Label.setText(blank + "Issue Number: ");
+            dynamicField3Label.setText(blank + libraryManagementSystem.translate("issueNumber"));
             dynamicField3Field.setText(String.valueOf(((Magazine) document).getMagazineIssueNumb()));
             dynamicField3Field.setVisible(true);
         }
@@ -196,7 +196,7 @@ public class DisplayOrUpdateDocumentController {
 
         // Button Panel for Update Button
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton updateButton = new JButton("UPDATE");
+        JButton updateButton = new JButton(libraryManagementSystem.translate("update"));
         if (kind.equals("update")) {
             buttonPanel.add(updateButton);
         }
@@ -252,6 +252,7 @@ public class DisplayOrUpdateDocumentController {
         jpnView.repaint();
     }
 
+
     public static void addBookCoverToJPanel(String imageUrl, JPanel picturePanel, int w, int h) {
         if (imageUrl.isEmpty()) {
             return;
@@ -277,12 +278,6 @@ public class DisplayOrUpdateDocumentController {
         } catch (Exception e) {
             // Handle exceptions if the image fails to load
             e.printStackTrace(); // Print the stack trace for debugging
-            JOptionPane.showMessageDialog(
-                    picturePanel,
-                    "Failed to load image: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            ); // Show an error message dialog to the user
         }
     }
 
@@ -297,7 +292,7 @@ public class DisplayOrUpdateDocumentController {
      * @param libraryManagementSystem The system containing the library's documents
      * @param kind A string representing kind of displaying or updating
      */
-    private static void updateDocument(JTextField[] fields, Document document, JPanel jpnView, LibraryManagementSystem libraryManagementSystem, String kind) {
+    public static void updateDocument(JTextField[] fields, Document document, JPanel jpnView, LibraryManagementSystem libraryManagementSystem, String kind) {
         try {
             // Retrieve data from input fields
             int totalDocumentQuantity = Integer.parseInt(fields[1].getText());
@@ -314,7 +309,7 @@ public class DisplayOrUpdateDocumentController {
             // Validate document quantity and page number
             int borrowedDocumentNumber = document.getDocumentQuantityAll() - document.documentQuantity;
             if (totalDocumentQuantity <= borrowedDocumentNumber) {
-                JOptionPane.showMessageDialog(jpnView, "Please check the total number of documents", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("CheckTotal"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -325,19 +320,19 @@ public class DisplayOrUpdateDocumentController {
                     fields[4].getText().isEmpty() || fields[5].getText().isEmpty() || fields[6].getText().isEmpty() ||
                     fields[7].getText().isEmpty() || dynamicField1.isEmpty() || dynamicField2.isEmpty() ||
                     !(document instanceof Book) && dynamicField3.isEmpty()) {
-                JOptionPane.showMessageDialog(jpnView, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("PleaseFillAllFields"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Check if the name only contains letters, single spaces between words, and dots followed by a space
             String regex = "^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*\\.$|^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*$";
             if (!documentAuthor.matches(regex) || !documentLanguage.matches(regex)) {
-                JOptionPane.showMessageDialog(jpnView, "Name must only contain letters and single spaces between words.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("NameInvalid"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (documentPage <= 0) {
-                JOptionPane.showMessageDialog(jpnView, "Pages must be greater than 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("PagesMustBeGreaterThanZero"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -451,13 +446,13 @@ public class DisplayOrUpdateDocumentController {
             libraryManagementSystem.saveData();
 
             // Notify the user of the successful update
-            JOptionPane.showMessageDialog(jpnView, "Document updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("DocumentUpdatedSuccessfully"), libraryManagementSystem.translate("Success"), JOptionPane.INFORMATION_MESSAGE);
             displayOrUpdateDocumentDetails(jpnView, kind, document, libraryManagementSystem);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(jpnView, "Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("PleaseEnterValidNumbers"), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(jpnView, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jpnView, libraryManagementSystem.translate("Error: ") + ex.getMessage(), libraryManagementSystem.translate("Error"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

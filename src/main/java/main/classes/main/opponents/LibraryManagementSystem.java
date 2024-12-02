@@ -1,5 +1,7 @@
 package main.classes.main.opponents;
 
+import main.classes.other.opponents.LanguageManager;
+
 import java.io.*;
 import java.util.Vector;
 
@@ -18,6 +20,7 @@ public class LibraryManagementSystem implements Serializable {
     public Vector<Magazine> magazineList;
     public Vector<Borrower> borrowerList;
     public Vector<Librarian> librarianList;
+    private LanguageManager languageManager;
 
     public LibraryManagementSystem() {
         userNumb = 0;
@@ -26,6 +29,19 @@ public class LibraryManagementSystem implements Serializable {
         magazineList = new Vector<>();
         borrowerList = new Vector<>();
         librarianList = new Vector<>();
+        languageManager = new LanguageManager("en");
+    }
+
+    public void setLanguage(String languageCode) {
+        this.languageManager.setLanguageCode(languageCode);
+    }
+
+    public String getLanguage() {
+        return this.languageManager.getLanguageCode();
+    }
+
+    public String translate(String originalText) {
+        return this.languageManager.translate(originalText);
     }
 
     /**
@@ -91,38 +107,6 @@ public class LibraryManagementSystem implements Serializable {
             }
         }
         return null;
-    }
-
-    /**
-     * Finds all documents with the given title.
-     *
-     * @param documentTitle the title of the document(s) to find
-     * @return a {@code Vector} of documents that match the title, or {@code null} if no documents are found
-     */
-    public Vector<Document> findDocumentByTitle(String documentTitle) {
-        Vector<Document> documentsOfTitle = new Vector<>();
-        for (Document document : getAllDocuments()) {
-            if (document.getDocumentTitle().equals(documentTitle)) {
-                documentsOfTitle.add(document);
-            }
-        }
-        return documentsOfTitle.isEmpty() ? null : documentsOfTitle;
-    }
-
-    /**
-     * Finds all documents by the given author.
-     *
-     * @param documentAuthor the author of the document(s) to find
-     * @return a {@code Vector} of documents that match the author, or {@code null} if no documents are found
-     */
-    public Vector<Document> findDocumentByAuthor(String documentAuthor) {
-        Vector<Document> documentsOfAuthor = new Vector<>();
-        for (Document document : getAllDocuments()) {
-            if (document.getDocumentAuthor().equals(documentAuthor)) {
-                documentsOfAuthor.add(document);
-            }
-        }
-        return documentsOfAuthor.isEmpty() ? null : documentsOfAuthor;
     }
 
     /**

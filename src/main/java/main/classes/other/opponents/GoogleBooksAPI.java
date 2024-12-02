@@ -21,7 +21,7 @@ import com.google.gson.JsonParser;
  */
 public class GoogleBooksAPI {
     private static final String API_URL = "https://www.googleapis.com/books/v1/volumes?q=isbn:"; // Base URL for Google Books API.
-    private static final String API_KEY = "AIzaSyB3ImOPrIkN0n1oWtMWE_KBErkoUELFRYY"; // API key for authentication.
+    private static final String API_KEY = "AIzaSyBZCB9iJUurWcvTgCWNin7-E7qruhMHruQ"; // API key for authentication.
 
     /**
      * Fetches book details from Google Books API based on the given ISBN.
@@ -68,7 +68,7 @@ public class GoogleBooksAPI {
      * @return A Book object with the retrieved information.
      * @throws IOException If there is an error with network or server response.
      */
-    private static Book getBookFromISBN(String isbn) throws IOException {
+    public static Book getBookFromISBN(String isbn) throws IOException {
         String jsonResponse = searchByISBN(isbn);
         JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
 

@@ -32,7 +32,7 @@ public class FindDocumentController {
     private JTextField jtfFindByTitle;
     private JTextField jtfFindByAuthor;
     private TableDisplay tableDisplay = null;
-    private final String[] COLUMNS = {"Quantity", "Genre", "ISBN", "Title", "Author"};
+    private LibraryManagementSystem libraryManagementSystem;
     private TableRowSorter<TableModel> rowSorter = null;
 
     /**
@@ -43,11 +43,12 @@ public class FindDocumentController {
      * @param jtfFindByTitle TextField for filtering by title.
      * @param jtfFindByAuthor TextField for filtering by author.
      */
-    public FindDocumentController(JPanel jpnView, JTextField jtfFindByGenre, JTextField jtfFindByTitle, JTextField jtfFindByAuthor) {
+    public FindDocumentController(JPanel jpnView, JTextField jtfFindByGenre, JTextField jtfFindByTitle, JTextField jtfFindByAuthor, LibraryManagementSystem libraryManagementSystem) {
         this.jpnView = jpnView;
         this.jtfFindByGenre = jtfFindByGenre;
         this.jtfFindByTitle = jtfFindByTitle;
         this.jtfFindByAuthor = jtfFindByAuthor;
+        this.libraryManagementSystem = libraryManagementSystem;
         this.tableDisplay = new TableDisplay();
     }
 
@@ -58,6 +59,13 @@ public class FindDocumentController {
      */
     public void setDataToTable(LibraryManagementSystem libraryManagementSystem) {
         List<Document> documentList = libraryManagementSystem.getAllDocuments();
+        String[] COLUMNS = {
+                libraryManagementSystem.translate("Quantity"),
+                libraryManagementSystem.translate("Genre"),
+                libraryManagementSystem.translate("ISBN"),
+                libraryManagementSystem.translate("Title"),
+                libraryManagementSystem.translate("Author")
+        };
         DefaultTableModel model = tableDisplay.setDocumentTable(documentList, COLUMNS);
         JTable table = new JTable(model);
 
@@ -98,7 +106,7 @@ public class FindDocumentController {
         table.setRowHeight(50);
         table.validate();
         table.repaint();
-        
+
         JScrollPane scroll = new JScrollPane();
         scroll.getViewport().add(table);
         scroll.setPreferredSize(new Dimension(1350, 400));
@@ -156,7 +164,7 @@ public class FindDocumentController {
                 public boolean isCellEditable(int rowIndex, int colIndex) {
                     return false;  // Make cells non-editable
                 }
-    
+
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnIndex == 7 ? Boolean.class : String.class;
@@ -186,6 +194,5 @@ public class FindDocumentController {
             }
             return dtm;
         }
-    }   
-    
+    }
 }

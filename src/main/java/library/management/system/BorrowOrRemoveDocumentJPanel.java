@@ -8,16 +8,15 @@ public class BorrowOrRemoveDocumentJPanel extends javax.swing.JPanel {
     //JPanel for borrowing documents
     public BorrowOrRemoveDocumentJPanel(Borrower borrower, LibraryManagementSystem libraryManagementSystem, String documentISBN) {
         initComponents();
-        jLabel2.setText("Borrow the document with ISBN:");
+        jLabel2.setText(libraryManagementSystem.translate("BORROW_DOCUMENT_ISBN"));
         jtfBorrowOrRemoveDocument.setText(documentISBN);
         BorrowOrRemoveDocumentController controller = new BorrowOrRemoveDocumentController(jpnView, jtfBorrowOrRemoveDocument, jbtBorrowOrRemoveDocument, borrower, libraryManagementSystem);
-        System.out.println("Hello");
     }
     
     //JPanel for removing documents
     public BorrowOrRemoveDocumentJPanel(LibraryManagementSystem libraryManagementSystem) {
         initComponents();
-        jLabel2.setText("Remove the document with ISBN:");
+        jLabel2.setText(libraryManagementSystem.translate("REMOVE_DOCUMENT_ISBN"));
         BorrowOrRemoveDocumentController controller = new BorrowOrRemoveDocumentController(jpnView, jtfBorrowOrRemoveDocument, jbtBorrowOrRemoveDocument, libraryManagementSystem);
     }
 

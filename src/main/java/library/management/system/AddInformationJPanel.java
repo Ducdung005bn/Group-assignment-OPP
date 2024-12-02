@@ -8,6 +8,9 @@ public class AddInformationJPanel extends JPanel {
 
     public AddInformationJPanel(String kind, LibraryManagementSystem libraryManagementSystem) {
         initComponents();
+
+        jbtAdd.setText(libraryManagementSystem.translate("ADD"));
+
         AddInformationController controller = new AddInformationController(kind, jpnView, jbtAdd, libraryManagementSystem);
     }
 
