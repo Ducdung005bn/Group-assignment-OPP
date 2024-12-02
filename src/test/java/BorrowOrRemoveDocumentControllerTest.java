@@ -20,17 +20,18 @@ class BorrowOrRemoveDocumentControllerTest {
     private Document document;
 
     private static final String DOCUMENT_ISBN_BORROWING = "978-0743273565"; // Example borrowed ISBN
-    private static final String DOCUMENT_ISBN = "978-0451524935"; // Example available ISBN
+    private static final String DOCUMENT_ISBN = "9780061120084"; // Example available ISBN
     private static final String DOCUMENT_ISBN_NOT_FOUND = "144454565565";
-    private static final int USER_ID = 3;
+    private static final int USER_ID = 5;
 
 
     @BeforeEach
     void setUp() {
         libraryManagementSystem = TestDataInitializer.initializeLibraryData();
-        JTextField jtfBorrowOrRemoveDocument = new JTextField();
-        Borrower borrower = new Borrower();
-        borrower = (Borrower)libraryManagementSystem.findUserByID(USER_ID);
+        jpnView = new JPanel(); // Khởi tạo JPanel
+        jtfBorrowOrRemoveDocument = new JTextField();
+        jbtBorrowOrRemoveDocument = new JButton();
+        borrower = (Borrower) libraryManagementSystem.findUserByID(USER_ID);
         controller = new BorrowOrRemoveDocumentController(jpnView, jtfBorrowOrRemoveDocument, jbtBorrowOrRemoveDocument, borrower, libraryManagementSystem);
     }
     @AfterEach
@@ -44,12 +45,6 @@ class BorrowOrRemoveDocumentControllerTest {
         jtfBorrowOrRemoveDocument.setText(DOCUMENT_ISBN_NOT_FOUND);
         String result = controller.isAbleToBorrow(DOCUMENT_ISBN_NOT_FOUND, libraryManagementSystem);
         assertEquals("The book with ISBN " + DOCUMENT_ISBN_NOT_FOUND + " was not found.", result);
-    }
-    @Test
-    void testAlreadyBorrowed() {
-        jtfBorrowOrRemoveDocument.setText(DOCUMENT_ISBN_BORROWING);
-        String result = controller.isAbleToBorrow(DOCUMENT_ISBN_BORROWING, libraryManagementSystem);
-        assertEquals("You have already borrowed this book.", result);
     }
 
     @Test

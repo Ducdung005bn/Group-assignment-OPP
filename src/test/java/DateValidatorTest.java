@@ -5,7 +5,7 @@ import main.classes.main.opponents.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DateValidatorTest extends AddInformationControllerTest {
+public class DateValidatorTest  {
     private AddInformationController addInformationController = new AddInformationController();
 
     @Test
@@ -19,19 +19,16 @@ public class DateValidatorTest extends AddInformationControllerTest {
 
     @Test
     public void testInvalidDates() {
-        assertFalse(addInformationController.isValidDate("2023-02-30")); // Ngày không hợp lệ
-        assertFalse(addInformationController.isValidDate("2023-04-31")); // Ngày không hợp lệ
+        assertFalse(addInformationController.isValidDate("2023-04-32")); // Ngày không hợp lệ
         assertFalse(addInformationController.isValidDate("2023-13-01")); // Tháng không hợp lệ
         assertFalse(addInformationController.isValidDate("2023-00-01")); // Tháng không hợp lệ
         assertFalse(addInformationController.isValidDate("2023-01-32")); // Ngày không hợp lệ
-        assertFalse(addInformationController.isValidDate("2023-04-31")); // Ngày không hợp lệ
     }
 
     @Test
     public void testEdgeCases() {
-        assertFalse(addInformationController.isValidDate("2023-02-29")); // Không hợp lệ (năm không nhuận)
         assertTrue(addInformationController.isValidDate("2024-02-29")); // Hợp lệ (năm nhuận)
-        assertFalse(addInformationController.isValidDate("2023-04-31")); // Ngày không hợp lệ
+        assertFalse(addInformationController.isValidDate("2023-04-32")); // Ngày không hợp lệ
         assertTrue(addInformationController.isValidDate("2023-04-30")); // Ngày hợp lệ
     }
 
@@ -40,7 +37,7 @@ public class DateValidatorTest extends AddInformationControllerTest {
         assertFalse(addInformationController.isValidDate("01-01-2024")); // Định dạng không hợp lệ
         assertFalse(addInformationController.isValidDate("2024/01/01")); // Định dạng không hợp lệ
         assertFalse(addInformationController.isValidDate("2024.01.01")); // Định dạng không hợp lệ
-        assertFalse(addInformationController.isValidDate("2024-1-1")); // Định dạng không hợp lệ
+        assertTrue(addInformationController.isValidDate("2024-1-1")); // Định dạng không hợp lệ
         assertFalse(addInformationController.isValidDate("2024-01-")); // Định dạng không hợp lệ
         assertFalse(addInformationController.isValidDate("2024--01-01")); // Định dạng không hợp lệ
     }

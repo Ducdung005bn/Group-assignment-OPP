@@ -142,8 +142,6 @@ public class ReturnDocumentController {
         libraryManagementSystem.saveData();
     }
 
-
-
     /**
      * Helper class that sets the borrow data into a table model.
      */

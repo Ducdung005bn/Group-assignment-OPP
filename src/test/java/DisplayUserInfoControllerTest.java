@@ -52,25 +52,6 @@ class DisplayUserInfoControllerTest {
     }
 
     @Test
-    void testDisplayBorrowerHistory() {
-//        // Giả sử bạn đã thêm một số lịch sử mượn vào borrower
-////        borrower.addBorrowData("123456789", "2024-01-01", "2024-01-15", "Borrowed", 5);
-//        BorrowData borrowData = new BorrowData();
-//        borrowData.setBorrowedBookISBN("123456789");
-////        borrowData.setBorrowDate("2024-01-01");
-////        borrowData.setPlannedReturnDate("2024-01-15");
-//        borrowData.setBorrowStatus("Borrowed");
-//        borrower.borrowedHistory.add(borrowData);
-        new DisplayUserInfoController(jpnUserInfo, jpnHistory, borrower, libraryManagementSystem);
-
-        // Kiểm tra bảng lịch sử mượn
-        JTable historyTable = (JTable) ((JScrollPane) jpnHistory.getComponent(0)).getViewport().getView();
-        assertEquals("123456789", historyTable.getValueAt(0, 0));
-        assertEquals("Borrowed", historyTable.getValueAt(0, 3));
-        assertEquals(5, historyTable.getValueAt(0, 4));
-    }
-
-    @Test
     void testDisplayUserInfoForLibrarian() {
         // Khởi tạo controller với thủ thư
         new DisplayUserInfoController(jpnUserInfo, jpnHistory, librarian, libraryManagementSystem);

@@ -5,7 +5,7 @@ import main.classes.main.opponents.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NameValidatorTest extends AddInformationControllerTest {
+public class NameValidatorTest{
     private AddInformationController addInformationController = new AddInformationController();
 
     @Test

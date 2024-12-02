@@ -1,7 +1,9 @@
 import main.classes.other.opponents.*;
 import main.classes.main.opponents.*;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Calendar;
+
 public class TestDataInitializer {
     public LibraryManagementSystem libraryManagementSystem;
     public static LibraryManagementSystem initializeLibraryData() {
@@ -192,6 +194,14 @@ public class TestDataInitializer {
         Book book10 = (Book) GoogleBooksAPI.fetchBook("9781451673214");
         book10.setDocumentQuantityAll(4);
         libraryManagementSystem.bookList.add(book10);
+
+        BorrowData borrowData = new BorrowData();
+        borrowData.setBorrowerID(borrower2 .getUserID());
+        borrowData.setBorrowedBookISBN("9781408845611");
+
+        borrowData.setBorrowStatus("Returned");
+        borrower2 .borrowedHistory.add(borrowData);
+
 
         return libraryManagementSystem;
     }

@@ -21,7 +21,7 @@ import com.google.gson.JsonParser;
  */
 public class GoogleBooksAPI {
     private static final String API_URL = "https://www.googleapis.com/books/v1/volumes?q=isbn:"; // Base URL for Google Books API.
-    private static final String API_KEY = "AIzaSyBZCB9iJUurWcvTgCWNin7-E7qruhMHruQ"; // API key for authentication.
+    private static final String API_KEY = "AIzaSyC6eGZSWzen1imDtkRQkSytj7NqNi-aYFk"; // API key for authentication.
 
     /**
      * Fetches book details from Google Books API based on the given ISBN.
