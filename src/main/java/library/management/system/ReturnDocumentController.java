@@ -86,7 +86,7 @@ public class ReturnDocumentController {
      *
      * @param borrowData The borrow data entry representing the borrowed document.
      */
-    private void returnDocument(BorrowData borrowData) {
+    protected void returnDocument(BorrowData borrowData) {
         borrower.borrowingHistory.remove(borrowData);
         borrower.borrowingBookCount--;
     

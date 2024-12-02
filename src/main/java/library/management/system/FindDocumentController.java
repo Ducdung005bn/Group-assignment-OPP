@@ -140,7 +140,7 @@ public class FindDocumentController {
     /**
      * Helper class to manage the creation of the document table and populating it with data.
      */
-    private class TableDisplay {
+    protected class TableDisplay {
         /**
          * Sets up the document table based on the list of documents.
          *

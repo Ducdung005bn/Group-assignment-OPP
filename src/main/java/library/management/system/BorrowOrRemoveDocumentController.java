@@ -27,11 +27,16 @@ import main.classes.Thesis;
  */
 public class BorrowOrRemoveDocumentController {
     private JPanel jpnView;
-    private JTextField jtfBorrowOrRemoveDocument;
+    protected JTextField jtfBorrowOrRemoveDocument;
     private JButton jbtBorrowOrRemoveDocument;
     private Borrower borrower;
     private LibraryManagementSystem libraryManagementSystem;
 
+    public BorrowOrRemoveDocumentController(LibraryManagementSystem libraryManagementSystem,JTextField jtfBorrowOrRemoveDocument,Borrower borrower){
+        this.libraryManagementSystem = libraryManagementSystem;
+        this.jtfBorrowOrRemoveDocument = jtfBorrowOrRemoveDocument;
+        this.borrower = borrower;
+    }
     /**
      * Constructor for handling document borrowing functionality.
      *
@@ -148,7 +153,7 @@ public class BorrowOrRemoveDocumentController {
      * Handles the process of borrowing a document.
      * It checks if the borrower can borrow the document and updates borrowing history.
      */
-    private void handleBorrowDocument() {
+    protected void handleBorrowDocument() {
         //Get the ISBN of the book appearing on the screen
         List<Document> matchingDocuments = libraryManagementSystem.getAllDocuments().stream()
             .filter(doc -> doc.getDocumentISBN().startsWith(jtfBorrowOrRemoveDocument.getText().trim()))
@@ -200,7 +205,7 @@ public class BorrowOrRemoveDocumentController {
      * @param libraryManagementSystem The system managing library data.
      * @return A message indicating why the borrower cannot borrow the document, or null if they can.
      */
-    private String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
+    protected String isAbleToBorrow(String documentISBN, LibraryManagementSystem libraryManagementSystem) {
         Document document = libraryManagementSystem.findDocumentByISBN(documentISBN);
 
         boolean alreadyBorrow = false;

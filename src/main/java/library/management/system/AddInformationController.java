@@ -22,6 +22,7 @@ public class AddInformationController {
     private JButton jbtAdd;
     private LibraryManagementSystem libraryManagementSystem;
 
+    public AddInformationController(){}
     /**
      * Constructor to initialize the AddInformationController.
      *
@@ -237,7 +238,7 @@ public class AddInformationController {
      * @param dateInput The date string to validate.
      * @return true if the date format is valid, false otherwise.
      */
-    private boolean isValidDate(String dateInput) {
+    protected boolean isValidDate(String dateInput) {
         // Regular expression for matching date in "yyyy-MM-dd" format
         String regex = "^\\d{4}-(\\d{1,2})-(\\d{1,2})$";
 
@@ -283,7 +284,7 @@ public class AddInformationController {
         return matcher.matches();
     }
 
-    private boolean isValidName(String name) {
+    protected boolean isValidName(String name) {
         // Check if the name only contains letters, single spaces between words, and optional dots
         if (!name.matches("^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*\\.$|^(?!.*\\s\\s)(?!.*\\.\\S)[a-zA-Z\\s.]*$")) {
             JOptionPane.showMessageDialog(null, "Name must only contain letters, single spaces, and optional dots between words", "Error", JOptionPane.ERROR_MESSAGE);

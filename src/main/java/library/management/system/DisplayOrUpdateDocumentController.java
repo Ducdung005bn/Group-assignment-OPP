@@ -297,7 +297,7 @@ public class DisplayOrUpdateDocumentController {
      * @param libraryManagementSystem The system containing the library's documents
      * @param kind A string representing kind of displaying or updating
      */
-    private static void updateDocument(JTextField[] fields, Document document, JPanel jpnView, LibraryManagementSystem libraryManagementSystem, String kind) {
+    protected static void updateDocument(JTextField[] fields, Document document, JPanel jpnView, LibraryManagementSystem libraryManagementSystem, String kind) {
         try {
             // Retrieve data from input fields
             int totalDocumentQuantity = Integer.parseInt(fields[1].getText());
